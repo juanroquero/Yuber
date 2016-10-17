@@ -16,6 +16,8 @@ public class Proveedor extends Usuario implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@ManyToOne(cascade=CascadeType.PERSIST)
 	private Servicio Servicio;
+	@OneToMany(mappedBy="Proveedor", cascade=CascadeType.PERSIST)
+	private List<InstanciaServicio> InstanciasServicio;
 
 	public Proveedor() {
 		super();
@@ -48,6 +50,26 @@ public class Proveedor extends Usuario implements Serializable {
 
 	public void setServicio(Servicio Servicio) {
 		this.Servicio = Servicio;
+	}
+	
+	public List<InstanciaServicio> getInstanciasServicio() {
+		return this.InstanciasServicio;
+	}
+
+	public void setInstanciasServicio(List<InstanciaServicio> instanciaServicios) {
+		this.InstanciasServicio = instanciaServicios;
+	}
+
+	public InstanciaServicio addInstanciaServicio(InstanciaServicio instanciaServicio) {
+		getInstanciasServicio().add(instanciaServicio);
+		instanciaServicio.setProveedor(this);
+		return instanciaServicio;
+	}
+
+	public InstanciaServicio removeInstanciaServicio(InstanciaServicio instanciaServicio) {
+		getInstanciasServicio().remove(instanciaServicio);
+		instanciaServicio.setProveedor(null);
+		return instanciaServicio;
 	}
 	
 }

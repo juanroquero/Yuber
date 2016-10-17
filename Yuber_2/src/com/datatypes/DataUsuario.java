@@ -18,8 +18,7 @@ public class DataUsuario {
 	}
 	
 	public DataUsuario(String usuarioCorreo, String usuarioNombre, String usuarioApellido, String usuarioCiudad,
-		String usuarioContraseña, String usuarioDireccion, float usuarioPromedioPuntaje, int usuarioTelefono,
-		List<DataInstanciaServicio> instanciasServicio) {
+		String usuarioContraseña, String usuarioDireccion, float usuarioPromedioPuntaje, int usuarioTelefono) {
 		super();
 		UsuarioCorreo = usuarioCorreo;
 		UsuarioNombre = usuarioNombre;
@@ -29,7 +28,6 @@ public class DataUsuario {
 		UsuarioDireccion = usuarioDireccion;
 		UsuarioPromedioPuntaje = usuarioPromedioPuntaje;
 		UsuarioTelefono = usuarioTelefono;
-		InstanciasServicio = instanciasServicio;
 	}
 	
 	public String getUsuarioCorreo() {

@@ -2,9 +2,12 @@ package com.controladores;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+
 import com.datatypes.*;
 public class ControladorServicios {
 
+	EntityManagerFactory emf;
 	EntityManager em;
 	
 	public ControladorServicios() {

@@ -1,18 +1,20 @@
 package com.controladores;
 import javax.persistence.EntityManager;
-
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import com.datatypes.*;
-
+import com.entities.Administrador;
 import java.util.List;
 
 public class ControladorAdministrador {
 
+	EntityManagerFactory emf;
 	EntityManager em;
 	
 	public ControladorAdministrador() {
 	}
 
-	public void Login(String AdministradorEmail, String Password){		
+	public void Login(String AdministradorEmail, String Password){					
 	}
 	
 	public List<DataCliente> ObtenerClientesActivos(){	

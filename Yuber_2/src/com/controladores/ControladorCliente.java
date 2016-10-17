@@ -2,9 +2,12 @@ package com.controladores;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+
 import com.datatypes.*;
 public class ControladorCliente {
 
+	EntityManagerFactory emf;
 	EntityManager em;
 	
 	public ControladorCliente() {
@@ -41,7 +44,8 @@ public class ControladorCliente {
 	//Este parece no estar bien definido, hay que ver bien como se maneja el asociar paypal
 	}
 	
-	public int PedirServicio(String ClienteCorreo, int ServicioId, String Ubicacion){		
+	public int PedirServicio(String ClienteCorreo, int ServicioId, String Ubicacion, String fecha){
+		//pedir fecha de hoy al sistema
 		return 0;
 	}
 	
