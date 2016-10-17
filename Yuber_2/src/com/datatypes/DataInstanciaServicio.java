@@ -10,12 +10,13 @@ public class DataInstanciaServicio {
 	private DataReseña ReseñaCliente;
 	private DataReseña ReseñaProveedor;	
 	private DataServicio Servicio;
-	private DataUsuario Usuario;
+	private DataCliente Cliente;
+	private DataProveedor Proveedor;
 
 	public DataInstanciaServicio() {
 	}
 
-	public DataInstanciaServicio(int InstanciaServicioId, float InstanciaServicioCosto, float InstanciaServicioDistancia, String InstanciaServicioFecha, float InstanciaServicioTiempo, DataReseña ReseñaCliente, DataReseña ReseñaProveedor, DataServicio Servicio, DataUsuario Usuario) {
+	public DataInstanciaServicio(int InstanciaServicioId, float InstanciaServicioCosto, float InstanciaServicioDistancia, String InstanciaServicioFecha, float InstanciaServicioTiempo, DataReseña ReseñaCliente, DataReseña ReseñaProveedor, DataServicio Servicio, DataCliente Cliente, DataProveedor Proveedor) {
 		this.InstanciaServicioId 		= InstanciaServicioId;
 		this.InstanciaServicioCosto 	= InstanciaServicioCosto;
 		this.InstanciaServicioDistancia	= InstanciaServicioDistancia;
@@ -24,7 +25,8 @@ public class DataInstanciaServicio {
 		this.ReseñaCliente				= ReseñaCliente;
 		this.ReseñaProveedor			= ReseñaProveedor;
 		this.Servicio					= Servicio;
-		this.Usuario					= Usuario;	
+		this.setCliente(Cliente);
+		this.setProveedor(Proveedor);
 	}
 	
 	public int getInstanciaServicioId() {
@@ -91,12 +93,22 @@ public class DataInstanciaServicio {
 		Servicio = servicio;
 	}
 
-	public DataUsuario getUsuario() {
-		return Usuario;
+	public DataCliente getCliente() {
+		return Cliente;
 	}
 
-	public void setUsuario(DataUsuario usuario) {
-		Usuario = usuario;
+	public void setCliente(DataCliente cliente) {
+		Cliente = cliente;
 	}
+
+	public DataProveedor getProveedor() {
+		return Proveedor;
+	}
+
+	public void setProveedor(DataProveedor proveedor) {
+		Proveedor = proveedor;
+	}
+
+	
 	
 }

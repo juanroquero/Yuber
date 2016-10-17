@@ -20,20 +20,12 @@ public class Usuario implements Serializable {
 	private String UsuarioContraseña;
 	private String UsuarioDireccion;	
 	private float UsuarioPromedioPuntaje;
-	private int UsuarioTelefono;
-	@OneToMany(mappedBy="Usuario", cascade=CascadeType.PERSIST)
-	private List<InstanciaServicio> InstanciasServicio;
+	private int UsuarioTelefono;	
 	
 	public Usuario() {
 	}
 
-	public DataUsuario getDataUsuario(){		
-		List<DataInstanciaServicio> ListaInstancias = new ArrayList<DataInstanciaServicio>();
-		for(InstanciaServicio Instancia : this.getInstanciasServicio())
-		{
-			DataInstanciaServicio DataInstanciaServicio = Instancia.getDataInstanciaServicio();
-			ListaInstancias.add(DataInstanciaServicio);
-		}		
+	public DataUsuario getDataUsuario(){
 		return new DataUsuario(	this.UsuarioCorreo, 
 								this.UsuarioNombre, 
 								this.UsuarioApellido, 
@@ -41,8 +33,7 @@ public class Usuario implements Serializable {
 								this.UsuarioContraseña, 
 								this.UsuarioDireccion, 
 								this.UsuarioPromedioPuntaje, 
-								this.UsuarioTelefono, 
-								ListaInstancias
+								this.UsuarioTelefono
 							   );
 	}
 	
@@ -108,26 +99,6 @@ public class Usuario implements Serializable {
 
 	public void setUsuarioTelefono(int UsuarioTelefono) {
 		this.UsuarioTelefono = UsuarioTelefono;
-	}
-
-	public List<InstanciaServicio> getInstanciasServicio() {
-		return this.InstanciasServicio;
-	}
-
-	public void setInstanciasServicio(List<InstanciaServicio> instanciaServicios) {
-		this.InstanciasServicio = instanciaServicios;
-	}
-
-	public InstanciaServicio addInstanciaServicio(InstanciaServicio instanciaServicio) {
-		getInstanciasServicio().add(instanciaServicio);
-		instanciaServicio.setUsuario(this);
-		return instanciaServicio;
-	}
-
-	public InstanciaServicio removeInstanciaServicio(InstanciaServicio instanciaServicio) {
-		getInstanciasServicio().remove(instanciaServicio);
-		instanciaServicio.setUsuario(null);
-		return instanciaServicio;
 	}
 
 }

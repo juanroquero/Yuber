@@ -13,6 +13,9 @@ import javax.persistence.*;
 @Inheritance(strategy=InheritanceType.SINGLE_TABLE)
 public class Cliente extends Usuario implements Serializable {
 	
+	@OneToMany(mappedBy="Cliente", cascade=CascadeType.PERSIST)
+	private List<InstanciaServicio> InstanciasServicio;
+	
 	private static final long serialVersionUID = 1L;
 
 	public Cliente() {
@@ -21,7 +24,7 @@ public class Cliente extends Usuario implements Serializable {
 		
     public DataCliente getDataCliente(){		
 		List<DataInstanciaServicio> ListaInstancias = new ArrayList<DataInstanciaServicio>();
-		for(InstanciaServicio Instancia : this.getInstanciasServicio())
+		for(InstanciaServicio Instancia : InstanciasServicio)
 		{
 			DataInstanciaServicio DataInstanciaServicio = Instancia.getDataInstanciaServicio();
 			ListaInstancias.add(DataInstanciaServicio);
@@ -38,6 +41,24 @@ public class Cliente extends Usuario implements Serializable {
 							   );
 	}
     
+    public InstanciaServicio addInstanciaServicio(InstanciaServicio instanciaServicio) {
+		getInstanciasServicio().add(instanciaServicio);
+		instanciaServicio.setCliente(this);
+		return instanciaServicio;
+	}
+
+	public InstanciaServicio removeInstanciaServicio(InstanciaServicio instanciaServicio) {
+		getInstanciasServicio().remove(instanciaServicio);
+		instanciaServicio.setCliente(null);
+		return instanciaServicio;
+	}
     
+	public List<InstanciaServicio> getInstanciasServicio() {
+		return this.InstanciasServicio;
+	}
+
+	public void setInstanciasServicio(List<InstanciaServicio> instanciaServicios) {
+		this.InstanciasServicio = instanciaServicios;
+	}
    
 }

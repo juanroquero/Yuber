@@ -21,9 +21,11 @@ public class InstanciaServicio implements Serializable {
 	private Reseña ReseñaProveedor;	
 	@ManyToOne(cascade=CascadeType.PERSIST)
 	private Servicio Servicio;
-	@ManyToOne(cascade=CascadeType.PERSIST)
-	private Usuario Usuario;
-
+	@ManyToOne
+	private Cliente Cliente;
+	@ManyToOne
+	private Proveedor Proveedor;
+	
 	public InstanciaServicio() {
 	}
 	
@@ -36,7 +38,8 @@ public class InstanciaServicio implements Serializable {
 											this.ReseñaCliente.getDataReseña(),
 											this.ReseñaProveedor.getDataReseña(),
 											this.Servicio.getDataServicio(),
-											this.Usuario.getDataUsuario() 
+											this.Cliente.getDataCliente(),
+											this.Proveedor.getDataProveedor()
 										);
 	}
 
@@ -88,14 +91,6 @@ public class InstanciaServicio implements Serializable {
 		this.Servicio = servicio;
 	}
 
-	public Usuario getUsuario() {
-		return this.Usuario;
-	}
-
-	public void setUsuario(Usuario usuario) {
-		this.Usuario = usuario;
-	}
-
 	public Reseña getReseñaCliente() {
 		return ReseñaCliente;
 	}
@@ -110,6 +105,22 @@ public class InstanciaServicio implements Serializable {
 
 	public void setReseñaProveedor(Reseña reseñaProveedor) {
 		ReseñaProveedor = reseñaProveedor;
+	}
+
+	public Cliente getCliente() {
+		return Cliente;
+	}
+
+	public void setCliente(Cliente cliente) {
+		Cliente = cliente;
+	}
+
+	public Proveedor getProveedor() {
+		return Proveedor;
+	}
+
+	public void setProveedor(Proveedor proveedor) {
+		Proveedor = proveedor;
 	}	
 	
 }
