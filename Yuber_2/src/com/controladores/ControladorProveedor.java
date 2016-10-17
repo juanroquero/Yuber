@@ -35,7 +35,7 @@ public class ControladorProveedor {
 	//	}
 		
 
-		InstanciaServicio is = new InstanciaServicio();
+	/*	InstanciaServicio is = new InstanciaServicio();
 		is.setInstanciaServicioCosto(2);
 		is.setInstanciaServicioDistancia(152);
 		is.setInstanciaServicioFecha("12/25/1468");
@@ -43,9 +43,9 @@ public class ControladorProveedor {
 		is.setReseñaCliente(null);
 		is.setReseñaProveedor(null);
 		is.setProveedor(null);
-		is.setCliente(null);
+		is.setCliente(null);*/
 		
-		/*
+		
 		Usuario u = new Proveedor();	
 		u.setUsuarioNombre("Martin");
 		u.setUsuarioApellido("Perez");
@@ -55,7 +55,7 @@ public class ControladorProveedor {
 		u.setUsuarioDireccion("18 de julio 321");		
 		u.setUsuarioPromedioPuntaje(3);
 		u.setUsuarioTelefono(4);
-		*/
+		
 		/*
 	    Servicio s = new Servicio();
 		s.setInstanciasServicio(null);
@@ -70,7 +70,7 @@ public class ControladorProveedor {
 		emf = Persistence.createEntityManagerFactory("Yuber_2");
 		em = emf.createEntityManager();	
 		em.getTransaction().begin();
-		em.persist(is);
+		em.persist(u);
 		em.getTransaction().commit();
 		
 		

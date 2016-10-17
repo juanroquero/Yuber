@@ -23,6 +23,15 @@ public class Administrador implements Serializable {
 	public Administrador() {
 	}
 	
+	public Administrador(String administradorCorreo, String administradorContraseña, String administradorNombre,
+			List<Vertical> verticales) {
+		super();
+		AdministradorCorreo = administradorCorreo;
+		AdministradorContraseña = administradorContraseña;
+		AdministradorNombre = administradorNombre;
+		Verticales = verticales;
+	}
+	
 	public DataAdministrador getDataAdministrador(){
 		List<DataVertical> ListaVerticales = new ArrayList<DataVertical>();
 		for(Vertical Instancia : this.Verticales)

@@ -13,6 +13,8 @@ import java.util.List;
 @Entity
 public class Vertical implements Serializable {
 	
+
+
 	private static final long serialVersionUID = 1L;
 	@Id
 	private String VerticalTipo;
@@ -23,6 +25,15 @@ public class Vertical implements Serializable {
 	private List<Administrador> Administradores;
 
 	public Vertical() {
+	}
+	
+	public Vertical(String verticalTipo, String verticalNombre, List<Servicio> servicios,
+			List<Administrador> administradores) {
+		super();
+		VerticalTipo = verticalTipo;
+		VerticalNombre = verticalNombre;
+		Servicios = servicios;
+		Administradores = administradores;
 	}
 	
 	public DataVertical getDataVertical(){		

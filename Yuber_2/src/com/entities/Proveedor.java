@@ -2,6 +2,7 @@ package com.entities;
 
 import com.datatypes.DataInstanciaServicio;
 import com.datatypes.DataProveedor;
+import com.datatypes.DataServicio;
 import com.entities.Usuario;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -30,6 +31,11 @@ public class Proveedor extends Usuario implements Serializable {
 			DataInstanciaServicio DataInstanciaServicio = Instancia.getDataInstanciaServicio();
 			ListaInstancias.add(DataInstanciaServicio);
 		}	
+		DataServicio DataServicio;
+		if (this.Servicio == null)
+			DataServicio = null;
+		else
+			DataServicio = this.Servicio.getDataServicio();
 		return new DataProveedor(
 								this.getUsuarioCorreo(), 
 								this.getUsuarioNombre(), 
@@ -40,7 +46,7 @@ public class Proveedor extends Usuario implements Serializable {
 								this.getUsuarioPromedioPuntaje(), 
 								this.getUsuarioTelefono(), 
 								ListaInstancias,
-								this.Servicio.getDataServicio()
+								DataServicio
 							   );
 	}
 	
