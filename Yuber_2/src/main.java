@@ -16,6 +16,7 @@ import com.datatypes.DataUbicacion;
 import com.datatypes.DataUsuario;
 import com.entities.Cliente;
 import com.entities.Usuario;
+import com.utils.ControlErrores;
 
 public class main {
 	
@@ -24,6 +25,7 @@ public class main {
 		ControladorProveedor cp = new ControladorProveedor();
 		ControladorServicios cs = new ControladorServicios();
 		ControladorAdministrador ca = new ControladorAdministrador();
+		ControlErrores CE = new ControlErrores();
 		
 		//*********************** CONTROLADOR CLIENTE ***********************//
 			//REGISTRO CLIENTE
@@ -102,6 +104,8 @@ public class main {
 			DataServicioBasico Servicio = new DataServicioBasico(301, "Mecanico", 100, 100, 100);
 			cs.ModificarServicio(Servicio);
 			*/
+		
+		System.out.println(CE.Ok);
 	}
 	
 	

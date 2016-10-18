@@ -7,6 +7,7 @@ import com.entities.Administrador;
 import com.entities.Cliente;
 import com.entities.Proveedor;
 import com.entities.Vertical;
+import com.utils.ControlErrores;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +16,7 @@ public class ControladorAdministrador {
 
 	EntityManagerFactory emf = Persistence.createEntityManagerFactory("Yuber_2");
 	EntityManager em = emf.createEntityManager();
+	ControlErrores Error = new ControlErrores();
 	
 	public ControladorAdministrador() {
 	}
@@ -45,20 +47,10 @@ public class ControladorAdministrador {
 	}
 	
 	public boolean CrearAdministrador(DataAdministrador Administrador){
-		try{
+		try{				
 			List<DataVerticalBasico> ListaDataVerticales = Administrador.getVerticales();
-			List <Vertical> ListaVerticales = new ArrayList<Vertical>();		
-			if(ListaDataVerticales != null){
-				for(DataVerticalBasico DataVertical : ListaDataVerticales){
-					Vertical Vertical = this.em.find(Vertical.class, DataVertical.getVerticalTipo());
-					if (Vertical != null){
-						ListaVerticales.add(Vertical);
-					}else{
-						return false;
-					}
-				}	
-			}			
-			Administrador Admin = new Administrador(Administrador.getAdministradorCorreo(), Administrador.getAdministradorContraseña(), Administrador.getAdministradorNombre(), ListaVerticales);
+			List <Vertical> ListaVerticales = new ArrayList<Vertical>();
+			Administrador Admin = new Administrador(Administrador.getAdministradorCorreo(), Administrador.getAdministradorContraseña(), Administrador.getAdministradorNombre(), null);
 			em.getTransaction().begin();;
 			em.persist(Admin);
 			em.getTransaction().commit();	
@@ -147,5 +139,55 @@ public class ControladorAdministrador {
 		em.persist(NuevaVertical);
 		em.getTransaction().commit();
 	}
+	
+	public String AsignarVertical(String AdminCreadorId, String AdminId, String TipoVertical){
+		//Retorna true si no hubo errores y se pudo asignar satisfactoriamente la vertical
+		boolean Habilitado = false;
+		if(AdminCreadorId == "FullAccess")
+		{
+			Habilitado = true;
+		}
+		else
+		{
+			DataAdministrador AdminCreador = this.em.find(Administrador.class, AdminCreadorId).getDataAdministrador();
+			for (DataVerticalBasico DataVertical : AdminCreador.getVerticales())
+			{
+				if (DataVertical.getVerticalTipo() == TipoVertical)
+				{
+					Habilitado = true;
+				}
+			}
+		}
+		if (Habilitado)
+		{
+			Administrador Admin = this.em.find(Administrador.class, AdminId);
+			Vertical Vertical = this.em.find(Vertical.class, TipoVertical);
+			
+			List<Administrador> ListaAdmin = Vertical.getAdministradores();
+			ListaAdmin.add(Admin);
+			Vertical.setAdministradores(ListaAdmin);
+			
+			List<Vertical> ListaVerticales = Admin.getVerticales();
+			ListaVerticales.add(Vertical);
+			Admin.setVerticales(ListaVerticales);
+			
+			em.getTransaction().begin();
+			em.persist(Admin);
+			em.getTransaction().commit();
+			
+			return Error.Ok;
+		}
+		else
+		{
+			return Error.A50;
+		}
+		
+				
+	}
+	
+	public void DenegarVertical(int AdminId, String TipoVertical){
+		
+	}
+	
 	
 }

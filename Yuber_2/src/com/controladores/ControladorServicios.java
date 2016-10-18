@@ -9,10 +9,12 @@ import javax.persistence.Persistence;
 import com.datatypes.*;
 import com.entities.Servicio;
 import com.entities.Vertical;
+import com.utils.ControlErrores;
 public class ControladorServicios {
 
 	EntityManagerFactory emf = Persistence.createEntityManagerFactory("Yuber_2");
 	EntityManager em = emf.createEntityManager();
+	ControlErrores Error = new ControlErrores();
 	
 	public ControladorServicios() {
 	}
