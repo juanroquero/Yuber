@@ -4,6 +4,7 @@ import java.util.List;
 
 public class DataVertical {
 	
+	private String Estado = "Ok";
 	private String VerticalTipo;
 	private String VerticalNombre;
 	private List<DataServicioBasico> Servicios;
@@ -51,6 +52,14 @@ public class DataVertical {
 
 	public void setAdministradores(List<DataAdministradorBasico> administradores) {
 		Administradores = administradores;
+	}
+
+	public String getEstado() {
+		return Estado;
+	}
+
+	public void setEstado(String estado) {
+		Estado = estado;
 	}
 
 }

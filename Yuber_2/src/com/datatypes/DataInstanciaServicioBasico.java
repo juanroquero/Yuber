@@ -4,6 +4,7 @@ import java.util.Date;
 
 public class DataInstanciaServicioBasico {
 	
+	private String Estado = "Ok";
 	private int InstanciaServicioId;
 	private float InstanciaServicioCosto;
 	private float InstanciaServicioDistancia;
@@ -56,6 +57,16 @@ public class DataInstanciaServicioBasico {
 
 	public void setInstanciaServicioTiempo(float instanciaServicioTiempo) {
 		InstanciaServicioTiempo = instanciaServicioTiempo;
+	}
+
+
+	public String getEstado() {
+		return Estado;
+	}
+
+
+	public void setEstado(String estado) {
+		Estado = estado;
 	}
 	
 }

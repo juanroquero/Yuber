@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DataAdministrador {
-
+	
+	private String Estado = "Ok";
 	private String AdministradorCorreo;
 	private String AdministradorContraseña;
 	private String AdministradorNombre;
@@ -50,6 +51,14 @@ public class DataAdministrador {
 
 	public void setVerticales(List<DataVerticalBasico> Verticales) {
 		this.Verticales = Verticales;
+	}
+
+	public String getEstado() {
+		return Estado;
+	}
+
+	public void setEstado(String estado) {
+		Estado = estado;
 	}
 
 }

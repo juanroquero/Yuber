@@ -3,6 +3,7 @@ package com.datatypes;
 
 public class DataAdministradorBasico {
 
+	private String Estado = "Ok";
 	private String AdministradorCorreo;
 	private String AdministradorContraseña;
 	private String AdministradorNombre;
@@ -38,5 +39,13 @@ public class DataAdministradorBasico {
 
 	public void setAdministradorNombre(String administradorNombre) {
 		AdministradorNombre = administradorNombre;
+	}
+
+	public String getEstado() {
+		return Estado;
+	}
+
+	public void setEstado(String estado) {
+		Estado = estado;
 	}
 }

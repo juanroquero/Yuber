@@ -3,6 +3,7 @@ package com.datatypes;
 
 public class DataServicioBasico {
 	
+	private String Estado = "Ok";
 	private int ServicioId;
 	private String ServicioNombre;
 	private float ServicioPrecioHora;
@@ -69,6 +70,14 @@ public class DataServicioBasico {
 
 	public void setBorrado(int borrado) {
 		Borrado = borrado;
+	}
+
+	public String getEstado() {
+		return Estado;
+	}
+
+	public void setEstado(String estado) {
+		Estado = estado;
 	}
 
 }

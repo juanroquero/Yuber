@@ -27,6 +27,7 @@ public class ControladorServicios {
 	}
 	
 	public boolean CrearServicio(DataServicio Servicio){
+		//Retorna false si no existe la vertical
 		try{
 			Vertical Vertical = em.find(Vertical.class, Servicio.getVertical().getVerticalTipo());			
 			if(Vertical != null){	
@@ -43,10 +44,12 @@ public class ControladorServicios {
 	}
 	
 	public boolean EliminarServicio(int ServicioId){
+		//Retorna false si no existe dicho servicio
 		try{
 			Servicio Servicio = this.em.find(Servicio.class, ServicioId);
+			Servicio.setBorrado(1);
 			this.em.getTransaction().begin();
-			this.em.remove(Servicio);
+			this.em.persist(Servicio);
 			this.em.getTransaction().commit();
 			return true;
 		}catch(Exception e){
@@ -54,7 +57,8 @@ public class ControladorServicios {
 		}		
 	}
 	
-	public boolean ModificarServicio(DataServicioBasico Servicio){		
+	public boolean ModificarServicio(DataServicioBasico Servicio){
+		//Retorna false si no existe dicho servicio
 		try{
 			Servicio NuevoServicio = this.em.find(Servicio.class, Servicio.getServicioId());
 			NuevoServicio.setServicioNombre(Servicio.getServicioNombre());
@@ -67,8 +71,7 @@ public class ControladorServicios {
 			return true;
 		}catch(Exception e){
 			return false;
-		}
-		
+		}		
 	}
 	
 	public DataServicio ObtenerServicio(int ServicioId){

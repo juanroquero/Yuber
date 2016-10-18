@@ -5,6 +5,7 @@ import java.util.List;
 
 public class DataCliente {
 	
+	private String Estado = "Ok";
 	private String UsuarioCorreo;
 	private String UsuarioNombre;
 	private String UsuarioApellido;
@@ -100,6 +101,14 @@ public class DataCliente {
 	
 	public void setInstanciasServicio(List<DataInstanciaServicioBasico> instanciasServicio) {
 		InstanciasServicio = instanciasServicio;
+	}
+
+	public String getEstado() {
+		return Estado;
+	}
+
+	public void setEstado(String estado) {
+		Estado = estado;
 	}	
 
 }

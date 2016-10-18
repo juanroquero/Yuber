@@ -4,6 +4,7 @@ import java.util.List;
 
 public class DataProveedor {
 	
+	private String Estado = "Ok";
 	private String UsuarioCorreo;
 	private String UsuarioNombre;
 	private String UsuarioApellido;
@@ -109,6 +110,14 @@ public class DataProveedor {
 
 	public void setServicio(DataServicioBasico servicio) {
 		Servicio = servicio;
+	}
+
+	public String getEstado() {
+		return Estado;
+	}
+
+	public void setEstado(String estado) {
+		Estado = estado;
 	}
 
 }

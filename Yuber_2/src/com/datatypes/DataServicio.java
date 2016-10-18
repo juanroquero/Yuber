@@ -4,6 +4,7 @@ import java.util.List;
 
 public class DataServicio {
 	
+	private String Estado = "Ok";
 	private int ServicioId;
 	private String ServicioNombre;
 	private float ServicioPrecioHora;
@@ -101,6 +102,14 @@ public class DataServicio {
 
 	public void setBorrado(int borrado) {
 		Borrado = borrado;
+	}
+
+	public String getEstado() {
+		return Estado;
+	}
+
+	public void setEstado(String estado) {
+		Estado = estado;
 	}
 
 }

@@ -66,7 +66,7 @@ public class Servicio implements Serializable {
 								this.getServicioPrecioHora(),
 								this.getServicioPrecioKM(),
 								this.getServicioTarifaBase(),
-								this.Borrado,
+								this.getBorrado(),
 								ListaInstanciasServicio,
 								this.Vertical.getDataVerticalBasico(),
 								ListaProveedores
@@ -80,7 +80,7 @@ public class Servicio implements Serializable {
 								this.getServicioPrecioHora(),
 								this.getServicioPrecioKM(),
 								this.getServicioTarifaBase(),
-								this.Borrado
+								this.getBorrado()
 							   );
 	}
 	public int getServicioId() {
@@ -169,6 +169,14 @@ public class Servicio implements Serializable {
 		getProveedores().remove(Proveedor);
 		Proveedor.setServicio(null);
 		return Proveedor;
+	}
+
+	public int getBorrado() {
+		return Borrado;
+	}
+
+	public void setBorrado(int borrado) {
+		Borrado = borrado;
 	}
 
 }

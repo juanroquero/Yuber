@@ -3,6 +3,7 @@ package com.datatypes;
 
 public class DataProveedorBasico {
 	
+	private String Estado = "Ok";
 	private String UsuarioCorreo;
 	private String UsuarioNombre;
 	private String UsuarioApellido;
@@ -88,6 +89,14 @@ public class DataProveedorBasico {
 	
 	public void setUsuarioTelefono(String usuarioTelefono) {
 		UsuarioTelefono = usuarioTelefono;
+	}
+
+	public String getEstado() {
+		return Estado;
+	}
+
+	public void setEstado(String estado) {
+		Estado = estado;
 	}
 
 }

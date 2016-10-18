@@ -4,6 +4,7 @@ import java.util.Date;
 
 public class DataInstanciaServicio {
 	
+	private String Estado = "Ok";
 	private int InstanciaServicioId;
 	private float InstanciaServicioCosto;
 	private float InstanciaServicioDistancia;
@@ -129,6 +130,14 @@ public class DataInstanciaServicio {
 
 	public void setInstanciaServicioFechaFin(Date instanciaServicioFechaFin) {
 		InstanciaServicioFechaFin = instanciaServicioFechaFin;
+	}
+
+	public String getEstado() {
+		return Estado;
+	}
+
+	public void setEstado(String estado) {
+		Estado = estado;
 	}
 
 	

@@ -3,6 +3,7 @@ package com.datatypes;
 
 public class DataVerticalBasico {
 	
+	private String Estado = "Ok";
 	private String VerticalTipo;
 	private String VerticalNombre;
 	
@@ -29,6 +30,14 @@ public class DataVerticalBasico {
 	
 	public void setVerticalNombre(String verticalNombre) {
 		VerticalNombre = verticalNombre;
+	}
+
+	public String getEstado() {
+		return Estado;
+	}
+
+	public void setEstado(String estado) {
+		Estado = estado;
 	}
 	
 

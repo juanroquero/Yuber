@@ -2,6 +2,7 @@ package com.datatypes;
 
 public class DataUbicacion {
 	
+	private String Estado = "Ok";
 	private String Longitud;
 	private String Latitud;
 	
@@ -27,6 +28,14 @@ public class DataUbicacion {
 	
 	public void setLatitud(String latitud) {
 		Latitud = latitud;
+	}
+
+	public String getEstado() {
+		return Estado;
+	}
+
+	public void setEstado(String estado) {
+		Estado = estado;
 	}
 
 	

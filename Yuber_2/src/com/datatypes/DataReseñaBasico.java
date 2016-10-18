@@ -2,6 +2,7 @@ package com.datatypes;
 
 public class DataReseñaBasico {
 	
+	private String Estado = "Ok";
 	private int ReseñaId;
 	private String ReseñaComentario;
 	private int ReseñaPuntaje;
@@ -37,6 +38,14 @@ public class DataReseñaBasico {
 
 	public void setReseñaPuntaje(int reseñaPuntaje) {
 		ReseñaPuntaje = reseñaPuntaje;
+	}
+
+	public String getEstado() {
+		return Estado;
+	}
+
+	public void setEstado(String estado) {
+		Estado = estado;
 	}
 
 }

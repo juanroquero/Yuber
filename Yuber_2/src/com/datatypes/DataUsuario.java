@@ -3,6 +3,7 @@ package com.datatypes;
 
 public class DataUsuario {
 	
+	private String Estado = "Ok";
 	private String UsuarioCorreo;
 	private String UsuarioNombre;
 	private String UsuarioApellido;
@@ -90,6 +91,14 @@ public class DataUsuario {
 	
 	public void setUsuarioTelefono(String usuarioTelefono) {
 		UsuarioTelefono = usuarioTelefono;
+	}
+
+	public String getEstado() {
+		return Estado;
+	}
+
+	public void setEstado(String estado) {
+		Estado = estado;
 	}
 
 }
