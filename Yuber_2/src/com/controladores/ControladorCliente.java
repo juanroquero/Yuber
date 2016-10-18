@@ -15,10 +15,12 @@ import com.entities.Proveedor;
 import com.entities.Reseña;
 import com.entities.Servicio;
 import com.entities.Usuario;
+import com.utils.ControlErrores;
 public class ControladorCliente {
 
 	EntityManagerFactory emf = Persistence.createEntityManagerFactory("Yuber_2");
 	EntityManager em = emf.createEntityManager();
+	ControlErrores Error = new ControlErrores();
 	
 	public ControladorCliente() {
 	}
