@@ -17,6 +17,7 @@ import javax.persistence.Persistence;
 import javax.persistence.Query;
 
 import com.datatypes.*;
+import com.entities.Cliente;
 import com.entities.InstanciaServicio;
 import com.entities.Proveedor;
 import com.entities.Reseña;
@@ -82,12 +83,20 @@ public class ControladorProveedor {
 		em.close();
 	}
 	
-	public void RegistrarProveedor(DataProveedor Proveedor){	
-		Proveedor user = new Proveedor(Proveedor);
+	public void RegistrarProveedor(DataProveedor Proveedor){
+		Proveedor user = new Proveedor();
+		user.setUsuarioNombre(Proveedor.getUsuarioNombre());
+		user.setUsuarioApellido(Proveedor.getUsuarioApellido());
+		user.setUsuarioCiudad(Proveedor.getUsuarioCiudad());
+		user.setUsuarioContraseña(Proveedor.getUsuarioContraseña());
+		user.setUsuarioCorreo(Proveedor.getUsuarioCorreo());
+		user.setUsuarioDireccion(Proveedor.getUsuarioDireccion());		
+		user.setUsuarioPromedioPuntaje(0);
+		user.setUsuarioTelefono(Proveedor.getUsuarioTelefono());	
 		em.getTransaction().begin();
 		em.persist(user);
 		em.getTransaction().commit();
-		em.close();
+		em.close(); 
 	}
 	
 	public void Login(String ProveedorEmail, String Password){		

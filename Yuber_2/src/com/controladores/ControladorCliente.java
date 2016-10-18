@@ -39,12 +39,12 @@ public class ControladorCliente {
 		em.close();
 	}
 	
-	public List<DataUsuario> ObtenerClientes(){	
-		List<DataUsuario> ListaDataCliente = new ArrayList<DataUsuario>();
-		List<Usuario> ListaCliente = em.createQuery(
-				"SELECT u FROM Cliente u", Usuario.class).getResultList();
-		for (Usuario Usuario : ListaCliente){ 
-			DataUsuario dc = Usuario.getDataUsuario();
+	public List<DataCliente> ObtenerClientes(){	
+		List<DataCliente> ListaDataCliente = new ArrayList<DataCliente>();
+		List<Cliente> ListaCliente = em.createQuery(
+				"SELECT u FROM Cliente u", Cliente.class).getResultList();
+		for (Cliente Cliente : ListaCliente){ 
+			DataCliente dc = Cliente.getDataCliente();
 			ListaDataCliente.add(dc);
 		}
 		return ListaDataCliente;

@@ -20,27 +20,26 @@ public class ControladorServicios {
 	public List<DataServicio> ObtenerServicios(String TipoDeVertical){
 		List<DataServicio> ListaDataServicios = new ArrayList<DataServicio>();		
 		Vertical Vertical = em.find(Vertical.class, TipoDeVertical);
-		for(Servicio Servicio : Vertical.getServicios())
-		{
+		for(Servicio Servicio : Vertical.getServicios()){
 			ListaDataServicios.add(Servicio.getDataServicio());
-		}
-		
-		return ListaDataServicios;
-		
+		}		
+		return ListaDataServicios;		
 	}
 	
 	public boolean CrearServicio(DataServicio Servicio){
 		try{
 			Vertical Vertical = em.find(Vertical.class, Servicio.getVertical().getVerticalTipo());			
-			Servicio NuevoServicio = new Servicio(Servicio.getServicioId(), Servicio.getServicioNombre(), Servicio.getServicioPrecioHora(), Servicio.getServicioPrecioKM(), Servicio.getServicioTarifaBase(), null, Vertical, null);
-			em.getTransaction().begin();;
-			em.persist(NuevoServicio);
-			em.getTransaction().commit();				
-			return true;
+			if(Vertical != null){	
+				Servicio NuevoServicio = new Servicio(Servicio.getServicioId(), Servicio.getServicioNombre(), Servicio.getServicioPrecioHora(), Servicio.getServicioPrecioKM(), Servicio.getServicioTarifaBase(), null, Vertical, null);
+				em.getTransaction().begin();;
+				em.persist(NuevoServicio);
+				em.getTransaction().commit();				
+				return true;
 			}
-			catch(Exception e){
-				return false;
-			}
+			return false;
+		}catch(Exception e){
+			return false;
+		}
 	}
 	
 	public boolean EliminarServicio(int ServicioId){
@@ -55,19 +54,18 @@ public class ControladorServicios {
 		}		
 	}
 	
-	public boolean ModificarServicio(DataServicio Servicio){		
+	public boolean ModificarServicio(DataServicioBasico Servicio){		
 		try{
-		Servicio NuevoServicio = this.em.find(Servicio.class, Servicio.getServicioId());
-		NuevoServicio.setServicioNombre(Servicio.getServicioNombre());
-		NuevoServicio.setServicioPrecioHora(Servicio.getServicioPrecioHora());
-		NuevoServicio.setServicioPrecioKM(Servicio.getServicioPrecioKM());
-		NuevoServicio.setServicioTarifaBase(Servicio.getServicioTarifaBase());
-		em.getTransaction().begin();;
-		em.persist(NuevoServicio);
-		em.getTransaction().commit();				
-		return true;
-		}
-		catch(Exception e){
+			Servicio NuevoServicio = this.em.find(Servicio.class, Servicio.getServicioId());
+			NuevoServicio.setServicioNombre(Servicio.getServicioNombre());
+			NuevoServicio.setServicioPrecioHora(Servicio.getServicioPrecioHora());
+			NuevoServicio.setServicioPrecioKM(Servicio.getServicioPrecioKM());
+			NuevoServicio.setServicioTarifaBase(Servicio.getServicioTarifaBase());
+			em.getTransaction().begin();;
+			em.persist(NuevoServicio);
+			em.getTransaction().commit();				
+			return true;
+		}catch(Exception e){
 			return false;
 		}
 		
@@ -80,4 +78,5 @@ public class ControladorServicios {
 			return new DataServicio();
 		}	
 	}
+	
 }

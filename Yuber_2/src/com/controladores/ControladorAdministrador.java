@@ -25,7 +25,7 @@ public class ControladorAdministrador {
 	public List<DataCliente> ObtenerClientesActivos(){	
 		List<DataCliente> ListaDataClientes = new ArrayList<DataCliente>();
 		List<Cliente> ListaClientes = em.createQuery(
-				"SELECT c FROM Cliente c", Cliente.class).getResultList();
+		"SELECT c FROM Cliente c", Cliente.class).getResultList();
 		for (Cliente Cliente : ListaClientes){ 
 			DataCliente DataCliente = Cliente.getDataCliente();
 			ListaDataClientes.add(DataCliente);
@@ -33,11 +33,10 @@ public class ControladorAdministrador {
 		return ListaDataClientes;
 	}
 	
-	public List<DataProveedor> ObtenerProveedoresActivos(){	
-		
+	public List<DataProveedor> ObtenerProveedoresActivos(){
 		List<DataProveedor> ListaDataProveedors = new ArrayList<DataProveedor>();
 		List<Proveedor> ListaProveedores = em.createQuery(
-				"SELECT p FROM Proveedor p", Proveedor.class).getResultList();
+		"SELECT p FROM Proveedor p", Proveedor.class).getResultList();
 		for (Proveedor Proveedor : ListaProveedores){ 
 			DataProveedor DataProveedor = Proveedor.getDataProveedor();
 			ListaDataProveedors.add(DataProveedor);
@@ -47,69 +46,71 @@ public class ControladorAdministrador {
 	
 	public boolean CrearAdministrador(DataAdministrador Administrador){
 		try{
-		List<DataVerticalBasico> ListaDataVerticales = Administrador.getVerticales();
-		List <Vertical> ListaVerticales = new ArrayList<Vertical>();
-		
-		if(ListaDataVerticales != null)
-		{
-			for(DataVerticalBasico DataVertical : ListaDataVerticales)
-			{
-				Vertical Vertical = this.em.find(Vertical.class, DataVertical.getVerticalTipo());
-				if (Vertical != null)
-				{
-					ListaVerticales.add(Vertical);
-				}		
-				else
-				{
-					return false;
-				}
-			}	
-		}			
-		Administrador Admin = new Administrador(Administrador.getAdministradorCorreo(), Administrador.getAdministradorContraseña(), Administrador.getAdministradorNombre(), ListaVerticales);
-		em.getTransaction().begin();;
-		em.persist(Admin);
-		em.getTransaction().commit();		
-		
-		return true;
-		}
-		catch(Exception e){
+			List<DataVerticalBasico> ListaDataVerticales = Administrador.getVerticales();
+			List <Vertical> ListaVerticales = new ArrayList<Vertical>();		
+			if(ListaDataVerticales != null){
+				for(DataVerticalBasico DataVertical : ListaDataVerticales){
+					Vertical Vertical = this.em.find(Vertical.class, DataVertical.getVerticalTipo());
+					if (Vertical != null){
+						ListaVerticales.add(Vertical);
+					}else{
+						return false;
+					}
+				}	
+			}			
+			Administrador Admin = new Administrador(Administrador.getAdministradorCorreo(), Administrador.getAdministradorContraseña(), Administrador.getAdministradorNombre(), ListaVerticales);
+			em.getTransaction().begin();;
+			em.persist(Admin);
+			em.getTransaction().commit();	
+			return true;
+		}catch(Exception e){
 			return false;
 		}
 	}
 	
 	public void EliminarAdministrador(String AdministradorEmail){
-		try{
-			Administrador Admin = this.em.find(Administrador.class, AdministradorEmail);
-			this.em.getTransaction().begin();
-			this.em.remove(Admin);
-			this.em.getTransaction().commit();
-		}catch(Exception e){
-		}	
+		em.createQuery("SELECT p FROM Proveedor p", Proveedor.class);
+		 int deletedVerticalseDeAdmin = em.createQuery("DELETE FROM Country").executeUpdate();
+		
+		Administrador Admin = this.em.find(Administrador.class, AdministradorEmail);
+		this.em.getTransaction().begin();
+		this.em.remove(Admin);
+		this.em.getTransaction().commit();
 	}
 	
-	public void ModificarAdministrador(DataAdministrador Administrador){
+	public boolean ModificarAdministrador(DataAdministrador Administrador){
 		Administrador Admin = this.em.find(Administrador.class, Administrador.getAdministradorCorreo());
-		
-		List<DataVerticalBasico> ListaDataVerticales = Administrador.getVerticales();
-		List <Vertical> ListaVerticales = new ArrayList<Vertical>();
-		
-		if(ListaDataVerticales != null)
-		{
-			for(DataVerticalBasico DataVertical : ListaDataVerticales)
-			{
-				Vertical Vertical = this.em.find(Vertical.class, DataVertical.getVerticalTipo());
-				if (Vertical != null)
-					ListaVerticales.add(Vertical);
-				
+		if(Admin != null){
+			List<DataVerticalBasico> ListaDataVerticales = Administrador.getVerticales();					
+			if(ListaDataVerticales != null){
+				List <Vertical> ListaVerticales = new ArrayList<Vertical>();
+				for(DataVerticalBasico DataVertical : ListaDataVerticales){
+					Vertical Vertical = this.em.find(Vertical.class, DataVertical.getVerticalTipo());
+					if (Vertical != null){
+						ListaVerticales.add(Vertical);							
+						List<Administrador> la = Vertical.getAdministradores();						
+						boolean esta = false;
+						for( Administrador administrador : la){
+							if(administrador.getAdministradorCorreo().equals(Admin.getAdministradorCorreo())){
+								esta = true;
+							}						
+						}					
+						if(! esta){
+							la.add(Admin);						
+							Vertical.setAdministradores(la);
+						}
+					}	
+				}	
+				Admin.setVerticales(ListaVerticales);				
 			}	
-			Admin.setVerticales(ListaVerticales);
-		}	
-		Admin.setAdministradorContraseña(Administrador.getAdministradorContraseña());
-		Admin.setAdministradorNombre(Administrador.getAdministradorNombre());		
-		em.getTransaction().begin();;
-		em.persist(Admin);
-		em.getTransaction().commit();
-		
+			Admin.setAdministradorContraseña(Administrador.getAdministradorContraseña());
+			Admin.setAdministradorNombre(Administrador.getAdministradorNombre());		
+			em.getTransaction().begin();;
+			em.persist(Admin);
+			em.getTransaction().commit();
+			return true;
+		}
+		return false;
 	}
 	
 	public DataAdministrador ObtenerAdministrador(String AdministradorEmail){
@@ -142,7 +143,6 @@ public class ControladorAdministrador {
 	
 	public void CrearVertical(DataVertical Vertical){
 		Vertical NuevaVertical = new Vertical(Vertical.getVerticalTipo(), Vertical.getVerticalNombre(), null, null);
-	
 		em.getTransaction().begin();;
 		em.persist(NuevaVertical);
 		em.getTransaction().commit();

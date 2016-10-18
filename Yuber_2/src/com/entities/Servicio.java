@@ -21,6 +21,7 @@ public class Servicio implements Serializable {
 	private float ServicioPrecioHora;
 	private float ServicioPrecioKM;
 	private float ServicioTarifaBase;
+	private int Borrado;
 	@OneToMany(mappedBy="Servicio", cascade=CascadeType.PERSIST)
 	private List<InstanciaServicio> InstanciasServicio;
 	@ManyToOne(cascade=CascadeType.PERSIST)
@@ -32,8 +33,8 @@ public class Servicio implements Serializable {
 	}
 	
 	public Servicio(int servicioId, String servicioNombre, float servicioPrecioHora, float servicioPrecioKM,
-			float servicioTarifaBase, List<InstanciaServicio> instanciasServicio, com.entities.Vertical vertical,
-			List<Proveedor> proveedores) {
+		float servicioTarifaBase, List<InstanciaServicio> instanciasServicio, com.entities.Vertical vertical,
+		List<Proveedor> proveedores) {
 		super();
 		ServicioId = servicioId;
 		ServicioNombre = servicioNombre;
@@ -43,6 +44,7 @@ public class Servicio implements Serializable {
 		InstanciasServicio = instanciasServicio;
 		Vertical = vertical;
 		Proveedores = proveedores;
+		Borrado = 0;
 	}
 	
 	public DataServicio getDataServicio(){
@@ -64,6 +66,7 @@ public class Servicio implements Serializable {
 								this.getServicioPrecioHora(),
 								this.getServicioPrecioKM(),
 								this.getServicioTarifaBase(),
+								this.Borrado,
 								ListaInstanciasServicio,
 								this.Vertical.getDataVerticalBasico(),
 								ListaProveedores
@@ -76,7 +79,8 @@ public class Servicio implements Serializable {
 								this.getServicioNombre(),
 								this.getServicioPrecioHora(),
 								this.getServicioPrecioKM(),
-								this.getServicioTarifaBase()
+								this.getServicioTarifaBase(),
+								this.Borrado
 							   );
 	}
 	public int getServicioId() {

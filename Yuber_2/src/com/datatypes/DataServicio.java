@@ -9,6 +9,7 @@ public class DataServicio {
 	private float ServicioPrecioHora;
 	private float ServicioPrecioKM;
 	private float ServicioTarifaBase;
+	private int Borrado;
 	private List<DataInstanciaServicioBasico> InstanciasServicio;
 	private DataVerticalBasico Vertical;
 	private List<DataProveedorBasico> Proveedores;
@@ -17,13 +18,14 @@ public class DataServicio {
 	}
 
 	public DataServicio(int servicioId, String servicioNombre, float servicioPrecioHora, float servicioPrecioKM,
-		float servicioTarifaBase, List<DataInstanciaServicioBasico> instanciasServicio, DataVerticalBasico vertical,
+		float servicioTarifaBase,int Borrado, List<DataInstanciaServicioBasico> instanciasServicio, DataVerticalBasico vertical,
 		List<DataProveedorBasico> proveedores) {
 		ServicioId = servicioId;
 		ServicioNombre = servicioNombre;
 		ServicioPrecioHora = servicioPrecioHora;
 		ServicioPrecioKM = servicioPrecioKM;
 		ServicioTarifaBase = servicioTarifaBase;
+		this.Borrado = Borrado;
 		InstanciasServicio = instanciasServicio;
 		Vertical = vertical;
 		Proveedores = proveedores;
@@ -91,6 +93,14 @@ public class DataServicio {
 
 	public void setProveedores(List<DataProveedorBasico> proveedores) {
 		Proveedores = proveedores;
+	}
+
+	public int getBorrado() {
+		return Borrado;
+	}
+
+	public void setBorrado(int borrado) {
+		Borrado = borrado;
 	}
 
 }

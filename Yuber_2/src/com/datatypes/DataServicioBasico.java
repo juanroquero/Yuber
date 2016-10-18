@@ -8,17 +8,19 @@ public class DataServicioBasico {
 	private float ServicioPrecioHora;
 	private float ServicioPrecioKM;
 	private float ServicioTarifaBase;
+	private int Borrado;
 	
 	public DataServicioBasico() {
 	}
 
 	public DataServicioBasico(int servicioId, String servicioNombre, float servicioPrecioHora, float servicioPrecioKM,
-		float servicioTarifaBase) {
+		float servicioTarifaBase, int borrado) {
 		ServicioId = servicioId;
 		ServicioNombre = servicioNombre;
 		ServicioPrecioHora = servicioPrecioHora;
 		ServicioPrecioKM = servicioPrecioKM;
 		ServicioTarifaBase = servicioTarifaBase;
+		setBorrado(borrado);
 	}
 	
 	public int getServicioId() {
@@ -59,6 +61,14 @@ public class DataServicioBasico {
 
 	public void setServicioTarifaBase(float servicioTarifaBase) {
 		ServicioTarifaBase = servicioTarifaBase;
+	}
+
+	public int getBorrado() {
+		return Borrado;
+	}
+
+	public void setBorrado(int borrado) {
+		Borrado = borrado;
 	}
 
 }
