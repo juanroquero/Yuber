@@ -1,4 +1,4 @@
-import java.util.List;
+/*import java.util.List;
 <<<<<<< HEAD
 =======
 import java.util.Scanner;
@@ -62,7 +62,7 @@ public class main {
 		//CAdmin.CrearVertical(NuevaDataVertical);
 		//DataServicio NuevoServicio = new DataServicio(0, "Taxi", 300, 15, 30, null , NuevaDataVertical , null);
 		//CServicios.CrearServicio(NuevoServicio);
-		
+		/*
 		List<DataServicio> Servicios = CServicios.ObtenerServicios("Transporte");
 		for(DataServicio DS : Servicios)
 		{
@@ -92,4 +92,4 @@ public class main {
 	
 	
 	
-}
+}*/
