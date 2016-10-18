@@ -1,6 +1,8 @@
 package com.entities;
 
 import java.io.Serializable;
+import java.util.Date;
+
 import javax.persistence.*;
 import com.datatypes.*;
 
@@ -13,8 +15,11 @@ public class InstanciaServicio implements Serializable {
 	private int InstanciaServicioId;
 	private float InstanciaServicioCosto;
 	private float InstanciaServicioDistancia;
-	private String InstanciaServicioFecha;
+	private Date InstanciaServicioFechaInicio;
+	private Date InstanciaServicioFechaFin;
 	private float InstanciaServicioTiempo;
+	private String Latitud;
+	private String Longitud;
 	@OneToOne(cascade=CascadeType.PERSIST)
 	private Reseña ReseñaCliente;
 	@OneToOne(cascade=CascadeType.PERSIST)
@@ -30,11 +35,14 @@ public class InstanciaServicio implements Serializable {
 	}
 	
 	public DataInstanciaServicio getDataInstanciaServicio() {
-		return new DataInstanciaServicio(	this.getInstanciaServicioId(),
-											this.getInstanciaServicioCosto(),
-											this.getInstanciaServicioDistancia(),
-											this.getInstanciaServicioFecha(),
-											this.getInstanciaServicioTiempo(),
+		DataUbicacion DataUbicacion = new DataUbicacion(Longitud,Latitud);
+		return new DataInstanciaServicio(	this.InstanciaServicioId,
+											this.InstanciaServicioCosto,
+											this.InstanciaServicioDistancia,
+											this.InstanciaServicioFechaInicio,
+											this.InstanciaServicioFechaFin,
+											this.InstanciaServicioTiempo,
+											DataUbicacion,
 											this.ReseñaCliente.getDataReseñaBasico(),
 											this.ReseñaProveedor.getDataReseñaBasico(),
 											this.Servicio.getDataServicioBasico(),
@@ -44,11 +52,14 @@ public class InstanciaServicio implements Serializable {
 	}
 	
 	public DataInstanciaServicioBasico getDataInstanciaServicioBasico() {
+		DataUbicacion DataUbicacion = new DataUbicacion(Longitud,Latitud);
 		return new DataInstanciaServicioBasico(	this.getInstanciaServicioId(),
 											this.getInstanciaServicioCosto(),
 											this.getInstanciaServicioDistancia(),
-											this.getInstanciaServicioFecha(),
-											this.getInstanciaServicioTiempo()
+											this.InstanciaServicioFechaInicio,
+											this.InstanciaServicioFechaFin,
+											this.getInstanciaServicioTiempo(),
+											DataUbicacion
 										);
 	}
 
@@ -74,14 +85,6 @@ public class InstanciaServicio implements Serializable {
 
 	public void setInstanciaServicioDistancia(float InstanciaServicioDistancia) {
 		this.InstanciaServicioDistancia = InstanciaServicioDistancia;
-	}
-
-	public String getInstanciaServicioFecha() {
-		return this.InstanciaServicioFecha;
-	}
-
-	public void setInstanciaServicioFecha(String InstanciaServicioFecha) {
-		this.InstanciaServicioFecha = InstanciaServicioFecha;
 	}
 
 	public float getInstanciaServicioTiempo() {
@@ -130,6 +133,22 @@ public class InstanciaServicio implements Serializable {
 
 	public void setProveedor(Proveedor proveedor) {
 		Proveedor = proveedor;
+	}
+
+	public Date getInstanciaServicioFechaInicio() {
+		return InstanciaServicioFechaInicio;
+	}
+
+	public void setInstanciaServicioFechaInicio(Date instanciaServicioFechaInicio) {
+		InstanciaServicioFechaInicio = instanciaServicioFechaInicio;
+	}
+
+	public Date getInstanciaServicioFechaFin() {
+		return InstanciaServicioFechaFin;
+	}
+
+	public void setInstanciaServicioFechaFin(Date instanciaServicioFechaFin) {
+		InstanciaServicioFechaFin = instanciaServicioFechaFin;
 	}	
 	
 }

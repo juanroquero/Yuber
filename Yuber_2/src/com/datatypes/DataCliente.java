@@ -12,13 +12,13 @@ public class DataCliente {
 	private String UsuarioContraseña;
 	private String UsuarioDireccion;	
 	private float UsuarioPromedioPuntaje;
-	private int UsuarioTelefono;
+	private String UsuarioTelefono;
 	private List<DataInstanciaServicioBasico> InstanciasServicio;
 	
 	public DataCliente() {
 	}
 	
-	public DataCliente(String UsuarioCorreo, String UsuarioNombre, String UsuarioApellido, String UsuarioCiudad, String UsuarioContraseña, String UsuarioDireccion, float UsuarioPromedioPuntaje, int UsuarioTelefono, List<DataInstanciaServicioBasico> InstanciasServicio) {
+	public DataCliente(String UsuarioCorreo, String UsuarioNombre, String UsuarioApellido, String UsuarioCiudad, String UsuarioContraseña, String UsuarioDireccion, float UsuarioPromedioPuntaje, String UsuarioTelefono, List<DataInstanciaServicioBasico> InstanciasServicio) {
 		this.UsuarioCorreo 			= UsuarioCorreo;
 		this.UsuarioNombre 			= UsuarioNombre;
 		this.UsuarioApellido		= UsuarioApellido;
@@ -86,11 +86,11 @@ public class DataCliente {
 		UsuarioPromedioPuntaje = usuarioPromedioPuntaje;
 	}
 	
-	public int getUsuarioTelefono() {
+	public String getUsuarioTelefono() {
 		return UsuarioTelefono;
 	}
 	
-	public void setUsuarioTelefono(int usuarioTelefono) {
+	public void setUsuarioTelefono(String usuarioTelefono) {
 		UsuarioTelefono = usuarioTelefono;
 	}
 	

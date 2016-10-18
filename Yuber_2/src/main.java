@@ -1,17 +1,31 @@
 import java.util.List;
+<<<<<<< HEAD
+=======
+import java.util.Scanner;
+>>>>>>> refs/heads/Martin
 
 import com.controladores.ControladorAdministrador;
+import com.controladores.ControladorCliente;
 import com.controladores.ControladorProveedor;
 import com.controladores.ControladorServicios;
+<<<<<<< HEAD
 import com.datatypes.DataAdministrador;
 import com.datatypes.DataCliente;
 import com.datatypes.DataProveedor;
 import com.datatypes.DataServicio;
 import com.datatypes.DataVertical;
+=======
+import com.datatypes.DataCliente;
+import com.datatypes.DataServicio;
+import com.datatypes.DataUbicacion;
+import com.entities.Cliente;
+import com.entities.Usuario;
+>>>>>>> refs/heads/Martin
 
 public class main {
-
+	
 	public static void main(String[] Args){
+<<<<<<< HEAD
 		ControladorAdministrador CAdmin = new ControladorAdministrador();
 		ControladorProveedor cp = new ControladorProveedor();
 		ControladorServicios CServicios = new ControladorServicios();
@@ -54,8 +68,28 @@ public class main {
 		{
 			System.out.println(DS.getServicioId() + " " + DS.getServicioNombre());
 		}
+=======
+		ControladorCliente cc = new ControladorCliente();
+		ControladorServicios cs = new ControladorServicios();
+		
+		DataCliente u = new DataCliente();	
+		u.setUsuarioNombre("Martin");
+		u.setUsuarioApellido("Perez");
+		u.setUsuarioCiudad("San Jose");
+		u.setUsuarioContraseña("pass");
+		u.setUsuarioCorreo("user1@hotmail.com");
+		u.setUsuarioDireccion("18 de julio 321");		
+		u.setUsuarioPromedioPuntaje(0);
+		u.setUsuarioTelefono("098826898");
+		
+		
+		cc.ObtenerClientes();
+		
+>>>>>>> refs/heads/Martin
 		
 		
 	}
+	
+	
 	
 }

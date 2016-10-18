@@ -18,7 +18,7 @@ public class Usuario implements Serializable {
 	private String UsuarioContraseña;
 	private String UsuarioDireccion;	
 	private float UsuarioPromedioPuntaje;
-	private int UsuarioTelefono;	
+	private String UsuarioTelefono;	
 	
 	public Usuario() {
 	}
@@ -103,11 +103,11 @@ public class Usuario implements Serializable {
 		this.UsuarioPromedioPuntaje = UsuarioPromedioPuntaje;
 	}
 
-	public int getUsuarioTelefono() {
+	public String getUsuarioTelefono() {
 		return this.UsuarioTelefono;
 	}
 
-	public void setUsuarioTelefono(int UsuarioTelefono) {
+	public void setUsuarioTelefono(String UsuarioTelefono) {
 		this.UsuarioTelefono = UsuarioTelefono;
 	}
 

@@ -1,22 +1,29 @@
 package com.datatypes;
 
+import java.util.Date;
+
 public class DataInstanciaServicioBasico {
 	
 	private int InstanciaServicioId;
 	private float InstanciaServicioCosto;
 	private float InstanciaServicioDistancia;
-	private String InstanciaServicioFecha;
+	private Date InstanciaServicioFechaInicio;
+	private Date InstanciaServicioFechaFin;
 	private float InstanciaServicioTiempo;
+	private DataUbicacion Ubicacion;
 
 	public DataInstanciaServicioBasico() {
 	}
-
-	public DataInstanciaServicioBasico(int InstanciaServicioId, float InstanciaServicioCosto, float InstanciaServicioDistancia, String InstanciaServicioFecha, float InstanciaServicioTiempo) {
+	
+	
+	public DataInstanciaServicioBasico(int InstanciaServicioId, float InstanciaServicioCosto, float InstanciaServicioDistancia, Date InstanciaServicioFechaInicio, Date InstanciaServicioFechaFin, float InstanciaServicioTiempo, DataUbicacion Ubicacion) {
 		this.InstanciaServicioId 		= InstanciaServicioId;
 		this.InstanciaServicioCosto 	= InstanciaServicioCosto;
 		this.InstanciaServicioDistancia	= InstanciaServicioDistancia;
-		this.InstanciaServicioFecha		= InstanciaServicioFecha;
+		this.InstanciaServicioFechaInicio	= InstanciaServicioFechaInicio;
+		this.InstanciaServicioFechaFin		= InstanciaServicioFechaFin;
 		this.InstanciaServicioTiempo	= InstanciaServicioTiempo;
+		this.Ubicacion	= Ubicacion;
 	}
 	
 	public int getInstanciaServicioId() {
@@ -41,14 +48,6 @@ public class DataInstanciaServicioBasico {
 
 	public void setInstanciaServicioDistancia(float instanciaServicioDistancia) {
 		InstanciaServicioDistancia = instanciaServicioDistancia;
-	}
-
-	public String getInstanciaServicioFecha() {
-		return InstanciaServicioFecha;
-	}
-
-	public void setInstanciaServicioFecha(String instanciaServicioFecha) {
-		InstanciaServicioFecha = instanciaServicioFecha;
 	}
 
 	public float getInstanciaServicioTiempo() {

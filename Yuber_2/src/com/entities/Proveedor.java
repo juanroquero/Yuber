@@ -25,6 +25,18 @@ public class Proveedor extends Usuario implements Serializable {
 		super();
 	}
    
+	public Proveedor (DataProveedor Proveedor){
+		Usuario user = new Proveedor();	
+		user.setUsuarioNombre(Proveedor.getUsuarioNombre());
+		user.setUsuarioApellido(Proveedor.getUsuarioApellido());
+		user.setUsuarioCiudad(Proveedor.getUsuarioCiudad());
+		user.setUsuarioContraseña(Proveedor.getUsuarioContraseña());
+		user.setUsuarioCorreo(Proveedor.getUsuarioCorreo());
+		user.setUsuarioDireccion(Proveedor.getUsuarioDireccion());		
+		user.setUsuarioPromedioPuntaje(0);
+		user.setUsuarioTelefono(Proveedor.getUsuarioTelefono());		
+	}
+	
 	public DataProveedor getDataProveedor(){		
 		List<DataInstanciaServicioBasico> ListaInstancias = new ArrayList<DataInstanciaServicioBasico>();
 		for(InstanciaServicio Instancia : this.getInstanciasServicio())
