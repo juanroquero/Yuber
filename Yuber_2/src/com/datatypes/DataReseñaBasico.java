@@ -1,18 +1,16 @@
 package com.datatypes;
 
-public class DataReseña {
+public class DataReseñaBasico {
 	
 	private int ReseñaId;
-	private DataInstanciaServicioBasico InstanciaServicio;
 	private String ReseñaComentario;
 	private int ReseñaPuntaje;
 
-	public DataReseña() {
+	public DataReseñaBasico() {
 	}
 	
-	public DataReseña(int reseñaId, DataInstanciaServicioBasico instanciaServicio, String reseñaComentario, int reseñaPuntaje) {
+	public DataReseñaBasico(int reseñaId, String reseñaComentario, int reseñaPuntaje) {
 		ReseñaId = reseñaId;
-		InstanciaServicio = instanciaServicio;
 		ReseñaComentario = reseñaComentario;
 		ReseñaPuntaje = reseñaPuntaje;
 	}
@@ -23,14 +21,6 @@ public class DataReseña {
 
 	public void setReseñaId(int reseñaId) {
 		ReseñaId = reseñaId;
-	}
-
-	public DataInstanciaServicioBasico getInstanciaServicio() {
-		return InstanciaServicio;
-	}
-
-	public void setInstanciaServicio(DataInstanciaServicioBasico instanciaServicio) {
-		InstanciaServicio = instanciaServicio;
 	}
 
 	public String getReseñaComentario() {

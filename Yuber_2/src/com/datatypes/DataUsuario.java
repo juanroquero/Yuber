@@ -1,6 +1,5 @@
 package com.datatypes;
 
-import java.util.List;
 
 public class DataUsuario {
 	
@@ -12,7 +11,6 @@ public class DataUsuario {
 	private String UsuarioDireccion;	
 	private float UsuarioPromedioPuntaje;
 	private int UsuarioTelefono;
-	private List<DataInstanciaServicio> InstanciasServicio;
 	
 	public DataUsuario() {
 	}
@@ -93,13 +91,5 @@ public class DataUsuario {
 	public void setUsuarioTelefono(int usuarioTelefono) {
 		UsuarioTelefono = usuarioTelefono;
 	}
-	
-	public List<DataInstanciaServicio> getInstanciasServicio() {
-		return InstanciasServicio;
-	}
-	
-	public void setInstanciasServicio(List<DataInstanciaServicio> instanciasServicio) {
-		InstanciasServicio = instanciasServicio;
-	}	
 
 }

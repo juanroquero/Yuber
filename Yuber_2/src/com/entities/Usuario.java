@@ -2,11 +2,9 @@ package com.entities;
 
 import java.io.Serializable;
 import javax.persistence.*;
-import com.datatypes.DataInstanciaServicio;
 import com.datatypes.DataUsuario;
+import com.datatypes.DataUsuarioBasico;
 
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 public class Usuario implements Serializable {
@@ -36,8 +34,20 @@ public class Usuario implements Serializable {
 								this.UsuarioTelefono
 							   );
 	}
+
+	public DataUsuarioBasico getDataUsuarioBasico(){
+		return new DataUsuarioBasico(	this.UsuarioCorreo, 
+								this.UsuarioNombre, 
+								this.UsuarioApellido, 
+								this.UsuarioCiudad, 
+								this.UsuarioContraseña, 
+								this.UsuarioDireccion, 
+								this.UsuarioPromedioPuntaje, 
+								this.UsuarioTelefono
+							   );
+	}
 	
-	public String getUsuarioCorreo() {
+	String getUsuarioCorreo() {
 		return this.UsuarioCorreo;
 	}
 

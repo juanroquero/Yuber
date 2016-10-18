@@ -35,11 +35,20 @@ public class InstanciaServicio implements Serializable {
 											this.getInstanciaServicioDistancia(),
 											this.getInstanciaServicioFecha(),
 											this.getInstanciaServicioTiempo(),
-											this.ReseñaCliente.getDataReseña(),
-											this.ReseñaProveedor.getDataReseña(),
-											this.Servicio.getDataServicio(),
-											this.Cliente.getDataCliente(),
-											this.Proveedor.getDataProveedor()
+											this.ReseñaCliente.getDataReseñaBasico(),
+											this.ReseñaProveedor.getDataReseñaBasico(),
+											this.Servicio.getDataServicioBasico(),
+											this.Cliente.getDataClienteBasico(),
+											this.Proveedor.getDataProveedorBasico()
+										);
+	}
+	
+	public DataInstanciaServicioBasico getDataInstanciaServicioBasico() {
+		return new DataInstanciaServicioBasico(	this.getInstanciaServicioId(),
+											this.getInstanciaServicioCosto(),
+											this.getInstanciaServicioDistancia(),
+											this.getInstanciaServicioFecha(),
+											this.getInstanciaServicioTiempo()
 										);
 	}
 
