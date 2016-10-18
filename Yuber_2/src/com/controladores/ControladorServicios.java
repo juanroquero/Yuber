@@ -3,12 +3,13 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 
 import com.datatypes.*;
 public class ControladorServicios {
 
-	EntityManagerFactory emf;
-	EntityManager em;
+	EntityManagerFactory emf = Persistence.createEntityManagerFactory("Yuber_2");
+	EntityManager em = emf.createEntityManager();
 	
 	public ControladorServicios() {
 	}

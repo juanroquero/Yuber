@@ -11,14 +11,13 @@ public class DataUsuario {
 	private String UsuarioContraseña;
 	private String UsuarioDireccion;	
 	private float UsuarioPromedioPuntaje;
-	private int UsuarioTelefono;
-	private List<DataInstanciaServicio> InstanciasServicio;
+	private String UsuarioTelefono;
 	
 	public DataUsuario() {
 	}
 	
 	public DataUsuario(String usuarioCorreo, String usuarioNombre, String usuarioApellido, String usuarioCiudad,
-		String usuarioContraseña, String usuarioDireccion, float usuarioPromedioPuntaje, int usuarioTelefono) {
+		String usuarioContraseña, String usuarioDireccion, float usuarioPromedioPuntaje, String usuarioTelefono) {
 		super();
 		UsuarioCorreo = usuarioCorreo;
 		UsuarioNombre = usuarioNombre;
@@ -86,20 +85,12 @@ public class DataUsuario {
 		UsuarioPromedioPuntaje = usuarioPromedioPuntaje;
 	}
 	
-	public int getUsuarioTelefono() {
+	public String getUsuarioTelefono() {
 		return UsuarioTelefono;
 	}
 	
-	public void setUsuarioTelefono(int usuarioTelefono) {
+	public void setUsuarioTelefono(String usuarioTelefono) {
 		UsuarioTelefono = usuarioTelefono;
 	}
-	
-	public List<DataInstanciaServicio> getInstanciasServicio() {
-		return InstanciasServicio;
-	}
-	
-	public void setInstanciasServicio(List<DataInstanciaServicio> instanciasServicio) {
-		InstanciasServicio = instanciasServicio;
-	}	
 
 }

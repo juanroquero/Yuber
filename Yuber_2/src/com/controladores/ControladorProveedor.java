@@ -1,5 +1,6 @@
 package com.controladores;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Properties;
 import java.util.Random;
@@ -13,18 +14,20 @@ import javax.mail.internet.MimeMessage;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.Query;
 
 import com.datatypes.*;
 import com.entities.Cliente;
 import com.entities.InstanciaServicio;
 import com.entities.Proveedor;
+import com.entities.Reseña;
 import com.entities.Servicio;
 import com.entities.Usuario;
 
 public class ControladorProveedor {
 
-	EntityManagerFactory emf;
-	EntityManager em;
+	EntityManagerFactory emf = Persistence.createEntityManagerFactory("Yuber_2");
+	EntityManager em = emf.createEntityManager();
 	
 	public ControladorProveedor() {
 	}
@@ -34,7 +37,7 @@ public class ControladorProveedor {
 		//	System.out.println(dti.getInstanciaServicioFecha());
 	//	}
 		
-
+/*
 		InstanciaServicio is = new InstanciaServicio();
 		is.setInstanciaServicioCosto(2);
 		is.setInstanciaServicioDistancia(152);
@@ -44,7 +47,7 @@ public class ControladorProveedor {
 		is.setReseñaProveedor(null);
 		is.setProveedor(null);
 		is.setCliente(null);
-		
+		*/
 		/*
 		Usuario u = new Proveedor();	
 		u.setUsuarioNombre("Martin");
@@ -65,7 +68,7 @@ public class ControladorProveedor {
 		s.setServicioPrecioKM(30);
 		s.setServicioTarifaBase(50);
 		s.setVertical(null);
-		*/
+		*//*
 		
 		emf = Persistence.createEntityManagerFactory("Yuber_2");
 		em = emf.createEntityManager();	
@@ -73,19 +76,48 @@ public class ControladorProveedor {
 		em.persist(is);
 		em.getTransaction().commit();
 		
-		
+		*/
 	}
 	
-	public void PuntuarProveedor(String ProveedorCorreo, int Puntaje){		
+	public void PuntuarProveedor(int Puntaje, String Comentario, String InstanciaServicioId){	
+		em.getTransaction().begin();		
+		InstanciaServicio InstanciaServicio = (InstanciaServicio)em.find(InstanciaServicio.class, InstanciaServicioId);
+		em.flush();
+		//Creo reseña para el cliente para dicha InstanciaServicio
+		Reseña Reseña = new Reseña();
+		Reseña.setInstanciaServicio(InstanciaServicio);
+		Reseña.setReseñaComentario(Comentario);
+		Reseña.setReseñaPuntaje(Puntaje);		
+		InstanciaServicio.setReseñaProveedor(Reseña);
+		//Guardo el BD
+		em.persist(InstanciaServicio);
+		em.getTransaction().commit();
+		em.close();
 	}
 	
-	public void RegistrarProveedor(DataProveedor Cliente){		
+	public void RegistrarProveedor(DataProveedor Proveedor){	
+		Proveedor user = new Proveedor(Proveedor);
+		em.getTransaction().begin();
+		em.persist(user);
+		em.getTransaction().commit();
+		em.close();
 	}
 	
 	public void Login(String ProveedorEmail, String Password){		
 	}
 	
-	public void AceptarServicio(int InstanciaServicioId){		
+	public void AceptarServicio(int InstanciaServicioId, String Correo){
+		//Busco la InstanciaServicio 
+		em.getTransaction().begin();
+		InstanciaServicio is = (InstanciaServicio)em.find(InstanciaServicio.class, InstanciaServicioId);
+		em.flush();
+		//Busco al Proveedor
+		Proveedor prov = (Proveedor)em.find(Proveedor.class, Correo);
+		em.flush();
+		//Asocio al provedor dicha InstanciaServicio
+		prov.addInstanciaServicio(is);
+		em.getTransaction().commit();
+		em.close();
 	}
 	
 	public void RechazarServicio(int InstanciaServicioId){		
@@ -107,12 +139,9 @@ public class ControladorProveedor {
 	
 	public List<DataInstanciaServicio> ObtenerHistorial(String ProveedorCorreo){		
 		List<DataInstanciaServicio> ListaDataInstanciaServicio = new ArrayList<DataInstanciaServicio>();
-		//NO SE HACE LA QUERY
-		//NO SE HACE LA QUERY
-		//NO SE HACE LA QUERY
-		//NO SE HACE LA QUERY
 		List<InstanciaServicio> ListaInstanciaServicio = em.createQuery(
-				"select is from InstanciaServicio is", InstanciaServicio.class).getResultList();
+				"SELECT is FROM InstanciaServicio is WHERE is.PROVEEDOR_USUARIOCORREO = :parametro", InstanciaServicio.class).
+				setParameter("parametro", '%' + ProveedorCorreo + '%').getResultList();
 		for (InstanciaServicio InstanciaServicio : ListaInstanciaServicio){ 
 			DataInstanciaServicio DataInstanciaServicio = InstanciaServicio.getDataInstanciaServicio();
 			ListaDataInstanciaServicio.add(DataInstanciaServicio);
@@ -124,38 +153,35 @@ public class ControladorProveedor {
 		
 	}
 	
-	public void IniciarServicio(int InstanciaServicioId, String Correo){		
+	public void IniciarServicio(int InstanciaServicioId){
+		java.util.Date fecha = new Date();
 		//Busco la InstanciaServicio 
-		emf = Persistence.createEntityManagerFactory("Yuber_2");
-		em = emf.createEntityManager();
 		em.getTransaction().begin();
 		InstanciaServicio is = (InstanciaServicio)em.find(InstanciaServicio.class, InstanciaServicioId);
 		em.flush();
-		//Busco al Proveedor
-		Proveedor prov = (Proveedor)em.find(Proveedor.class, Correo);
-		em.flush();
-		//Asocio al provedor dicha InstanciaServicio
-		prov.addInstanciaServicio(is);
+		//Asocio la fecha a la InstanciaServicio
+		is.setInstanciaServicioFechaInicio(fecha);
 		em.getTransaction().commit();
 		em.close();		
 	}
 	
-	public void FinServicio(int InstanciaServicioId, float InstanciaServicioCosto, float InstanciaServicioDistancia, float InstanciaServicioTiempo){	
-		//Busco la InstanciaServicio 
-		emf = Persistence.createEntityManagerFactory("Yuber_2");
-		em = emf.createEntityManager();
-		em.getTransaction().begin();
-		InstanciaServicio is = (InstanciaServicio)em.find(InstanciaServicio.class, InstanciaServicioId);
+	public void FinServicio(String InstanciaServicioId, float Costo, float Distancia, float Tiempo){
+		java.util.Date fecha = new Date();
+		em.getTransaction().begin();		
+		InstanciaServicio InstanciaServicio = (InstanciaServicio)em.find(InstanciaServicio.class, InstanciaServicioId);
 		em.flush();
-		//Actualizo los campos
-		is.setInstanciaServicioCosto(InstanciaServicioCosto);
-		is.setInstanciaServicioDistancia(InstanciaServicioDistancia);
-		is.setInstanciaServicioTiempo(InstanciaServicioTiempo);
+		InstanciaServicio.setInstanciaServicioCosto(Costo);
+		InstanciaServicio.setInstanciaServicioDistancia(Distancia);
+		InstanciaServicio.setInstanciaServicioTiempo(Tiempo);
+		InstanciaServicio.setInstanciaServicioFechaFin(fecha);
+		//Guardo el BD
+		em.persist(InstanciaServicio);
 		em.getTransaction().commit();
 		em.close();
 	}
 	
-	public boolean OlvidePass(String ClienteCorreo){	
+	public boolean OlvidePass(String ClienteCorreo){
+		//************************ESTA INCOMPETO************************//
 		//Retorna true si lo manda false en otro caso		
 	    String para = ClienteCorreo;
 	    String de = "martinperez_15@hotmail.com";
@@ -176,8 +202,6 @@ public class ControladorProveedor {
 			mensaje.setContent(msgInicio + pass + msgFin,"text/html");
 			Transport.send(mensaje);
 			//Cambio en la BD la pass			
-			emf = Persistence.createEntityManagerFactory("Yuber_2");
-			em = emf.createEntityManager();
 			em.getTransaction().begin();
 			Proveedor prov = (Proveedor)em.find(Proveedor.class, ClienteCorreo);
 			em.flush();

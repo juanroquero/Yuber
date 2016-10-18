@@ -8,8 +8,8 @@ import java.util.List;
 
 public class ControladorAdministrador {
 
-	EntityManagerFactory emf;
-	EntityManager em;
+	EntityManagerFactory emf = Persistence.createEntityManagerFactory("Yuber_2");
+	EntityManager em = emf.createEntityManager();
 	
 	public ControladorAdministrador() {
 	}
