@@ -82,8 +82,8 @@ public class main {
 			//CREAR VERTICAL
 			/*
 			DataVertical dv = new DataVertical("Transporte","Vertical transporte", null, null);
-			ca.CrearVertical(dv);
-			*/
+			ca.CrearVertical(dv);*/
+			
 			
 		//*********************** CONTROLADOR SERVICIO ***********************//
 			//CREAR SERVICIO
@@ -105,7 +105,17 @@ public class main {
 			cs.ModificarServicio(Servicio);
 			*/
 		
-		System.out.println(CE.Ok);
+			//Asignar Vertical admin2 - Transporte			
+	 	    /* 
+		    String Result = ca.AsignarVertical("FullAccess", "admin2@hotmail.com", "Transporte");
+		    System.out.println(Result);
+		    */
+		
+			//Revocar Vertical admin2 - Transporte			
+	 	   /* 
+		    String Result = ca.DenegarVertical("FullAccess", "admin2@hotmail.com", "Transporte");
+		    System.out.println(Result);
+		    */
 	}
 	
 	

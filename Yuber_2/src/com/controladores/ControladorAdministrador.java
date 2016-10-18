@@ -141,7 +141,6 @@ public class ControladorAdministrador {
 	}
 	
 	public String AsignarVertical(String AdminCreadorId, String AdminId, String TipoVertical){
-		//Retorna true si no hubo errores y se pudo asignar satisfactoriamente la vertical
 		boolean Habilitado = false;
 		if(AdminCreadorId == "FullAccess")
 		{
@@ -185,8 +184,46 @@ public class ControladorAdministrador {
 				
 	}
 	
-	public void DenegarVertical(int AdminId, String TipoVertical){
-		
+	public String DenegarVertical(String AdminCreadorId, String AdminId, String TipoVertical){
+		boolean Habilitado = false;
+		if(AdminCreadorId == "FullAccess")
+		{
+			Habilitado = true;
+		}
+		else
+		{
+			DataAdministrador AdminCreador = this.em.find(Administrador.class, AdminCreadorId).getDataAdministrador();
+			for (DataVerticalBasico DataVertical : AdminCreador.getVerticales())
+			{
+				if (DataVertical.getVerticalTipo() == TipoVertical)
+				{
+					Habilitado = true;
+				}
+			}
+		}
+		if (Habilitado)
+		{
+			Administrador Admin = this.em.find(Administrador.class, AdminId);
+			Vertical Vertical = this.em.find(Vertical.class, TipoVertical);
+			
+			List<Administrador> ListaAdmin = Vertical.getAdministradores();
+			ListaAdmin.remove(Admin);
+			Vertical.setAdministradores(ListaAdmin);
+			
+			List<Vertical> ListaVerticales = Admin.getVerticales();
+			ListaVerticales.remove(Vertical);
+			Admin.setVerticales(ListaVerticales);
+			
+			em.getTransaction().begin();
+			em.persist(Admin);
+			em.getTransaction().commit();
+			
+			return Error.Ok;
+		}
+		else
+		{
+			return Error.A51;
+		}
 	}
 	
 	
