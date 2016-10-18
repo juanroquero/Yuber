@@ -4,7 +4,8 @@ import java.io.Serializable;
 import javax.persistence.*;
 
 import com.datatypes.DataAdministrador;
-import com.datatypes.DataVertical;
+import com.datatypes.DataAdministradorBasico;
+import com.datatypes.DataVerticalBasico;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,16 +34,24 @@ public class Administrador implements Serializable {
 	}
 	
 	public DataAdministrador getDataAdministrador(){
-		List<DataVertical> ListaVerticales = new ArrayList<DataVertical>();
+		List<DataVerticalBasico> ListaVerticales = new ArrayList<DataVerticalBasico>();
 		for(Vertical Instancia : this.Verticales)
 		{
-			DataVertical DataVertical = Instancia.getDataVertical();
+			DataVerticalBasico DataVertical = Instancia.getDataVerticalBasico();
 			ListaVerticales.add(DataVertical);
 		}		
 		return new DataAdministrador(	this.getAdministradorCorreo(),
 										this.getAdministradorNombre(),
 										this.getAdministradorContraseña(),										
 										ListaVerticales
+				    				);
+		
+	}
+	
+	public DataAdministradorBasico getDataAdministradorBasico(){		
+		return new DataAdministradorBasico(	this.getAdministradorCorreo(),
+										this.getAdministradorNombre(),
+										this.getAdministradorContraseña()
 				    				);
 		
 	}

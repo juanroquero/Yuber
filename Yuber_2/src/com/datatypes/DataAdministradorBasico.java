@@ -1,23 +1,19 @@
 package com.datatypes;
 
-import java.util.ArrayList;
-import java.util.List;
 
-public class DataAdministrador {
+public class DataAdministradorBasico {
 
 	private String AdministradorCorreo;
 	private String AdministradorContraseña;
 	private String AdministradorNombre;
-	private List<DataVerticalBasico> Verticales = new ArrayList<DataVerticalBasico>();
 		
-	public DataAdministrador() {
+	public DataAdministradorBasico() {
 	}
 	
-	public DataAdministrador(String AdministradorCorreo, String AdministradorNombre, String AdministradorContraseña, List<DataVerticalBasico> DataVertical){
+	public DataAdministradorBasico(String AdministradorCorreo, String AdministradorNombre, String AdministradorContraseña){
 		this.AdministradorCorreo 	= AdministradorCorreo;
 		this.AdministradorNombre 	= AdministradorNombre;
 		this.AdministradorContraseña= AdministradorContraseña;
-		this.Verticales = DataVertical;
 	}
 	
 	public String getAdministradorCorreo() {
@@ -43,13 +39,4 @@ public class DataAdministrador {
 	public void setAdministradorNombre(String administradorNombre) {
 		AdministradorNombre = administradorNombre;
 	}
-
-	public List<DataVerticalBasico> getVerticales() {
-		return Verticales;
-	}
-
-	public void setVerticales(List<DataVerticalBasico> Verticales) {
-		this.Verticales = Verticales;
-	}
-
 }

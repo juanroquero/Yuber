@@ -15,10 +15,8 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
 import com.datatypes.*;
-import com.entities.Cliente;
 import com.entities.InstanciaServicio;
 import com.entities.Proveedor;
-import com.entities.Servicio;
 import com.entities.Usuario;
 
 public class ControladorProveedor {

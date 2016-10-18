@@ -5,9 +5,7 @@ import javax.persistence.Persistence;
 import com.datatypes.*;
 import com.entities.Administrador;
 import com.entities.Cliente;
-import com.entities.InstanciaServicio;
 import com.entities.Proveedor;
-import com.entities.Usuario;
 import com.entities.Vertical;
 
 import java.util.ArrayList;
@@ -49,12 +47,12 @@ public class ControladorAdministrador {
 	
 	public boolean CrearAdministrador(DataAdministrador Administrador){
 		try{
-		List<DataVertical> ListaDataVerticales = Administrador.getVerticales();
+		List<DataVerticalBasico> ListaDataVerticales = Administrador.getVerticales();
 		List <Vertical> ListaVerticales = new ArrayList<Vertical>();
 		
 		if(ListaDataVerticales != null)
 		{
-			for(DataVertical DataVertical : ListaDataVerticales)
+			for(DataVerticalBasico DataVertical : ListaDataVerticales)
 			{
 				Vertical Vertical = this.em.find(Vertical.class, DataVertical.getVerticalTipo());
 				if (Vertical != null)
@@ -92,12 +90,12 @@ public class ControladorAdministrador {
 	public void ModificarAdministrador(DataAdministrador Administrador){
 		Administrador Admin = this.em.find(Administrador.class, Administrador.getAdministradorCorreo());
 		
-		List<DataVertical> ListaDataVerticales = Administrador.getVerticales();
+		List<DataVerticalBasico> ListaDataVerticales = Administrador.getVerticales();
 		List <Vertical> ListaVerticales = new ArrayList<Vertical>();
 		
 		if(ListaDataVerticales != null)
 		{
-			for(DataVertical DataVertical : ListaDataVerticales)
+			for(DataVerticalBasico DataVertical : ListaDataVerticales)
 			{
 				Vertical Vertical = this.em.find(Vertical.class, DataVertical.getVerticalTipo());
 				if (Vertical != null)
@@ -142,7 +140,12 @@ public class ControladorAdministrador {
 		return null;		
 	}	
 	
-	public void CrearVertical(String tipo){
+	public void CrearVertical(DataVertical Vertical){
+		Vertical NuevaVertical = new Vertical(Vertical.getVerticalTipo(), Vertical.getVerticalNombre(), null, null);
+	
+		em.getTransaction().begin();;
+		em.persist(NuevaVertical);
+		em.getTransaction().commit();
 	}
 	
 }

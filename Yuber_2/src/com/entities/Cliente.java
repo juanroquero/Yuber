@@ -1,7 +1,8 @@
 package com.entities;
 
 import com.datatypes.DataCliente;
-import com.datatypes.DataInstanciaServicio;
+import com.datatypes.DataClienteBasico;
+import com.datatypes.DataInstanciaServicioBasico;
 import com.entities.Usuario;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -23,10 +24,10 @@ public class Cliente extends Usuario implements Serializable {
 	}
 		
     public DataCliente getDataCliente(){		
-		List<DataInstanciaServicio> ListaInstancias = new ArrayList<DataInstanciaServicio>();
+		List<DataInstanciaServicioBasico> ListaInstancias = new ArrayList<DataInstanciaServicioBasico>();
 		for(InstanciaServicio Instancia : InstanciasServicio)
 		{
-			DataInstanciaServicio DataInstanciaServicio = Instancia.getDataInstanciaServicio();
+			DataInstanciaServicioBasico DataInstanciaServicio = Instancia.getDataInstanciaServicioBasico();
 			ListaInstancias.add(DataInstanciaServicio);
 		}		
 		return new DataCliente(	this.getUsuarioCorreo(), 
@@ -38,6 +39,18 @@ public class Cliente extends Usuario implements Serializable {
 								this.getUsuarioPromedioPuntaje(), 
 								this.getUsuarioTelefono(), 
 								ListaInstancias
+							   );
+	}
+    
+    public DataClienteBasico getDataClienteBasico(){		
+		return new DataClienteBasico(	this.getUsuarioCorreo(), 
+								this.getUsuarioNombre(), 
+								this.getUsuarioApellido(), 
+								this.getUsuarioCiudad(), 
+								this.getUsuarioContraseña(), 
+								this.getUsuarioDireccion(), 
+								this.getUsuarioPromedioPuntaje(), 
+								this.getUsuarioTelefono()
 							   );
 	}
     

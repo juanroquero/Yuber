@@ -1,9 +1,7 @@
 package com.datatypes;
 
-import java.util.List;
 
-
-public class DataCliente {
+public class DataUsuarioBasico {
 	
 	private String UsuarioCorreo;
 	private String UsuarioNombre;
@@ -13,21 +11,21 @@ public class DataCliente {
 	private String UsuarioDireccion;	
 	private float UsuarioPromedioPuntaje;
 	private int UsuarioTelefono;
-	private List<DataInstanciaServicioBasico> InstanciasServicio;
 	
-	public DataCliente() {
+	public DataUsuarioBasico() {
 	}
 	
-	public DataCliente(String UsuarioCorreo, String UsuarioNombre, String UsuarioApellido, String UsuarioCiudad, String UsuarioContraseña, String UsuarioDireccion, float UsuarioPromedioPuntaje, int UsuarioTelefono, List<DataInstanciaServicioBasico> InstanciasServicio) {
-		this.UsuarioCorreo 			= UsuarioCorreo;
-		this.UsuarioNombre 			= UsuarioNombre;
-		this.UsuarioApellido		= UsuarioApellido;
-		this.UsuarioCiudad			= UsuarioCiudad;
-		this.UsuarioContraseña		= UsuarioContraseña;
-		this.UsuarioDireccion		= UsuarioDireccion;
-		this.UsuarioTelefono		= UsuarioTelefono;
-		this.UsuarioPromedioPuntaje	= UsuarioPromedioPuntaje;
-		this.InstanciasServicio		= InstanciasServicio;	
+	public DataUsuarioBasico(String usuarioCorreo, String usuarioNombre, String usuarioApellido, String usuarioCiudad,
+		String usuarioContraseña, String usuarioDireccion, float usuarioPromedioPuntaje, int usuarioTelefono) {
+		super();
+		UsuarioCorreo = usuarioCorreo;
+		UsuarioNombre = usuarioNombre;
+		UsuarioApellido = usuarioApellido;
+		UsuarioCiudad = usuarioCiudad;
+		UsuarioContraseña = usuarioContraseña;
+		UsuarioDireccion = usuarioDireccion;
+		UsuarioPromedioPuntaje = usuarioPromedioPuntaje;
+		UsuarioTelefono = usuarioTelefono;
 	}
 	
 	public String getUsuarioCorreo() {
@@ -94,12 +92,4 @@ public class DataCliente {
 		UsuarioTelefono = usuarioTelefono;
 	}
 	
-	public List<DataInstanciaServicioBasico> getInstanciasServicio() {
-		return InstanciasServicio;
-	}
-	
-	public void setInstanciasServicio(List<DataInstanciaServicioBasico> instanciasServicio) {
-		InstanciasServicio = instanciasServicio;
-	}	
-
 }

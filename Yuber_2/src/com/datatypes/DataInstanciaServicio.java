@@ -7,16 +7,16 @@ public class DataInstanciaServicio {
 	private float InstanciaServicioDistancia;
 	private String InstanciaServicioFecha;
 	private float InstanciaServicioTiempo;
-	private DataReseña ReseñaCliente;
-	private DataReseña ReseñaProveedor;	
-	private DataServicio Servicio;
-	private DataCliente Cliente;
-	private DataProveedor Proveedor;
+	private DataReseñaBasico ReseñaCliente;
+	private DataReseñaBasico ReseñaProveedor;	
+	private DataServicioBasico Servicio;
+	private DataClienteBasico Cliente;
+	private DataProveedorBasico Proveedor;
 
 	public DataInstanciaServicio() {
 	}
 
-	public DataInstanciaServicio(int InstanciaServicioId, float InstanciaServicioCosto, float InstanciaServicioDistancia, String InstanciaServicioFecha, float InstanciaServicioTiempo, DataReseña ReseñaCliente, DataReseña ReseñaProveedor, DataServicio Servicio, DataCliente Cliente, DataProveedor Proveedor) {
+	public DataInstanciaServicio(int InstanciaServicioId, float InstanciaServicioCosto, float InstanciaServicioDistancia, String InstanciaServicioFecha, float InstanciaServicioTiempo, DataReseñaBasico ReseñaCliente, DataReseñaBasico ReseñaProveedor, DataServicioBasico Servicio, DataClienteBasico Cliente, DataProveedorBasico Proveedor) {
 		this.InstanciaServicioId 		= InstanciaServicioId;
 		this.InstanciaServicioCosto 	= InstanciaServicioCosto;
 		this.InstanciaServicioDistancia	= InstanciaServicioDistancia;
@@ -69,43 +69,43 @@ public class DataInstanciaServicio {
 		InstanciaServicioTiempo = instanciaServicioTiempo;
 	}
 
-	public DataReseña getReseñaCliente() {
+	public DataReseñaBasico getReseñaCliente() {
 		return ReseñaCliente;
 	}
 
-	public void setReseñaCliente(DataReseña reseñaCliente) {
+	public void setReseñaCliente(DataReseñaBasico reseñaCliente) {
 		ReseñaCliente = reseñaCliente;
 	}
 
-	public DataReseña getReseñaProveedor() {
+	public DataReseñaBasico getReseñaProveedor() {
 		return ReseñaProveedor;
 	}
 
-	public void setReseñaProveedor(DataReseña reseñaProveedor) {
+	public void setReseñaProveedor(DataReseñaBasico reseñaProveedor) {
 		ReseñaProveedor = reseñaProveedor;
 	}
 
-	public DataServicio getServicio() {
+	public DataServicioBasico getServicio() {
 		return Servicio;
 	}
 
-	public void setServicio(DataServicio servicio) {
+	public void setServicio(DataServicioBasico servicio) {
 		Servicio = servicio;
 	}
 
-	public DataCliente getCliente() {
+	public DataClienteBasico getCliente() {
 		return Cliente;
 	}
 
-	public void setCliente(DataCliente cliente) {
+	public void setCliente(DataClienteBasico cliente) {
 		Cliente = cliente;
 	}
 
-	public DataProveedor getProveedor() {
+	public DataProveedorBasico getProveedor() {
 		return Proveedor;
 	}
 
-	public void setProveedor(DataProveedor proveedor) {
+	public void setProveedor(DataProveedorBasico proveedor) {
 		Proveedor = proveedor;
 	}
 

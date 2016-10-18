@@ -1,9 +1,7 @@
 package com.datatypes;
 
-import java.util.List;
 
-
-public class DataCliente {
+public class DataProveedorBasico {
 	
 	private String UsuarioCorreo;
 	private String UsuarioNombre;
@@ -13,12 +11,11 @@ public class DataCliente {
 	private String UsuarioDireccion;	
 	private float UsuarioPromedioPuntaje;
 	private int UsuarioTelefono;
-	private List<DataInstanciaServicioBasico> InstanciasServicio;
 	
-	public DataCliente() {
+	public DataProveedorBasico() {
 	}
 	
-	public DataCliente(String UsuarioCorreo, String UsuarioNombre, String UsuarioApellido, String UsuarioCiudad, String UsuarioContraseña, String UsuarioDireccion, float UsuarioPromedioPuntaje, int UsuarioTelefono, List<DataInstanciaServicioBasico> InstanciasServicio) {
+	public DataProveedorBasico(String UsuarioCorreo, String UsuarioNombre, String UsuarioApellido, String UsuarioCiudad, String UsuarioContraseña, String UsuarioDireccion, float UsuarioPromedioPuntaje, int UsuarioTelefono) {
 		this.UsuarioCorreo 			= UsuarioCorreo;
 		this.UsuarioNombre 			= UsuarioNombre;
 		this.UsuarioApellido		= UsuarioApellido;
@@ -27,7 +24,6 @@ public class DataCliente {
 		this.UsuarioDireccion		= UsuarioDireccion;
 		this.UsuarioTelefono		= UsuarioTelefono;
 		this.UsuarioPromedioPuntaje	= UsuarioPromedioPuntaje;
-		this.InstanciasServicio		= InstanciasServicio;	
 	}
 	
 	public String getUsuarioCorreo() {
@@ -93,13 +89,5 @@ public class DataCliente {
 	public void setUsuarioTelefono(int usuarioTelefono) {
 		UsuarioTelefono = usuarioTelefono;
 	}
-	
-	public List<DataInstanciaServicioBasico> getInstanciasServicio() {
-		return InstanciasServicio;
-	}
-	
-	public void setInstanciasServicio(List<DataInstanciaServicioBasico> instanciasServicio) {
-		InstanciasServicio = instanciasServicio;
-	}	
 
 }

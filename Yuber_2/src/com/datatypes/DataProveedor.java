@@ -12,13 +12,13 @@ public class DataProveedor {
 	private String UsuarioDireccion;	
 	private float UsuarioPromedioPuntaje;
 	private int UsuarioTelefono;
-	private List<DataInstanciaServicio> InstanciasServicio;
-	private DataServicio Servicio;
+	private List<DataInstanciaServicioBasico> InstanciasServicio;
+	private DataServicioBasico Servicio;
 	
 	public DataProveedor() {
 	}
 	
-	public DataProveedor(String UsuarioCorreo, String UsuarioNombre, String UsuarioApellido, String UsuarioCiudad, String UsuarioContraseña, String UsuarioDireccion, float UsuarioPromedioPuntaje, int UsuarioTelefono, List<DataInstanciaServicio> InstanciasServicio, DataServicio Servicio) {
+	public DataProveedor(String UsuarioCorreo, String UsuarioNombre, String UsuarioApellido, String UsuarioCiudad, String UsuarioContraseña, String UsuarioDireccion, float UsuarioPromedioPuntaje, int UsuarioTelefono, List<DataInstanciaServicioBasico> InstanciasServicio, DataServicioBasico Servicio) {
 		this.UsuarioCorreo 			= UsuarioCorreo;
 		this.UsuarioNombre 			= UsuarioNombre;
 		this.UsuarioApellido		= UsuarioApellido;
@@ -95,19 +95,19 @@ public class DataProveedor {
 		UsuarioTelefono = usuarioTelefono;
 	}
 	
-	public List<DataInstanciaServicio> getInstanciasServicio() {
+	public List<DataInstanciaServicioBasico> getInstanciasServicio() {
 		return InstanciasServicio;
 	}
 	
-	public void setInstanciasServicio(List<DataInstanciaServicio> instanciasServicio) {
+	public void setInstanciasServicio(List<DataInstanciaServicioBasico> instanciasServicio) {
 		InstanciasServicio = instanciasServicio;
 	}	
 	
-	public DataServicio getServicio() {
+	public DataServicioBasico getServicio() {
 		return Servicio;
 	}
 
-	public void setServicio(DataServicio servicio) {
+	public void setServicio(DataServicioBasico servicio) {
 		Servicio = servicio;
 	}
 

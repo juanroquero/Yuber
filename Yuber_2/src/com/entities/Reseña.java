@@ -4,6 +4,7 @@ import java.io.Serializable;
 import javax.persistence.*;
 
 import com.datatypes.DataReseña;
+import com.datatypes.DataReseñaBasico;
 
 @Entity
 public class Reseña implements Serializable {
@@ -23,7 +24,15 @@ public class Reseña implements Serializable {
 	public DataReseña getDataReseña(){
 		return new DataReseña(
 							this.ReseñaId,
-							this.InstanciaServicio.getDataInstanciaServicio(),
+							this.InstanciaServicio.getDataInstanciaServicioBasico(),
+							this.ReseñaComentario,
+							this.ReseñaPuntaje
+						 	);
+	}
+	
+	public DataReseñaBasico getDataReseñaBasico(){
+		return new DataReseñaBasico(
+							this.ReseñaId,
 							this.ReseñaComentario,
 							this.ReseñaPuntaje
 						 	);

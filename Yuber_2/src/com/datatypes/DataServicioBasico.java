@@ -1,32 +1,24 @@
 package com.datatypes;
 
-import java.util.List;
 
-public class DataServicio {
+public class DataServicioBasico {
 	
 	private int ServicioId;
 	private String ServicioNombre;
 	private float ServicioPrecioHora;
 	private float ServicioPrecioKM;
 	private float ServicioTarifaBase;
-	private List<DataInstanciaServicioBasico> InstanciasServicio;
-	private DataVerticalBasico Vertical;
-	private List<DataProveedorBasico> Proveedores;
 	
-	public DataServicio() {
+	public DataServicioBasico() {
 	}
 
-	public DataServicio(int servicioId, String servicioNombre, float servicioPrecioHora, float servicioPrecioKM,
-		float servicioTarifaBase, List<DataInstanciaServicioBasico> instanciasServicio, DataVerticalBasico vertical,
-		List<DataProveedorBasico> proveedores) {
+	public DataServicioBasico(int servicioId, String servicioNombre, float servicioPrecioHora, float servicioPrecioKM,
+		float servicioTarifaBase) {
 		ServicioId = servicioId;
 		ServicioNombre = servicioNombre;
 		ServicioPrecioHora = servicioPrecioHora;
 		ServicioPrecioKM = servicioPrecioKM;
 		ServicioTarifaBase = servicioTarifaBase;
-		InstanciasServicio = instanciasServicio;
-		Vertical = vertical;
-		Proveedores = proveedores;
 	}
 	
 	public int getServicioId() {
@@ -67,30 +59,6 @@ public class DataServicio {
 
 	public void setServicioTarifaBase(float servicioTarifaBase) {
 		ServicioTarifaBase = servicioTarifaBase;
-	}
-
-	public List<DataInstanciaServicioBasico> getInstanciasServicio() {
-		return InstanciasServicio;
-	}
-
-	public void setInstanciasServicio(List<DataInstanciaServicioBasico> instanciasServicio) {
-		InstanciasServicio = instanciasServicio;
-	}
-
-	public DataVerticalBasico getVertical() {
-		return Vertical;
-	}
-
-	public void setVertical(DataVerticalBasico vertical) {
-		Vertical = vertical;
-	}
-
-	public List<DataProveedorBasico> getProveedores() {
-		return Proveedores;
-	}
-
-	public void setProveedores(List<DataProveedorBasico> proveedores) {
-		Proveedores = proveedores;
 	}
 
 }

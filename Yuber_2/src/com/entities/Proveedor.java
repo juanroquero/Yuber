@@ -1,8 +1,9 @@
 package com.entities;
 
-import com.datatypes.DataInstanciaServicio;
+import com.datatypes.DataInstanciaServicioBasico;
 import com.datatypes.DataProveedor;
-import com.datatypes.DataServicio;
+import com.datatypes.DataProveedorBasico;
+import com.datatypes.DataServicioBasico;
 import com.entities.Usuario;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -25,17 +26,17 @@ public class Proveedor extends Usuario implements Serializable {
 	}
    
 	public DataProveedor getDataProveedor(){		
-		List<DataInstanciaServicio> ListaInstancias = new ArrayList<DataInstanciaServicio>();
+		List<DataInstanciaServicioBasico> ListaInstancias = new ArrayList<DataInstanciaServicioBasico>();
 		for(InstanciaServicio Instancia : this.getInstanciasServicio())
 		{
-			DataInstanciaServicio DataInstanciaServicio = Instancia.getDataInstanciaServicio();
+			DataInstanciaServicioBasico DataInstanciaServicio = Instancia.getDataInstanciaServicioBasico();
 			ListaInstancias.add(DataInstanciaServicio);
 		}	
-		DataServicio DataServicio;
+		DataServicioBasico DataServicio;
 		if (this.Servicio == null)
 			DataServicio = null;
 		else
-			DataServicio = this.Servicio.getDataServicio();
+			DataServicio = this.Servicio.getDataServicioBasico();
 		return new DataProveedor(
 								this.getUsuarioCorreo(), 
 								this.getUsuarioNombre(), 
@@ -47,6 +48,19 @@ public class Proveedor extends Usuario implements Serializable {
 								this.getUsuarioTelefono(), 
 								ListaInstancias,
 								DataServicio
+							   );
+	}
+	
+	public DataProveedorBasico getDataProveedorBasico(){		
+		return new DataProveedorBasico(
+								this.getUsuarioCorreo(), 
+								this.getUsuarioNombre(), 
+								this.getUsuarioApellido(), 
+								this.getUsuarioCiudad(), 
+								this.getUsuarioContraseña(), 
+								this.getUsuarioDireccion(), 
+								this.getUsuarioPromedioPuntaje(), 
+								this.getUsuarioTelefono()
 							   );
 	}
 	

@@ -3,9 +3,10 @@ package com.entities;
 import java.io.Serializable;
 import javax.persistence.*;
 
-import com.datatypes.DataAdministrador;
-import com.datatypes.DataServicio;
+import com.datatypes.DataAdministradorBasico;
+import com.datatypes.DataServicioBasico;
 import com.datatypes.DataVertical;
+import com.datatypes.DataVerticalBasico;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,16 +38,16 @@ public class Vertical implements Serializable {
 	}
 	
 	public DataVertical getDataVertical(){		
-		List<DataServicio> ListaServicios = new ArrayList<DataServicio>();
+		List<DataServicioBasico> ListaServicios = new ArrayList<DataServicioBasico>();
 		for(Servicio Servicio : this.Servicios)
 		{
-			DataServicio DataServicio = Servicio.getDataServicio();
+			DataServicioBasico DataServicio = Servicio.getDataServicioBasico();
 			ListaServicios.add(DataServicio);
 		}		
-		List<DataAdministrador> ListaAdministradores = new ArrayList<DataAdministrador>();
+		List<DataAdministradorBasico> ListaAdministradores = new ArrayList<DataAdministradorBasico>();
 		for(Administrador Administrador : this.Administradores)
 		{
-			DataAdministrador DataAdministrador = Administrador.getDataAdministrador();
+			DataAdministradorBasico DataAdministrador = Administrador.getDataAdministradorBasico();
 			ListaAdministradores.add(DataAdministrador);
 		}		
 		return new DataVertical(
@@ -54,6 +55,13 @@ public class Vertical implements Serializable {
 								this.VerticalNombre, 
 								ListaServicios, 
 								ListaAdministradores
+							   );
+	}
+	
+	public DataVerticalBasico getDataVerticalBasico(){		
+		return new DataVerticalBasico(
+								this.VerticalTipo, 
+								this.VerticalNombre
 							   );
 	}
 
