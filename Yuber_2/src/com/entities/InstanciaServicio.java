@@ -7,6 +7,10 @@ import javax.persistence.*;
 import com.datatypes.*;
 
 @Entity
+@NamedQueries({
+	@NamedQuery(query = "SELECT i AS cant FROM InstanciaServicio i ORDER BY cant DESC", name = "TopClientesPorCantServicios"),
+	@NamedQuery(query = "SELECT i FROM InstanciaServicio i WHERE i.InstanciaServicioFechaInicio >= :FechaInicio AND i.InstanciaServicioFechaInicio <= :FechaFin", name = "ObtenerGananciaMensual")
+})
 public class InstanciaServicio implements Serializable {
 	
 	private static final long serialVersionUID = 1L;

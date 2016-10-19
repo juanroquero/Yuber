@@ -12,7 +12,11 @@ import java.util.List;
 import javax.persistence.*;
 
 @Entity
-@Inheritance(strategy=InheritanceType.SINGLE_TABLE)
+@Inheritance(strategy=InheritanceType.SINGLE_TABLE)  
+@NamedQueries({
+	@NamedQuery(query = "SELECT p FROM Proveedor p INNER JOIN InstanciaServicio i ON (p.UsuarioCorreo = i.Proveedor.UsuarioCorreo) ORDER BY i.InstanciaServicioCosto DESC", name = "TopProveedoresPorGanancia"),
+	@NamedQuery(query = "SELECT p FROM Proveedor p INNER JOIN InstanciaServicio i ON (p.UsuarioCorreo = i.Proveedor.UsuarioCorreo) WHERE i.InstanciaServicioFechaFin >= :Fecha", name = "ObtenerProveedoresActivos")
+})
 public class Proveedor extends Usuario implements Serializable {
 	
 	private static final long serialVersionUID = 1L;

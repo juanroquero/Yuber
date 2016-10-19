@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 import com.controladores.ControladorAdministrador;
@@ -7,7 +8,9 @@ import com.controladores.ControladorProveedor;
 import com.controladores.ControladorServicios;
 import com.datatypes.DataAdministrador;
 import com.datatypes.DataCliente;
+import com.datatypes.DataClienteBasico;
 import com.datatypes.DataProveedor;
+import com.datatypes.DataProveedorBasico;
 import com.datatypes.DataServicio;
 import com.datatypes.DataServicioBasico;
 import com.datatypes.DataVertical;
@@ -29,9 +32,9 @@ public class main {
 		//*********************** CONTROLADOR CLIENTE ***********************//
 			//REGISTRO CLIENTE
 			/*
-			DataCliente Cliente = new DataCliente("user2@hotmail.com", "nombre2", "apellido2", "San Jose", "123", "18 de julio 123", 0, "094568452", null);  
+			DataCliente Cliente = new DataCliente("user1@hotmail.com", "nombre1", "apellido1", "San Jose", "123", "18 de julio 123", 0, "094568452", null);  
 			cc.RegistrarCliente(Cliente);
-			*/		
+				*/
 			//OBTENER CLIENTES
 			/*
 			List<DataCliente> lista = cc.ObtenerClientes();
@@ -39,15 +42,35 @@ public class main {
 				System.out.println(du.getUsuarioCorreo());
 			}
 			*/
+			
+			DataUbicacion DataUbicacion = new DataUbicacion("85258","150651");
+		//	cc.PedirServicio("user1@hotmail.com", 151, DataUbicacion);
+			
+		//	cp.AceptarServicio(351, "prov2@hotmail.com");
+			
+		//	cp.IniciarServicio(351);
 		
+		//	cp.FinServicio(351, 256, 12, 126);
 		//*********************** CONTROLADOR PROVEEDOR **********************//
 			//REGISTRO CLIENTE
 			/*
-			DataProveedor Proveedor = new DataProveedor("prov1@hotmail.com", "nombre1", "apellido1", "Montevideo", "123", "18 de julio 123", 0, "092569751", null, null);  
+			DataProveedor Proveedor = new DataProveedor("prov2@hotmail.com", "nombre2", "apellido2", "Montevideo", "123", "18 de julio 123", 0, "092569751", null, null);  
 			cp.RegistrarProveedor(Proveedor);
 			*/
-			
-			
+		/*
+			Date fecha = new Date();
+			System.out.println(ca.ObtenerGananciaMensual(fecha));
+	*/
+		/*
+			List<DataProveedorBasico> lista = ca.TopProveedoresPorGanancia(1);
+			for(DataProveedorBasico dpb : lista){
+				System.out.println(dpb.getUsuarioCorreo());
+			}*/
+
+	/*	List<DataClienteBasico> lista = ca.TopClientesPorCantServicios(1);
+		for(DataClienteBasico dpb : lista){
+			System.out.println(dpb.getUsuarioCorreo());
+		}*/
 	
 			//********************* CONTROLADOR ADMINISTRADOR ********************//
 			//REGISTRO ADMINISTRADOR
@@ -80,6 +103,20 @@ public class main {
 			DataVertical dv = new DataVertical("caca", "Vertical transporte", null, null);
 			ca.CrearVertical(dv);
 			*/
+			//OBTENER PROVEEDORES ACTIVOS
+			/*
+			List<DataProveedorBasico> lista = ca.ObtenerProveedoresActivos();
+			for(DataProveedorBasico dt : lista){
+				System.out.println(dt.getUsuarioNombre());
+			}
+			System.out.println("jojo");
+			List<DataClienteBasico> lista2 = ca.ObtenerClientesActivos();
+			for(DataClienteBasico dt : lista2){
+				System.out.println(dt.getUsuarioNombre());
+			}
+			*/
+			
+			
 			
 		//*********************** CONTROLADOR SERVICIO ***********************//
 			//CREAR SERVICIO
@@ -88,12 +125,12 @@ public class main {
 			System.out.println(cs.CrearServicio(Servicio, "caca"));
 			*/
 			//OBTENER SERVICIOS
-			
+			/*
 			List<DataServicio> lista = cs.ObtenerServicios("Transporte");
 			for(DataServicio dt : lista){
 				System.out.println(dt.getServicioNombre());
 			}
-			
+			*/
 		 	//MODIFICAR DATOS DE SERVICIO
 			/*
 			DataServicioBasico Servicio = new DataServicioBasico(101, "MecanicA", 100, 100, 100,1);

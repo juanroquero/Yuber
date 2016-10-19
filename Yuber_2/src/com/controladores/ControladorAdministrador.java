@@ -6,11 +6,15 @@ import javax.persistence.Query;
 import com.datatypes.*;
 import com.entities.Administrador;
 import com.entities.Cliente;
+import com.entities.InstanciaServicio;
 import com.entities.Proveedor;
+import com.entities.Servicio;
 import com.entities.Vertical;
 import com.utils.ControlErrores;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class ControladorAdministrador {
@@ -25,27 +29,42 @@ public class ControladorAdministrador {
 	public void Login(String AdministradorEmail, String Password){					
 	}
 	
-	public List<DataCliente> ObtenerClientesActivos(){
-		
-		List<DataCliente> ListaDataClientes = new ArrayList<DataCliente>();
-		List<Cliente> ListaClientes = em.createQuery(
-		"SELECT c FROM Cliente c", Cliente.class).getResultList();
-		for (Cliente Cliente : ListaClientes){ 
-			DataCliente DataCliente = Cliente.getDataCliente();
-			ListaDataClientes.add(DataCliente);
-		}
+	public List<DataClienteBasico> ObtenerClientesActivos(){
+		//Se considera clientes activos aquellos que tienen
+		//instancia_servicio con menos de 30 dias 
+		Date fechaHoy = new Date();
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(fechaHoy); 
+		calendar.add(Calendar.MONTH, -1);  
+		Date fecha = calendar.getTime();
+		 
+		List<DataClienteBasico> ListaDataClientes = new ArrayList<DataClienteBasico>();
+		Query query = em.createNamedQuery("ObtenerClientesActivos", Cliente.class);
+		query.setParameter("Fecha", fecha);
+		List<Cliente> ListaCliente = query.getResultList();		
+		for(Cliente Cliente : ListaCliente){
+			ListaDataClientes.add(Cliente.getDataClienteBasico());
+		}		
 		return ListaDataClientes;
 	}
 	
-	public List<DataProveedor> ObtenerProveedoresActivos(){
-		List<DataProveedor> ListaDataProveedors = new ArrayList<DataProveedor>();
-		List<Proveedor> ListaProveedores = em.createQuery(
-		"SELECT p FROM Proveedor p", Proveedor.class).getResultList();
-		for (Proveedor Proveedor : ListaProveedores){ 
-			DataProveedor DataProveedor = Proveedor.getDataProveedor();
-			ListaDataProveedors.add(DataProveedor);
-		}
-		return ListaDataProveedors;
+	public List<DataProveedorBasico> ObtenerProveedoresActivos(){
+		//Se considera provedores activos aquellos que tienen
+		//instancia_servicio con menos de 30 dias
+		Date fechaHoy = new Date();
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(fechaHoy); 
+		calendar.add(Calendar.MONTH, -1);  
+		Date fecha = calendar.getTime();
+		  
+		List<DataProveedorBasico> ListaDataProveedores = new ArrayList<DataProveedorBasico>();
+		Query query = em.createNamedQuery("ObtenerProveedoresActivos", Proveedor.class);
+		query.setParameter("Fecha", fecha);
+		List<Proveedor> ListaProveedor = query.getResultList();		
+		for(Proveedor Proveedor : ListaProveedor){
+			ListaDataProveedores.add(Proveedor.getDataProveedorBasico());
+		}		
+		return ListaDataProveedores;		
 	}
 	
 	public String CrearAdministrador(DataAdministradorBasico Administrador){
@@ -106,23 +125,58 @@ public class ControladorAdministrador {
 			return DAdmin;
 	}	
 	
-	public float ObtenerGananciaMensual(){
-		return 0;
+	public float ObtenerGananciaMensual(Date fecha){		  
+		//obtengo el primer dia del mes
+		Date fechaInicio = fecha;
+		fechaInicio.setDate(1);
+		//Calulo el ultimo dia del mes		
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(fechaInicio); 
+		calendar.add(Calendar.MONTH, + 1);  
+		calendar.add(Calendar.DATE, - 1);  
+		Date fechaFin = calendar.getTime();
+		//Hago la consulta		
+		Query query = em.createNamedQuery("ObtenerGananciaMensual", InstanciaServicio.class);
+		query.setParameter("FechaInicio", fechaInicio);
+		query.setParameter("FechaFin", fechaFin);		
+		List<InstanciaServicio> ListaInstanciaServicio = query.getResultList();
+		float ganancia = 0;
+		for(InstanciaServicio is : ListaInstanciaServicio){
+			ganancia += is.getInstanciaServicioCosto();
+		}		
+		return ganancia;
 	}
 	
-	public List<DataProveedor> TopProveedoresPorPuntajes(){
+	public List<DataProveedorBasico> TopProveedoresPorPuntajes(int Limit){
 		return null;
 	}
 	
-	public List<DataProveedor> TopProveedoresPorGanancia(){
-		return null;
+	public List<DataProveedorBasico> TopProveedoresPorGanancia(int Limit){
+		List<DataProveedorBasico> ListaDataProveedores = new ArrayList<DataProveedorBasico>();
+		Query query = em.createNamedQuery("TopProveedoresPorGanancia", Proveedor.class);
+		query.setMaxResults(Limit);	
+		List<Proveedor> ListaProveedor = query.getResultList();
+		for(Proveedor prov : ListaProveedor){
+			ListaDataProveedores.add(prov.getDataProveedorBasico());
+		}		
+		return ListaDataProveedores;
 	}
 	
-	public List<DataCliente> TopClientesPorCantServicios(){
-		return null;
+	public List<DataClienteBasico> TopClientesPorCantServicios(int Limit){
+		List<DataClienteBasico> ListaDataClientes = new ArrayList<DataClienteBasico>();
+		Query query = em.createNamedQuery("TopClientesPorCantServicios", InstanciaServicio.class);
+		query.setMaxResults(Limit);	
+		List<InstanciaServicio> ListaCliente = query.getResultList();
+		for(InstanciaServicio user : ListaCliente){
+			
+			
+			
+			
+		}		
+		return ListaDataClientes;
 	}
 	
-	public List<DataCliente> TopClientesPorPuntaje(){
+	public List<DataClienteBasico> TopClientesPorPuntaje(int Limit){
 		return null;		
 	}	
 	
@@ -269,6 +323,7 @@ public class ControladorAdministrador {
 			em.getTransaction().commit();
 			return Error.Ok;
 		}catch(Exception e){
+			em.getTransaction().rollback();
 			return Error.G1;
 		}
 	}

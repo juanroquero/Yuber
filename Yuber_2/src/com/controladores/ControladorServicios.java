@@ -22,36 +22,24 @@ public class ControladorServicios {
 	}
 	
 	public List<DataServicio> ObtenerServicios(String TipoDeVertical){ 
-		/*
 		List<DataServicio> ListaDataServicios = new ArrayList<DataServicio>();		
+		//Verifico que exista la vertical
 		Vertical vertical; 
 		try{
 			vertical = em.find(Vertical.class, TipoDeVertical);
 		}catch(Exception e){
-			return null;
+			return ListaDataServicios;
 		}
 		if(vertical == null){
-			return null;
+			return ListaDataServicios;
 		}
-		for(Servicio Servicio : vertical.getServicios()){
+		//Existe, traigo las que esta activas
+		Query query = em.createNamedQuery("BuscarServiciosActivosDeVertical", Servicio.class).setParameter("TipoVertical", TipoDeVertical);
+		List<Servicio> ListaServicio = query.getResultList();		
+		for(Servicio Servicio : ListaServicio){
 			ListaDataServicios.add(Servicio.getDataServicio());
-		}
+		}		
 		return ListaDataServicios;
-		*/
-		List<DataServicio> ListaDataServicios = new ArrayList<DataServicio>();
-		Vertical vertical;
-		
-		em.getTransaction().begin();
-		Query query = em.createNamedQuery("BuscarServiciosActivos", Servicio.class).setParameter("val", 0);
-		List<Servicio> list = query.getResultList();
-		
-	/*	List<Proveedor> ListaProveedores = em.createQuery(
-		"Select s from Servicio AS s where s.BORRADO = 0", Proveedor.class).getResultList();
-		*/
-		return null;
-		
-		
-		
 	}
 	
 	public String CrearServicio(DataServicioBasico Servicio, String TipoVertical){
@@ -65,15 +53,7 @@ public class ControladorServicios {
 			return Error.S1;
 		}
 		Servicio NuevoServicio = new Servicio(Servicio.getServicioId(), Servicio.getServicioNombre(), Servicio.getServicioPrecioHora(), Servicio.getServicioPrecioKM(), Servicio.getServicioTarifaBase(), null, vertical, null);
-		try {
-			em.getTransaction().begin();
-			em.persist(NuevoServicio);
-			em.getTransaction().commit();
-		} catch (Exception e) {
-		    em.getTransaction().rollback();
-		    return Error.G1;
-		}	
-		return Error.Ok;
+		return Persistir(NuevoServicio);
 	}
 	
 	public String EliminarServicio(int ServicioId){
@@ -86,16 +66,8 @@ public class ControladorServicios {
 		if(servicio == null){
 			return Error.S2;
 		}
-		servicio.setBorrado(1);
-		try {
-			this.em.getTransaction().begin();
-			this.em.persist(servicio);
-			this.em.getTransaction().commit();
-		} catch (Exception e) {
-		    em.getTransaction().rollback();
-		    return Error.G1;
-		}	
-		return Error.Ok;			
+		servicio.setBorrado(1);		
+		return Persistir(servicio);
 	}
 	
 	public String ModificarServicio(DataServicioBasico Servicio){
@@ -111,16 +83,8 @@ public class ControladorServicios {
 		NuevoServicio.setServicioNombre(Servicio.getServicioNombre());
 		NuevoServicio.setServicioPrecioHora(Servicio.getServicioPrecioHora());
 		NuevoServicio.setServicioPrecioKM(Servicio.getServicioPrecioKM());
-		NuevoServicio.setServicioTarifaBase(Servicio.getServicioTarifaBase());
-		try {
-			em.getTransaction().begin();;
-			em.persist(NuevoServicio);
-			em.getTransaction().commit();
-		} catch (Exception e) {
-		    em.getTransaction().rollback();
-		    return Error.G1;
-		}
-		return Error.Ok;				
+		NuevoServicio.setServicioTarifaBase(Servicio.getServicioTarifaBase());		
+		return Persistir(NuevoServicio);				
 	}
 	
 	public DataServicio ObtenerServicio(int ServicioId){
@@ -141,4 +105,16 @@ public class ControladorServicios {
 		return ds;		
 	}
 	
+	private String Persistir(Object Objeto)
+	{
+		try{
+			em.getTransaction().begin();
+			em.persist(Objeto);
+			em.getTransaction().commit();
+			return Error.Ok;
+		}catch(Exception e){
+			em.getTransaction().rollback();
+			return Error.G1;
+		}
+	}
 }

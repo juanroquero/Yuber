@@ -163,7 +163,7 @@ public class ControladorProveedor {
 		em.close();		
 	}
 	
-	public void FinServicio(String InstanciaServicioId, float Costo, float Distancia, float Tiempo){
+	public void FinServicio(int InstanciaServicioId, float Costo, float Distancia, float Tiempo){
 		java.util.Date fecha = new Date();
 		em.getTransaction().begin();		
 		InstanciaServicio InstanciaServicio = (InstanciaServicio)em.find(InstanciaServicio.class, InstanciaServicioId);
