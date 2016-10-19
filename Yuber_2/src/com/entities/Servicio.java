@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@NamedQuery(query = "SELECT s FROM Servicio s WHERE s.Borrado = :val", name = "BuscarServiciosActivos")
 public class Servicio implements Serializable {
 	
 	private static final long serialVersionUID = 1L;

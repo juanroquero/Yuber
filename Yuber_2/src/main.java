@@ -25,7 +25,6 @@ public class main {
 		ControladorProveedor cp = new ControladorProveedor();
 		ControladorServicios cs = new ControladorServicios();
 		ControladorAdministrador ca = new ControladorAdministrador();
-		ControlErrores CE = new ControlErrores();
 		
 		//*********************** CONTROLADOR CLIENTE ***********************//
 			//REGISTRO CLIENTE
@@ -40,9 +39,6 @@ public class main {
 				System.out.println(du.getUsuarioCorreo());
 			}
 			*/
-		
-		
-		
 		
 		//*********************** CONTROLADOR PROVEEDOR **********************//
 			//REGISTRO CLIENTE
@@ -81,38 +77,40 @@ public class main {
 					
 			//CREAR VERTICAL
 			/*
-			DataVertical dv = new DataVertical("Transporte","Vertical transporte", null, null);
-			ca.CrearVertical(dv);*/
-			
+			DataVertical dv = new DataVertical("caca", "Vertical transporte", null, null);
+			ca.CrearVertical(dv);
+			*/
 			
 		//*********************** CONTROLADOR SERVICIO ***********************//
 			//CREAR SERVICIO
 			/*
-			DataVerticalBasico Vertical = new DataVerticalBasico("On-Site", "transporte!");
-			DataServicio Servicio = new DataServicio(0, "Mecanico", 50, 20, 50, null, Vertical, null);
-			cs.CrearServicio(Servicio);
+			DataServicioBasico Servicio = new DataServicioBasico(0, "cacona", 50, 20, 50, 0);
+			System.out.println(cs.CrearServicio(Servicio, "caca"));
 			*/
 			//OBTENER SERVICIOS
-			/*
+			
 			List<DataServicio> lista = cs.ObtenerServicios("Transporte");
 			for(DataServicio dt : lista){
 				System.out.println(dt.getServicioNombre());
 			}
-			*/
+			
 		 	//MODIFICAR DATOS DE SERVICIO
-		/*	DataVerticalBasico Vertical = new DataVerticalBasico("On-Site", "transporte!");
-			DataServicioBasico Servicio = new DataServicioBasico(301, "Mecanico", 100, 100, 100);
-			cs.ModificarServicio(Servicio);
+			/*
+			DataServicioBasico Servicio = new DataServicioBasico(101, "MecanicA", 100, 100, 100,1);
+			System.out.println(cs.ModificarServicio(Servicio));
 			*/
-		
+			
+			/* System.out.println(cs.ObtenerServicio(101).getEstado()); */
+			
+			
 			//Asignar Vertical admin2 - Transporte			
-	 	    /* 
+	 	    /*
 		    String Result = ca.AsignarVertical("FullAccess", "admin2@hotmail.com", "Transporte");
 		    System.out.println(Result);
 		    */
 		
 			//Revocar Vertical admin2 - Transporte			
-	 	   /* 
+	 	   /*
 		    String Result = ca.DenegarVertical("FullAccess", "admin2@hotmail.com", "Transporte");
 		    System.out.println(Result);
 		    */
