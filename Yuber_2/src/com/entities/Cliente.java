@@ -13,7 +13,7 @@ import javax.persistence.*;
 @Entity
 @Inheritance(strategy=InheritanceType.SINGLE_TABLE)
 @NamedQueries({
-//	@NamedQuery(query = "SELECT c FROM Cliente c INNER JOIN InstanciaServicio i ON (c.UsuarioCorreo = i.Cliente.UsuarioCorreo) ORDER BY COUNT(i.Cliente.UsuarioCorreo) DESC", name = "TopClientesPorCantServicios"),
+	@NamedQuery(query = "SELECT c FROM Cliente c ORDER BY c.UsuarioPromedioPuntaje DESC", name = "TopClientesPorPuntaje"),
 	@NamedQuery(query = "SELECT c FROM Cliente c INNER JOIN InstanciaServicio i ON (c.UsuarioCorreo = i.Cliente.UsuarioCorreo) WHERE i.InstanciaServicioFechaFin >= :Fecha", name = "ObtenerClientesActivos")
 })
 public class Cliente extends Usuario implements Serializable {

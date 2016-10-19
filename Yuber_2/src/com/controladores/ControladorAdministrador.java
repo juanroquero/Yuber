@@ -148,7 +148,14 @@ public class ControladorAdministrador {
 	}
 	
 	public List<DataProveedorBasico> TopProveedoresPorPuntajes(int Limit){
-		return null;
+		List<DataProveedorBasico> ListaDataProveedores = new ArrayList<DataProveedorBasico>();
+		Query query = em.createNamedQuery("TopProveedoresPorPuntajes", Proveedor.class);
+		query.setMaxResults(Limit);	
+		List<Proveedor> ListaProveedor = query.getResultList();
+		for(Proveedor prov : ListaProveedor){
+			ListaDataProveedores.add(prov.getDataProveedorBasico());
+		}		
+		return ListaDataProveedores;
 	}
 	
 	public List<DataProveedorBasico> TopProveedoresPorGanancia(int Limit){
@@ -162,6 +169,8 @@ public class ControladorAdministrador {
 		return ListaDataProveedores;
 	}
 	
+	
+	/*
 	public List<DataClienteBasico> TopClientesPorCantServicios(int Limit){
 		List<DataClienteBasico> ListaDataClientes = new ArrayList<DataClienteBasico>();
 		Query query = em.createNamedQuery("TopClientesPorCantServicios", InstanciaServicio.class);
@@ -175,9 +184,16 @@ public class ControladorAdministrador {
 		}		
 		return ListaDataClientes;
 	}
-	
+*/	
 	public List<DataClienteBasico> TopClientesPorPuntaje(int Limit){
-		return null;		
+		List<DataClienteBasico> ListaDataClientes = new ArrayList<DataClienteBasico>();
+		Query query = em.createNamedQuery("TopClientesPorPuntaje", Proveedor.class);
+		query.setMaxResults(Limit);	
+		List<Cliente> ListaClientes = query.getResultList();
+		for(Cliente user : ListaClientes){
+			ListaDataClientes.add(user.getDataClienteBasico());
+		}		
+		return ListaDataClientes;		
 	}	
 	
 	public String CrearVertical(DataVerticalBasico Vertical){
