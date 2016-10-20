@@ -25,6 +25,7 @@ public class Proveedor extends Usuario implements Serializable {
 	private Servicio Servicio;
 	@OneToMany(mappedBy="Proveedor", cascade=CascadeType.PERSIST)
 	private List<InstanciaServicio> InstanciasServicio;
+	private boolean Trabajando;
 
 	public Proveedor() {
 		super();
@@ -39,7 +40,8 @@ public class Proveedor extends Usuario implements Serializable {
 		user.setUsuarioCorreo(Proveedor.getUsuarioCorreo());
 		user.setUsuarioDireccion(Proveedor.getUsuarioDireccion());		
 		user.setUsuarioPromedioPuntaje(0);
-		user.setUsuarioTelefono(Proveedor.getUsuarioTelefono());		
+		user.setUsuarioTelefono(Proveedor.getUsuarioTelefono());
+		this.Trabajando	= Proveedor.isTrabajando();
 	}
 	
 	public DataProveedor getDataProveedor(){		
@@ -63,6 +65,7 @@ public class Proveedor extends Usuario implements Serializable {
 								this.getUsuarioDireccion(), 
 								this.getUsuarioPromedioPuntaje(), 
 								this.getUsuarioTelefono(), 
+								this.isTrabajando(),
 								ListaInstancias,
 								DataServicio
 							   );
@@ -77,7 +80,8 @@ public class Proveedor extends Usuario implements Serializable {
 								this.getUsuarioContraseña(), 
 								this.getUsuarioDireccion(), 
 								this.getUsuarioPromedioPuntaje(), 
-								this.getUsuarioTelefono()
+								this.getUsuarioTelefono(),
+								this.isTrabajando()
 							   );
 	}
 	
@@ -107,6 +111,14 @@ public class Proveedor extends Usuario implements Serializable {
 		getInstanciasServicio().remove(instanciaServicio);
 		instanciaServicio.setProveedor(null);
 		return instanciaServicio;
+	}
+
+	public boolean isTrabajando() {
+		return Trabajando;
+	}
+
+	public void setTrabajando(boolean trabajando) {
+		Trabajando = trabajando;
 	}
 	
 }

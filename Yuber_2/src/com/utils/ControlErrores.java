@@ -13,9 +13,22 @@ public class ControlErrores {
 	public String A52 = "El administrador no existe en el sistema";
 	public String A53 = "El administrador ya existe en el sistema";
 	public String A54 = "No se ha podido desasociar el administrador";
+	
 	//C0-100 : Errores de Clientes
+	public String C52 = "El cliente no existe en el sistema";
+	public String C53 = "Error calculando el puntaje del cliente";
 	
 	//P0-P100 : Errores de Provedores
+	public String P50 = "El proveedor no brinda el servicio dado";
+	public String P51 = "El proveedor debe estar trabajando";
+	public String P52 = "El proveedor no existe en el sistema";
+	public String P53 = "Error calculando el puntaje del proveedor";
+	
+	
+	//I0-I100 : Errores de Instancias de servicio
+	public String I50 = "La instancia de servicio ya fue asignada a otro proveedor";
+	public String I52 = "La instancia de servicio no existe en el sistema";
+	
 	
 	//S0-S100 : Errores de Servicios
 	public String S1 = "No existe dicha vertical";

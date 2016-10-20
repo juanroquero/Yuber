@@ -8,7 +8,7 @@ import com.datatypes.*;
 
 @Entity
 @NamedQueries({
-	@NamedQuery(query = "SELECT i AS cant FROM InstanciaServicio i ORDER BY cant DESC", name = "TopClientesPorCantServicios"),
+	//@NamedQuery(query = "SELECT i AS cant FROM InstanciaServicio i ORDER BY cant DESC", name = "TopClientesPorCantServicios"),
 	@NamedQuery(query = "SELECT i FROM InstanciaServicio i WHERE i.InstanciaServicioFechaInicio >= :FechaInicio AND i.InstanciaServicioFechaInicio <= :FechaFin", name = "ObtenerGananciaMensual")
 })
 public class InstanciaServicio implements Serializable {
@@ -39,7 +39,7 @@ public class InstanciaServicio implements Serializable {
 	}
 	
 	public DataInstanciaServicio getDataInstanciaServicio() {
-		DataUbicacion DataUbicacion = new DataUbicacion(Longitud,Latitud);
+		DataUbicacion DataUbicacion = new DataUbicacion(getLongitud(),getLatitud());
 		return new DataInstanciaServicio(	this.InstanciaServicioId,
 											this.InstanciaServicioCosto,
 											this.InstanciaServicioDistancia,
@@ -56,7 +56,7 @@ public class InstanciaServicio implements Serializable {
 	}
 	
 	public DataInstanciaServicioBasico getDataInstanciaServicioBasico() {
-		DataUbicacion DataUbicacion = new DataUbicacion(Longitud,Latitud);
+		DataUbicacion DataUbicacion = new DataUbicacion(getLongitud(),getLatitud());
 		return new DataInstanciaServicioBasico(	this.getInstanciaServicioId(),
 											this.getInstanciaServicioCosto(),
 											this.getInstanciaServicioDistancia(),
@@ -153,6 +153,22 @@ public class InstanciaServicio implements Serializable {
 
 	public void setInstanciaServicioFechaFin(Date instanciaServicioFechaFin) {
 		InstanciaServicioFechaFin = instanciaServicioFechaFin;
+	}
+
+	public String getLongitud() {
+		return Longitud;
+	}
+
+	public void setLongitud(String longitud) {
+		Longitud = longitud;
+	}
+
+	public String getLatitud() {
+		return Latitud;
+	}
+
+	public void setLatitud(String latitud) {
+		Latitud = latitud;
 	}	
 	
 }

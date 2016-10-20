@@ -31,10 +31,10 @@ public class main {
 		
 		//*********************** CONTROLADOR CLIENTE ***********************//
 			//REGISTRO CLIENTE
-			/*
-			DataCliente Cliente = new DataCliente("user1@hotmail.com", "nombre1", "apellido1", "San Jose", "123", "18 de julio 123", 0, "094568452", null);  
-			cc.RegistrarCliente(Cliente);
-				*/
+			
+			/*DataCliente Cliente = new DataCliente("user1@hotmail.com", "nombre1", "apellido1", "San Jose", "123", "18 de julio 123", 0, "094568452", null);  
+			cc.RegistrarCliente(Cliente);*/
+				
 			//OBTENER CLIENTES
 			/*
 			List<DataCliente> lista = cc.ObtenerClientes();
@@ -43,20 +43,39 @@ public class main {
 			}
 			*/
 			
-			DataUbicacion DataUbicacion = new DataUbicacion("85258","150651");
-		//	cc.PedirServicio("user1@hotmail.com", 151, DataUbicacion);
+		/*DataUbicacion DataUbicacion = new DataUbicacion("85258","150651");
+			System.out.println(cc.PedirServicio("user1@hotmail.com", 1, DataUbicacion));*/
 			
-		//	cp.AceptarServicio(351, "prov2@hotmail.com");
+		//System.out.println(cc.CancelarPedido(101));
+			
+		//System.out.println(cc.PuntuarCliente(5, "Un rompe huevos el tipo", 51));
+
 			
 		//	cp.IniciarServicio(351);
 		
 		//	cp.FinServicio(351, 256, 12, 126);
 		//*********************** CONTROLADOR PROVEEDOR **********************//
-			//REGISTRO CLIENTE
-			/*
-			DataProveedor Proveedor = new DataProveedor("prov2@hotmail.com", "nombre2", "apellido2", "Montevideo", "123", "18 de julio 123", 0, "092569751", null, null);  
-			cp.RegistrarProveedor(Proveedor);
-			*/
+			//REGISTRO PROVEEDOR
+			
+		/*	DataProveedor Proveedor = new DataProveedor("prov2@hotmail.com", "nombre2", "apellido2", "Montevideo", "123", "18 de julio 123", 0, "092569751",false, null, null);  
+			cp.RegistrarProveedor(Proveedor);*/
+		
+		
+		//System.out.println(cp.IniciarJornada("prov2@hotmail.com", 1));
+		
+		//System.out.println(cp.FinalizarJornada("prov2@hotmail.com", 1));
+			
+		//cp.AsociarServicio("prov2@hotmail.com", 1);
+		
+		//System.out.println(cp.AceptarServicio(51, "prov2@hotmail.com"));
+		
+		//System.out.println(cp.IniciarServicio(51));
+		
+		//System.out.println(cp.FinServicio(51,568,5,25));
+		
+		//System.out.println(cp.PuntuarProveedor(10, "Lindo viaje", 51));
+		
+		
 		/*
 			Date fecha = new Date();
 			System.out.println(ca.ObtenerGananciaMensual(fecha));
@@ -99,10 +118,10 @@ public class main {
 			*/
 					
 			//CREAR VERTICAL
-			/*
-			DataVertical dv = new DataVertical("caca", "Vertical transporte", null, null);
-			ca.CrearVertical(dv);
-			*/
+			
+			/*DataVerticalBasico dv = new DataVerticalBasico("transporte", "Vertical transporte");
+			ca.CrearVertical(dv);*/
+			
 			//OBTENER PROVEEDORES ACTIVOS
 			/*
 			List<DataProveedorBasico> lista = ca.ObtenerProveedoresActivos();
@@ -120,10 +139,9 @@ public class main {
 			
 		//*********************** CONTROLADOR SERVICIO ***********************//
 			//CREAR SERVICIO
-			/*
-			DataServicioBasico Servicio = new DataServicioBasico(0, "cacona", 50, 20, 50, 0);
-			System.out.println(cs.CrearServicio(Servicio, "caca"));
-			*/
+		/*	DataServicioBasico Servicio = new DataServicioBasico(0, "taxi", 50, 20, 50, 0);
+			System.out.println(cs.CrearServicio(Servicio, "transporte"));
+		*/
 			//OBTENER SERVICIOS
 			/*
 			List<DataServicio> lista = cs.ObtenerServicios("Transporte");

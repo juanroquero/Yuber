@@ -12,11 +12,12 @@ public class DataProveedorBasico {
 	private String UsuarioDireccion;	
 	private float UsuarioPromedioPuntaje;
 	private String UsuarioTelefono;
+	private boolean Trabajando;
 	
 	public DataProveedorBasico() {
 	}
 	
-	public DataProveedorBasico(String UsuarioCorreo, String UsuarioNombre, String UsuarioApellido, String UsuarioCiudad, String UsuarioContraseña, String UsuarioDireccion, float UsuarioPromedioPuntaje, String UsuarioTelefono) {
+	public DataProveedorBasico(String UsuarioCorreo, String UsuarioNombre, String UsuarioApellido, String UsuarioCiudad, String UsuarioContraseña, String UsuarioDireccion, float UsuarioPromedioPuntaje, String UsuarioTelefono, boolean Trabajando) {
 		this.UsuarioCorreo 			= UsuarioCorreo;
 		this.UsuarioNombre 			= UsuarioNombre;
 		this.UsuarioApellido		= UsuarioApellido;
@@ -25,6 +26,7 @@ public class DataProveedorBasico {
 		this.UsuarioDireccion		= UsuarioDireccion;
 		this.UsuarioTelefono		= UsuarioTelefono;
 		this.UsuarioPromedioPuntaje	= UsuarioPromedioPuntaje;
+		this.Trabajando				= Trabajando;
 	}
 	
 	public String getUsuarioCorreo() {
@@ -97,6 +99,14 @@ public class DataProveedorBasico {
 
 	public void setEstado(String estado) {
 		Estado = estado;
+	}
+
+	public boolean isTrabajando() {
+		return Trabajando;
+	}
+
+	public void setTrabajando(boolean trabajando) {
+		Trabajando = trabajando;
 	}
 
 }

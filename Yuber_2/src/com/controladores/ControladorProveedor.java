@@ -34,44 +34,20 @@ public class ControladorProveedor {
 	public ControladorProveedor() {
 	}
 	
-	public void prueba(){
-	//	for (DataInstanciaServicio dti : lista){ 
-		//	System.out.println(dti.getInstanciaServicioFecha());
-	//	}
-		/*
-		Usuario u = new Proveedor();	
-		u.setUsuarioNombre("Martin");
-		u.setUsuarioApellido("Perez");
-		u.setUsuarioCiudad("San Jose");
-		u.setUsuarioContraseña("user1");
-		u.setUsuarioCorreo("user1@hotmail.com");
-		u.setUsuarioDireccion("18 de julio 321");		
-		u.setUsuarioPromedioPuntaje(3);
-		u.setUsuarioTelefono(4);
-		*/
-		/*
-	    Servicio s = new Servicio();
-		s.setInstanciasServicio(null);
-		s.setProveedores(null);
-		s.setServicioNombre("Taxi");
-		s.setServicioPrecioHora(400);
-		s.setServicioPrecioKM(30);
-		s.setServicioTarifaBase(50);
-		s.setVertical(null);
-		*//*
 		
-		emf = Persistence.createEntityManagerFactory("Yuber_2");
-		em = emf.createEntityManager();	
-		em.getTransaction().begin();
-		em.persist(u);
-		em.getTransaction().commit();
-		
-		*/
-	}
-	
-	public void PuntuarProveedor(int Puntaje, String Comentario, String InstanciaServicioId){	
+	public String PuntuarProveedor(int Puntaje, String Comentario, int InstanciaServicioId){	
 		em.getTransaction().begin();		
-		InstanciaServicio InstanciaServicio = (InstanciaServicio)em.find(InstanciaServicio.class, InstanciaServicioId);
+		//Busco la InstanciaServicio 		
+		InstanciaServicio InstanciaServicio;
+		try{
+			InstanciaServicio = (InstanciaServicio)em.find(InstanciaServicio.class, InstanciaServicioId);
+			if(InstanciaServicio == null)
+			{
+				return Error.I52;
+			}
+		}catch(Exception e){
+			return Error.I52;
+		}
 		em.flush();
 		//Creo reseña para el cliente para dicha InstanciaServicio
 		Reseña Reseña = new Reseña();
@@ -82,7 +58,35 @@ public class ControladorProveedor {
 		//Guardo el BD
 		em.persist(InstanciaServicio);
 		em.getTransaction().commit();
-		em.close();
+		
+		String Error = RecalcularPromedio(InstanciaServicio.getProveedor());
+		
+		return Error;
+	}
+	
+	private String RecalcularPromedio(Proveedor Proveedor)
+	{
+		try{
+			List<InstanciaServicio> ListaInstancias = Proveedor.getInstanciasServicio();
+			float suma = 0;
+			int cantidad = 0;
+			for(InstanciaServicio is : ListaInstancias)
+			{
+				suma += is.getReseñaProveedor().getReseñaPuntaje();
+				cantidad++;
+			}
+			
+			float promedio = suma/cantidad;
+			Proveedor.setUsuarioPromedioPuntaje(promedio);
+			em.getTransaction().begin();;
+			em.persist(Proveedor);
+			em.getTransaction().commit();
+		
+			return Error.Ok;
+		}
+		catch(Exception e){
+			return Error.P53;
+		}
 	}
 	
 	public void RegistrarProveedor(DataProveedor Proveedor){
@@ -98,33 +102,110 @@ public class ControladorProveedor {
 		em.getTransaction().begin();
 		em.persist(user);
 		em.getTransaction().commit();
-		em.close(); 
 	}
 	
 	public void Login(String ProveedorEmail, String Password){		
 	}
 	
-	public void AceptarServicio(int InstanciaServicioId, String Correo){
-		//Busco la InstanciaServicio 
+	public String AceptarServicio(int InstanciaServicioId, String Correo){
 		em.getTransaction().begin();
-		InstanciaServicio is = (InstanciaServicio)em.find(InstanciaServicio.class, InstanciaServicioId);
-		em.flush();
 		//Busco al Proveedor
-		Proveedor prov = (Proveedor)em.find(Proveedor.class, Correo);
+		Proveedor prov;
+		try{
+			prov = (Proveedor)em.find(Proveedor.class, Correo);
+			em.flush();
+			if(prov == null)
+			{
+				return Error.P52;
+			}
+		}catch(Exception e){
+			return Error.P52;
+		}	
+		if(!prov.isTrabajando())
+			return Error.P51;
+		//Busco la InstanciaServicio 		
+		InstanciaServicio is;
+		try{
+			is = (InstanciaServicio)em.find(InstanciaServicio.class, InstanciaServicioId);
+			if(is == null)
+			{
+				return Error.I52;
+			}
+		}catch(Exception e){
+			return Error.I52;
+		}
 		em.flush();
+
 		//Asocio al provedor dicha InstanciaServicio
-		prov.addInstanciaServicio(is);
-		em.getTransaction().commit();
-		em.close();
+		if (is.getProveedor() == null)
+		{
+			prov.addInstanciaServicio(is);
+			em.getTransaction().commit();
+			return Error.Ok;
+		}
+		else
+			return Error.I50;			
 	}
 	
-	public void RechazarServicio(int InstanciaServicioId){		
+	public void RechazarServicio(int InstanciaServicioId){
+		//Creo que no tiene que hacer nada. Lo unico que hace esto es el cancel en el boton 
+		//del celular ignorando el servicio que se le habia propuesto
 	}
 	
-	public void IniciarJornada(String ProveedorCorreo, int ServicioId){		
+	public String IniciarJornada(String ProveedorCorreo, int ServicioId){		
+		em.getTransaction().begin();
+		//Busco al Proveedor
+		Proveedor prov;
+		try{
+			prov = em.find(Proveedor.class, ProveedorCorreo);
+			em.flush();
+			if(prov == null)
+			{
+				return Error.P52;
+			}
+		}catch(Exception e){
+			return Error.P52;
+		}	
+		if(!prov.isTrabajando())
+		{
+			if(prov.getServicio().getServicioId() == ServicioId)
+			{
+				prov.setTrabajando(true);
+				em.persist(prov);
+				em.getTransaction().commit();				
+			}
+			else
+				return Error.P50;
+		}
+		return Error.Ok;
 	}
 	
-	public void FinalizarJornada(String ProveedorCorreo, int ServicioId){		
+	public String FinalizarJornada(String ProveedorCorreo, int ServicioId){		
+		em.getTransaction().begin();
+		//Busco al Proveedor
+		Proveedor prov;
+		try{
+			prov = (Proveedor)em.find(Proveedor.class, ProveedorCorreo);
+			em.flush();
+			if(prov == null)
+			{
+				return Error.P52;
+			}
+		}catch(Exception e){
+			return Error.P52;
+		}	
+		if(prov.isTrabajando())
+		{
+			if(prov.getServicio().getServicioId() == ServicioId)
+			{
+				prov.setTrabajando(false);
+				em.persist(prov);
+				em.getTransaction().commit();				
+			}
+			else
+				return Error.P50;
+		}
+		return Error.Ok;
 	}
 	
 	public List<DataReseña> ReseñaServicios(String ProveedorCorreo){
@@ -151,22 +232,78 @@ public class ControladorProveedor {
 		
 	}
 	
-	public void IniciarServicio(int InstanciaServicioId){
+	public String AsociarServicio(String ProveedorCorreo, int ServicioId)
+	{
+		//Busco el servicio
+		em.getTransaction().begin();
+		Servicio Servicio;
+		try{
+			Servicio = (Servicio)em.find(Servicio.class, ServicioId);
+			em.flush();
+			if(Servicio == null)
+			{
+				return Error.S2;
+			}
+		}catch(Exception e){
+			return Error.S2;
+		}
+		//Busco al proveedor que lo solicito
+		Proveedor prov;
+		try{
+			prov = (Proveedor)em.find(Proveedor.class, ProveedorCorreo);
+			em.flush();
+			if(prov == null)
+			{
+				return Error.P52;
+			}
+		}catch(Exception e){
+			return Error.P52;
+		}					
+		//Guardo el BD				
+		prov.setServicio(Servicio);
+		List<Proveedor> ListaProveedores = Servicio.getProveedores();
+		ListaProveedores.add(prov);
+		Servicio.setProveedores(ListaProveedores);				
+		em.persist(prov);
+		em.getTransaction().commit();		
+		return Error.Ok;
+	}
+	
+	public String IniciarServicio(int InstanciaServicioId){
 		java.util.Date fecha = new Date();
 		//Busco la InstanciaServicio 
 		em.getTransaction().begin();
-		InstanciaServicio is = (InstanciaServicio)em.find(InstanciaServicio.class, InstanciaServicioId);
+		InstanciaServicio is;
+		try{
+			is = (InstanciaServicio)em.find(InstanciaServicio.class, InstanciaServicioId);
+			if(is == null)
+			{
+				return Error.I52;
+			}
+		}catch(Exception e){
+			return Error.I52;
+		}
 		em.flush();
 		//Asocio la fecha a la InstanciaServicio
 		is.setInstanciaServicioFechaInicio(fecha);
+		em.persist(is);
 		em.getTransaction().commit();
-		em.close();		
+		return Error.Ok;
 	}
 	
-	public void FinServicio(int InstanciaServicioId, float Costo, float Distancia, float Tiempo){
+	public String FinServicio(int InstanciaServicioId, float Costo, float Distancia, float Tiempo){
 		java.util.Date fecha = new Date();
 		em.getTransaction().begin();		
-		InstanciaServicio InstanciaServicio = (InstanciaServicio)em.find(InstanciaServicio.class, InstanciaServicioId);
+		InstanciaServicio InstanciaServicio;
+		try{
+			InstanciaServicio = (InstanciaServicio)em.find(InstanciaServicio.class, InstanciaServicioId);
+			if(InstanciaServicio == null)
+			{
+				return Error.I52;
+			}
+		}catch(Exception e){
+			return Error.I52;
+		}
 		em.flush();
 		InstanciaServicio.setInstanciaServicioCosto(Costo);
 		InstanciaServicio.setInstanciaServicioDistancia(Distancia);
@@ -175,7 +312,7 @@ public class ControladorProveedor {
 		//Guardo el BD
 		em.persist(InstanciaServicio);
 		em.getTransaction().commit();
-		em.close();
+		return Error.Ok;
 	}
 	
 	public boolean OlvidePass(String ClienteCorreo){
@@ -205,7 +342,6 @@ public class ControladorProveedor {
 			em.flush();
 			prov.setUsuarioContraseña(String.valueOf(pass));			
 			em.getTransaction().commit();
-			em.close();
 			return true;
 		} catch (MessagingException e) {
 			return false;

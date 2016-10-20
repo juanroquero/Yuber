@@ -183,8 +183,8 @@ public class ControladorAdministrador {
 			
 		}		
 		return ListaDataClientes;
-	}
-*/	
+	}*/
+
 	public List<DataClienteBasico> TopClientesPorPuntaje(int Limit){
 		List<DataClienteBasico> ListaDataClientes = new ArrayList<DataClienteBasico>();
 		Query query = em.createNamedQuery("TopClientesPorPuntaje", Proveedor.class);

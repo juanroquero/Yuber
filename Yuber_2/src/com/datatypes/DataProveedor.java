@@ -13,13 +13,14 @@ public class DataProveedor {
 	private String UsuarioDireccion;	
 	private float UsuarioPromedioPuntaje;
 	private String UsuarioTelefono;
+	private boolean Trabajando;
 	private List<DataInstanciaServicioBasico> InstanciasServicio;
 	private DataServicioBasico Servicio;
 	
 	public DataProveedor() {
 	}
 	
-	public DataProveedor(String UsuarioCorreo, String UsuarioNombre, String UsuarioApellido, String UsuarioCiudad, String UsuarioContraseña, String UsuarioDireccion, float UsuarioPromedioPuntaje, String UsuarioTelefono, List<DataInstanciaServicioBasico> InstanciasServicio, DataServicioBasico Servicio) {
+	public DataProveedor(String UsuarioCorreo, String UsuarioNombre, String UsuarioApellido, String UsuarioCiudad, String UsuarioContraseña, String UsuarioDireccion, float UsuarioPromedioPuntaje, String UsuarioTelefono, boolean Trabajando, List<DataInstanciaServicioBasico> InstanciasServicio, DataServicioBasico Servicio) {
 		this.UsuarioCorreo 			= UsuarioCorreo;
 		this.UsuarioNombre 			= UsuarioNombre;
 		this.UsuarioApellido		= UsuarioApellido;
@@ -28,6 +29,7 @@ public class DataProveedor {
 		this.UsuarioDireccion		= UsuarioDireccion;
 		this.UsuarioTelefono		= UsuarioTelefono;
 		this.UsuarioPromedioPuntaje	= UsuarioPromedioPuntaje;
+		this.Trabajando				= Trabajando;
 		this.InstanciasServicio		= InstanciasServicio;	
 		this.Servicio				= Servicio;
 	}
@@ -118,6 +120,14 @@ public class DataProveedor {
 
 	public void setEstado(String estado) {
 		Estado = estado;
+	}
+
+	public boolean isTrabajando() {
+		return Trabajando;
+	}
+
+	public void setTrabajando(boolean trabajando) {
+		Trabajando = trabajando;
 	}
 
 }
