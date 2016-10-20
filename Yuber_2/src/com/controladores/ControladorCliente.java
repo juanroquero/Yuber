@@ -3,10 +3,16 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.ejb.LocalBean;
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
 
 import com.datatypes.*;
 import com.entities.Cliente;
@@ -16,7 +22,14 @@ import com.entities.Reseña;
 import com.entities.Servicio;
 import com.entities.Usuario;
 import com.utils.ControlErrores;
-public class ControladorCliente {
+import com.webservices.ControladorClienteWS;
+
+
+
+@Stateless
+@LocalBean
+@Path("/")
+public class ControladorCliente implements ControladorClienteWS {
 
 	EntityManagerFactory emf = Persistence.createEntityManagerFactory("Yuber_2");
 	EntityManager em = emf.createEntityManager();
@@ -25,6 +38,10 @@ public class ControladorCliente {
 	public ControladorCliente() {
 	}
 	
+	@Override
+	@POST
+	@Path("/cliente")
+	@Produces(MediaType.APPLICATION_JSON)
 	public String PuntuarCliente(int Puntaje, String Comentario, int InstanciaServicioId){	
 		em.getTransaction().begin();		
 		//Busco la InstanciaServicio 		
@@ -79,6 +96,7 @@ public class ControladorCliente {
 		}
 	}
 	
+	@Override
 	public List<DataCliente> ObtenerClientes(){	
 		List<DataCliente> ListaDataCliente = new ArrayList<DataCliente>();
 		List<Cliente> ListaCliente = em.createQuery(
@@ -90,6 +108,7 @@ public class ControladorCliente {
 		return ListaDataCliente;
 	}
 	
+	@Override
 	public List<DataInstanciaServicio> ObtenerHistorial(String ClienteCorreo, int ServicioId){		
 	/*	List<DataInstanciaServicio> ListaDataInstanciaServicio = new ArrayList<DataInstanciaServicio>();
 		List<InstanciaServicio> ListaInstanciaServicio = em.createQuery(
@@ -120,10 +139,12 @@ public class ControladorCliente {
 		return ListaDataInstanciaServicio;
 	}
 	
+	@Override
 	public List<DataReseña> ReseñaServicios(String ClienteCorreo){
 		return null;
 	}
 	
+	@Override
 	public String CancelarPedido(int InstanciaServicioId){	
 			//Busco la InstanciaServicio 
 			em.getTransaction().begin();
@@ -152,9 +173,11 @@ public class ControladorCliente {
 			return Error.Ok;
 	}
 		
+	@Override
 	public void OlvidePass(String CienteCorreo){		
 	}
 	
+	@Override
 	public void RegistrarCliente(DataCliente Cliente){	
 		Cliente user = new Cliente();
 		user.setUsuarioNombre(Cliente.getUsuarioNombre());
@@ -170,10 +193,12 @@ public class ControladorCliente {
 		em.getTransaction().commit();
 	}
 	
+	@Override
 	public void AsociarMecanismoDePago(String ClienteCorreo, String MedioDePago){		
 	//Este parece no estar bien definido, hay que ver bien como se maneja el asociar paypal
 	}
 	
+	@Override
 	public int PedirServicio(String ClienteCorreo, int ServicioId, DataUbicacion DataUbicacion){
 		//Busco el servicio
 		em.getTransaction().begin();
@@ -202,6 +227,7 @@ public class ControladorCliente {
 		return is.getInstanciaServicioId();
 	}
 	
+	@Override
 	public boolean Login(String ClienteEmail, String Password){	
 		return true;
 	}

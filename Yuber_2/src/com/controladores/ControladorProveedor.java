@@ -24,8 +24,9 @@ import com.entities.Reseña;
 import com.entities.Servicio;
 import com.entities.Usuario;
 import com.utils.ControlErrores;
+import com.webservices.ControladorProveedorWS;
 
-public class ControladorProveedor {
+public class ControladorProveedor implements ControladorProveedorWS {
 
 	EntityManagerFactory emf = Persistence.createEntityManagerFactory("Yuber_2");
 	EntityManager em = emf.createEntityManager();
@@ -35,6 +36,7 @@ public class ControladorProveedor {
 	}
 	
 		
+	@Override
 	public String PuntuarProveedor(int Puntaje, String Comentario, int InstanciaServicioId){	
 		em.getTransaction().begin();		
 		//Busco la InstanciaServicio 		
@@ -89,6 +91,7 @@ public class ControladorProveedor {
 		}
 	}
 	
+	@Override
 	public void RegistrarProveedor(DataProveedor Proveedor){
 		Proveedor user = new Proveedor();
 		user.setUsuarioNombre(Proveedor.getUsuarioNombre());
@@ -104,9 +107,11 @@ public class ControladorProveedor {
 		em.getTransaction().commit();
 	}
 	
+	@Override
 	public void Login(String ProveedorEmail, String Password){		
 	}
 	
+	@Override
 	public String AceptarServicio(int InstanciaServicioId, String Correo){
 		em.getTransaction().begin();
 		//Busco al Proveedor
@@ -147,11 +152,13 @@ public class ControladorProveedor {
 			return Error.I50;			
 	}
 	
+	@Override
 	public void RechazarServicio(int InstanciaServicioId){
 		//Creo que no tiene que hacer nada. Lo unico que hace esto es el cancel en el boton 
 		//del celular ignorando el servicio que se le habia propuesto
 	}
 	
+	@Override
 	public String IniciarJornada(String ProveedorCorreo, int ServicioId){		
 		em.getTransaction().begin();
 		//Busco al Proveedor
@@ -180,6 +187,7 @@ public class ControladorProveedor {
 		return Error.Ok;
 	}
 	
+	@Override
 	public String FinalizarJornada(String ProveedorCorreo, int ServicioId){		
 		em.getTransaction().begin();
 		//Busco al Proveedor
@@ -208,14 +216,17 @@ public class ControladorProveedor {
 		return Error.Ok;
 	}
 	
+	@Override
 	public List<DataReseña> ReseñaServicios(String ProveedorCorreo){
 		return null;
 	}
 	
+	@Override
 	public void RetirarFondos(String ProveedorCorreo){	
 		
 	}
 	
+	@Override
 	public List<DataInstanciaServicio> ObtenerHistorial(String ProveedorCorreo){		
 		List<DataInstanciaServicio> ListaDataInstanciaServicio = new ArrayList<DataInstanciaServicio>();
 		List<InstanciaServicio> ListaInstanciaServicio = em.createQuery(
@@ -228,10 +239,12 @@ public class ControladorProveedor {
 		return ListaDataInstanciaServicio;
 	}
 	
+	@Override
 	public void NotificarArribo(int InstanciaServicioId){
 		
 	}
 	
+	@Override
 	public String AsociarServicio(String ProveedorCorreo, int ServicioId)
 	{
 		//Busco el servicio
@@ -269,6 +282,7 @@ public class ControladorProveedor {
 		return Error.Ok;
 	}
 	
+	@Override
 	public String IniciarServicio(int InstanciaServicioId){
 		java.util.Date fecha = new Date();
 		//Busco la InstanciaServicio 
@@ -291,6 +305,7 @@ public class ControladorProveedor {
 		return Error.Ok;
 	}
 	
+	@Override
 	public String FinServicio(int InstanciaServicioId, float Costo, float Distancia, float Tiempo){
 		java.util.Date fecha = new Date();
 		em.getTransaction().begin();		
@@ -315,6 +330,7 @@ public class ControladorProveedor {
 		return Error.Ok;
 	}
 	
+	@Override
 	public boolean OlvidePass(String ClienteCorreo){
 		//************************ESTA INCOMPETO************************//
 		//Retorna true si lo manda false en otro caso		
@@ -348,10 +364,12 @@ public class ControladorProveedor {
 		}
 	}
 	
+	@Override
 	public void AsociarMecanismoDePago(String ProveedorCorreo, String MedioDePago){		
 	//Este parece no estar bien definido, hay que ver bien como se maneja el asociar paypal
 	}
 	
+	@Override
 	public void Cobrar(String ProveedorCorreo){
 		//No es lo mismo que RetirarFrondos??
 	}

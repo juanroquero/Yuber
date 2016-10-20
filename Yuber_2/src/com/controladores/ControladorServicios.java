@@ -12,7 +12,8 @@ import com.entities.Proveedor;
 import com.entities.Servicio;
 import com.entities.Vertical;
 import com.utils.ControlErrores;
-public class ControladorServicios {
+import com.webservices.ControladorServiciosWS;
+public class ControladorServicios implements ControladorServiciosWS {
 
 	EntityManagerFactory emf = Persistence.createEntityManagerFactory("Yuber_2");
 	EntityManager em = emf.createEntityManager();
@@ -21,6 +22,7 @@ public class ControladorServicios {
 	public ControladorServicios() {
 	}
 	
+	@Override
 	public List<DataServicio> ObtenerServicios(String TipoDeVertical){ 
 		List<DataServicio> ListaDataServicios = new ArrayList<DataServicio>();		
 		//Verifico que exista la vertical
@@ -42,6 +44,7 @@ public class ControladorServicios {
 		return ListaDataServicios;
 	}
 	
+	@Override
 	public String CrearServicio(DataServicioBasico Servicio, String TipoVertical){
 		Vertical vertical;
 		try{
@@ -56,6 +59,7 @@ public class ControladorServicios {
 		return Persistir(NuevoServicio);
 	}
 	
+	@Override
 	public String EliminarServicio(int ServicioId){
 		Servicio servicio;
 		try{
@@ -70,6 +74,7 @@ public class ControladorServicios {
 		return Persistir(servicio);
 	}
 	
+	@Override
 	public String ModificarServicio(DataServicioBasico Servicio){
 		Servicio NuevoServicio;
 		try{
@@ -87,6 +92,7 @@ public class ControladorServicios {
 		return Persistir(NuevoServicio);				
 	}
 	
+	@Override
 	public DataServicio ObtenerServicio(int ServicioId){
 		DataServicio ds;
 		try{
