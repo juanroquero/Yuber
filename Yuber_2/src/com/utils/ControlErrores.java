@@ -23,14 +23,12 @@ public class ControlErrores {
 	public String P51 = "El proveedor debe estar trabajando";
 	public String P52 = "El proveedor no existe en el sistema";
 	public String P53 = "Error calculando el puntaje del proveedor";
-	
-	
+		
 	//I0-I100 : Errores de Instancias de servicio
 	public String I50 = "La servicio ya fue asignada a otro proveedor";
 	public String I52 = "La servicio no existe en el sistema";
 	public String I53 = "El servicio ya fue finalizado";
-	
-	
+		
 	//S0-S100 : Errores de Servicios
 	public String S1 = "No existe dicha vertical";
 	public String S2 = "No existe dicho servicio";
@@ -40,15 +38,12 @@ public class ControlErrores {
 	public String V51 = "La vertical no existe en el sistema";
 	public String V52 = "No se ha podido desasociar la vertical";
 	
-	
-	
-	
-	
+	//L0-L100 : Errores de Sesiones
+	public String L1 = "La sesion no existe en el sistema";
+	public String L2 = "La vertical no existe en el sistema";
+		
 	public ControlErrores() {
 		
 	}
 	
-	
-	
-
 }
