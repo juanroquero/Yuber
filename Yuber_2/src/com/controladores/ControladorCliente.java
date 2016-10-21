@@ -47,31 +47,24 @@ public class ControladorCliente {
 		InstanciaServicio.setReseñaCliente(Reseña);
 		//Guardo el BD
 		em.persist(InstanciaServicio);
-		em.getTransaction().commit();
-		
+		em.getTransaction().commit();		
 		return RecalcularPromedio(InstanciaServicio.getCliente());
 	}
 	
-	private String RecalcularPromedio(Cliente Cliente)
-	{
+	private String RecalcularPromedio(Cliente Cliente){
 		try{
 			List<InstanciaServicio> ListaInstancias = Cliente.getInstanciasServicio();
 			float suma = 0;
 			int cantidad = 0;
-			for(InstanciaServicio is : ListaInstancias)
-			{
+			for(InstanciaServicio is : ListaInstancias){
 				suma += is.getReseñaCliente().getReseñaPuntaje();
 				cantidad++;
-			}
-			
+			}			
 			float promedio = suma/cantidad;
-			Cliente.setUsuarioPromedioPuntaje(promedio);
-			
+			Cliente.setUsuarioPromedioPuntaje(promedio);			
 			em.getTransaction().begin();;
 			em.persist(Cliente);
-			em.getTransaction().commit();
-			
-		
+			em.getTransaction().commit();	
 			return Error.Ok;
 		}
 		catch(Exception e){
@@ -91,37 +84,46 @@ public class ControladorCliente {
 	}
 	
 	public List<DataInstanciaServicio> ObtenerHistorial(String ClienteCorreo, int ServicioId){		
-	/*	List<DataInstanciaServicio> ListaDataInstanciaServicio = new ArrayList<DataInstanciaServicio>();
-		List<InstanciaServicio> ListaInstanciaServicio = em.createQuery(
-				"SELECT is FROM InstanciaServicio is WHERE is.CLIENTE_USUARIOCORREO = "+ClienteCorreo, InstanciaServicio.class).getResultList();
-		for (InstanciaServicio InstanciaServicio : ListaInstanciaServicio){ 
-			DataInstanciaServicio DataInstanciaServicio = InstanciaServicio.getDataInstanciaServicio();
-			ListaDataInstanciaServicio.add(DataInstanciaServicio);
-		}
-		*/
 		//Busco al cliente
 		Cliente Cliente;
 		try{
 			Cliente = (Cliente)em.find(Cliente.class, ClienteCorreo);
 			em.flush();
-			if(Cliente == null)
-			{
+			if(Cliente == null){
 				return null;
 			}
 		}catch(Exception e){
 			return null;
 		}					
 		List<DataInstanciaServicio> ListaDataInstanciaServicio = new ArrayList<DataInstanciaServicio>();
-		for(InstanciaServicio is : Cliente.getInstanciasServicio())
-		{
-			if (is.getServicio().getServicioId() == ServicioId)
+		for(InstanciaServicio is : Cliente.getInstanciasServicio()){
+			if (is.getServicio().getServicioId() == ServicioId){
 				ListaDataInstanciaServicio.add(is.getDataInstanciaServicio());
+			}
 		}	
 		return ListaDataInstanciaServicio;
 	}
 	
-	public List<DataReseña> ReseñaServicios(String ClienteCorreo){
-		return null;
+	public List<DataReseña> MisReseñasObtenidas(String ClienteCorreo){
+		em.getTransaction().begin();
+		Cliente cliente;
+		try{
+			cliente = (Cliente)em.find(Cliente.class, ClienteCorreo);
+			if(cliente == null){
+				return null;
+			}
+		}catch(Exception e){
+			return null;
+		}
+		em.flush();
+		List<DataReseña> ListaReseña = new ArrayList<DataReseña>();
+		List<InstanciaServicio> ListaInstanciaServicio = cliente.getInstanciasServicio();
+		for(InstanciaServicio is : ListaInstanciaServicio){
+			if(is.getReseñaProveedor() != null){
+				ListaReseña.add(is.getReseñaProveedor().getDataReseña());
+			}
+		}
+		return ListaReseña;
 	}
 	
 	public String CancelarPedido(int InstanciaServicioId){	
@@ -130,8 +132,7 @@ public class ControladorCliente {
 			InstanciaServicio is;
 			try{
 				is = (InstanciaServicio)em.find(InstanciaServicio.class, InstanciaServicioId);
-				if(is == null)
-				{
+				if(is == null){
 					return Error.I52;
 				}
 			}catch(Exception e){
@@ -197,6 +198,9 @@ public class ControladorCliente {
 		is.setLatitud(DataUbicacion.getLatitud());
 		is.setLongitud(DataUbicacion.getLongitud());
 		//Guardo el BD
+		List<InstanciaServicio> ListaInstanciaServicio = Cliente.getInstanciasServicio();
+		ListaInstanciaServicio.add(is);
+		Cliente.setInstanciasServicio(ListaInstanciaServicio);
 		em.persist(is);
 		em.getTransaction().commit();		
 		return is.getInstanciaServicioId();
@@ -205,4 +209,5 @@ public class ControladorCliente {
 	public boolean Login(String ClienteEmail, String Password){	
 		return true;
 	}
+	
 }

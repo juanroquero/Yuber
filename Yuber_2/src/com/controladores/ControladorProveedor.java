@@ -1,6 +1,8 @@
 package com.controladores;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Properties;
 import java.util.Random;
@@ -34,214 +36,50 @@ public class ControladorProveedor {
 	public ControladorProveedor() {
 	}
 	
-		
-	public String PuntuarProveedor(int Puntaje, String Comentario, int InstanciaServicioId){	
-		em.getTransaction().begin();		
-		//Busco la InstanciaServicio 		
-		InstanciaServicio InstanciaServicio;
-		try{
-			InstanciaServicio = (InstanciaServicio)em.find(InstanciaServicio.class, InstanciaServicioId);
-			if(InstanciaServicio == null)
-			{
-				return Error.I52;
-			}
-		}catch(Exception e){
-			return Error.I52;
-		}
-		em.flush();
-		//Creo reseña para el cliente para dicha InstanciaServicio
-		Reseña Reseña = new Reseña();
-		Reseña.setInstanciaServicio(InstanciaServicio);
-		Reseña.setReseñaComentario(Comentario);
-		Reseña.setReseñaPuntaje(Puntaje);		
-		InstanciaServicio.setReseñaProveedor(Reseña);
-		//Guardo el BD
-		em.persist(InstanciaServicio);
-		em.getTransaction().commit();
-		
-		String Error = RecalcularPromedio(InstanciaServicio.getProveedor());
-		
-		return Error;
-	}
-	
-	private String RecalcularPromedio(Proveedor Proveedor)
-	{
-		try{
-			List<InstanciaServicio> ListaInstancias = Proveedor.getInstanciasServicio();
-			float suma = 0;
-			int cantidad = 0;
-			for(InstanciaServicio is : ListaInstancias)
-			{
-				suma += is.getReseñaProveedor().getReseñaPuntaje();
-				cantidad++;
-			}
-			
-			float promedio = suma/cantidad;
-			Proveedor.setUsuarioPromedioPuntaje(promedio);
-			em.getTransaction().begin();;
-			em.persist(Proveedor);
-			em.getTransaction().commit();
-		
-			return Error.Ok;
-		}
-		catch(Exception e){
-			return Error.P53;
-		}
-	}
-	
-	public void RegistrarProveedor(DataProveedor Proveedor){
-		Proveedor user = new Proveedor();
-		user.setUsuarioNombre(Proveedor.getUsuarioNombre());
-		user.setUsuarioApellido(Proveedor.getUsuarioApellido());
-		user.setUsuarioCiudad(Proveedor.getUsuarioCiudad());
-		user.setUsuarioContraseña(Proveedor.getUsuarioContraseña());
-		user.setUsuarioCorreo(Proveedor.getUsuarioCorreo());
-		user.setUsuarioDireccion(Proveedor.getUsuarioDireccion());		
-		user.setUsuarioPromedioPuntaje(0);
-		user.setUsuarioTelefono(Proveedor.getUsuarioTelefono());	
-		em.getTransaction().begin();
-		em.persist(user);
-		em.getTransaction().commit();
-	}
-	
-	public void Login(String ProveedorEmail, String Password){		
-	}
-	
 	public String AceptarServicio(int InstanciaServicioId, String Correo){
 		em.getTransaction().begin();
-		//Busco al Proveedor
 		Proveedor prov;
 		try{
 			prov = (Proveedor)em.find(Proveedor.class, Correo);
 			em.flush();
-			if(prov == null)
-			{
+			if(prov == null){
 				return Error.P52;
 			}
 		}catch(Exception e){
 			return Error.P52;
 		}	
-		if(!prov.isTrabajando())
+		if(!prov.isTrabajando()){
 			return Error.P51;
+		}
 		//Busco la InstanciaServicio 		
 		InstanciaServicio is;
 		try{
 			is = (InstanciaServicio)em.find(InstanciaServicio.class, InstanciaServicioId);
-			if(is == null)
-			{
+			if(is == null){
 				return Error.I52;
 			}
 		}catch(Exception e){
 			return Error.I52;
 		}
 		em.flush();
-
 		//Asocio al provedor dicha InstanciaServicio
-		if (is.getProveedor() == null)
-		{
+		if (is.getProveedor() == null){
 			prov.addInstanciaServicio(is);
 			em.getTransaction().commit();
 			return Error.Ok;
-		}
-		else
+		}else{
 			return Error.I50;			
-	}
-	
-	public void RechazarServicio(int InstanciaServicioId){
-		//Creo que no tiene que hacer nada. Lo unico que hace esto es el cancel en el boton 
-		//del celular ignorando el servicio que se le habia propuesto
-	}
-	
-	public String IniciarJornada(String ProveedorCorreo, int ServicioId){		
-		em.getTransaction().begin();
-		//Busco al Proveedor
-		Proveedor prov;
-		try{
-			prov = em.find(Proveedor.class, ProveedorCorreo);
-			em.flush();
-			if(prov == null)
-			{
-				return Error.P52;
-			}
-		}catch(Exception e){
-			return Error.P52;
-		}	
-		if(!prov.isTrabajando())
-		{
-			if(prov.getServicio().getServicioId() == ServicioId)
-			{
-				prov.setTrabajando(true);
-				em.persist(prov);
-				em.getTransaction().commit();				
-			}
-			else
-				return Error.P50;
 		}
-		return Error.Ok;
 	}
 	
-	public String FinalizarJornada(String ProveedorCorreo, int ServicioId){		
-		em.getTransaction().begin();
-		//Busco al Proveedor
-		Proveedor prov;
-		try{
-			prov = (Proveedor)em.find(Proveedor.class, ProveedorCorreo);
-			em.flush();
-			if(prov == null)
-			{
-				return Error.P52;
-			}
-		}catch(Exception e){
-			return Error.P52;
-		}	
-		if(prov.isTrabajando())
-		{
-			if(prov.getServicio().getServicioId() == ServicioId)
-			{
-				prov.setTrabajando(false);
-				em.persist(prov);
-				em.getTransaction().commit();				
-			}
-			else
-				return Error.P50;
-		}
-		return Error.Ok;
-	}
-	
-	public List<DataReseña> ReseñaServicios(String ProveedorCorreo){
-		return null;
-	}
-	
-	public void RetirarFondos(String ProveedorCorreo){	
-		
-	}
-	
-	public List<DataInstanciaServicio> ObtenerHistorial(String ProveedorCorreo){		
-		List<DataInstanciaServicio> ListaDataInstanciaServicio = new ArrayList<DataInstanciaServicio>();
-		List<InstanciaServicio> ListaInstanciaServicio = em.createQuery(
-				"SELECT is FROM InstanciaServicio is WHERE is.PROVEEDOR_USUARIOCORREO = :parametro", InstanciaServicio.class).
-				setParameter("parametro", '%' + ProveedorCorreo + '%').getResultList();
-		for (InstanciaServicio InstanciaServicio : ListaInstanciaServicio){ 
-			DataInstanciaServicio DataInstanciaServicio = InstanciaServicio.getDataInstanciaServicio();
-			ListaDataInstanciaServicio.add(DataInstanciaServicio);
-		}
-		return ListaDataInstanciaServicio;
-	}
-	
-	public void NotificarArribo(int InstanciaServicioId){
-		
-	}
-	
-	public String AsociarServicio(String ProveedorCorreo, int ServicioId)
-	{
+	public String AsociarServicio(String ProveedorCorreo, int ServicioId){
 		//Busco el servicio
 		em.getTransaction().begin();
 		Servicio Servicio;
 		try{
 			Servicio = (Servicio)em.find(Servicio.class, ServicioId);
 			em.flush();
-			if(Servicio == null)
-			{
+			if(Servicio == null){
 				return Error.S2;
 			}
 		}catch(Exception e){
@@ -252,8 +90,7 @@ public class ControladorProveedor {
 		try{
 			prov = (Proveedor)em.find(Proveedor.class, ProveedorCorreo);
 			em.flush();
-			if(prov == null)
-			{
+			if(prov == null){
 				return Error.P52;
 			}
 		}catch(Exception e){
@@ -269,6 +106,102 @@ public class ControladorProveedor {
 		return Error.Ok;
 	}
 	
+	public String FinalizarJornada(String ProveedorCorreo, int ServicioId){		
+		em.getTransaction().begin();
+		//Busco al Proveedor
+		Proveedor prov;
+		try{
+			prov = (Proveedor)em.find(Proveedor.class, ProveedorCorreo);
+			em.flush();
+			if(prov == null){
+				return Error.P52;
+			}
+		}catch(Exception e){
+			return Error.P52;
+		}	
+		if(prov.isTrabajando()){
+			if(prov.getServicio().getServicioId() == ServicioId){
+				prov.setTrabajando(false);
+				em.persist(prov);
+				em.getTransaction().commit();				
+			}
+			else{
+				return Error.P50;
+			}
+		}
+		return Error.Ok;
+	}
+	
+	public String FinServicio(int InstanciaServicioId, float Distancia){
+		em.getTransaction().begin();		
+		InstanciaServicio InstanciaServicio;
+		try{
+			InstanciaServicio = (InstanciaServicio)em.find(InstanciaServicio.class, InstanciaServicioId);
+			if(InstanciaServicio == null)
+			{
+				return Error.I52;
+			}
+		}catch(Exception e){
+			return Error.I52;
+		}
+		em.flush();
+		if(InstanciaServicio.getInstanciaServicioFechaFin() != null){
+			return Error.I53;
+		}
+		//Calculo el tiempo
+		java.util.Date fechaFin = new Date();
+		java.util.Date fechaInicio = InstanciaServicio.getInstanciaServicioFechaInicio();
+		float Tiempo = ( fechaFin.getTime() - fechaInicio.getTime() )/1000; 
+		float Costo = 0;
+		float TarifaBase = InstanciaServicio.getServicio().getServicioTarifaBase();
+		String TipoDeVertical = InstanciaServicio.getServicio().getVertical().getVerticalTipo();
+		//Calculo la tarifa
+		if (TipoDeVertical.equals("Transporte")){
+			//La tarifa, estará determinada como: tarifa_base + distancia_recorrida * precio_por_km
+			float PrecioPorKM = InstanciaServicio.getServicio().getServicioPrecioKM();
+			Costo = TarifaBase + (Distancia*PrecioPorKM);			
+		}else{
+			//tarifa_base + tiempo * precio_por_hora
+			float PrecioPorHora = InstanciaServicio.getServicio().getServicioPrecioHora();
+			float PrecioPorSegundo = PrecioPorHora/60/60;			
+			Costo = TarifaBase + (Tiempo*PrecioPorSegundo);
+		}					
+		//Seteo y guardo
+		InstanciaServicio.setInstanciaServicioCosto(Costo);
+		InstanciaServicio.setInstanciaServicioDistancia(Distancia);
+		InstanciaServicio.setInstanciaServicioTiempo(Tiempo);
+		InstanciaServicio.setInstanciaServicioFechaFin(fechaFin);
+		//Guardo el BD
+		em.persist(InstanciaServicio);
+		em.getTransaction().commit();
+		return Error.Ok;
+	}
+			
+	public String IniciarJornada(String ProveedorCorreo, int ServicioId){		
+		em.getTransaction().begin();
+		//Busco al Proveedor
+		Proveedor prov;
+		try{
+			prov = em.find(Proveedor.class, ProveedorCorreo);
+			em.flush();
+			if(prov == null){
+				return Error.P52;
+			}
+		}catch(Exception e){
+			return Error.P52;
+		}	
+		if(!prov.isTrabajando()){
+			if(prov.getServicio().getServicioId() == ServicioId){
+				prov.setTrabajando(true);
+				em.persist(prov);
+				em.getTransaction().commit();				
+			}else{
+				return Error.P50;
+			}
+		}
+		return Error.Ok;
+	}
+	
 	public String IniciarServicio(int InstanciaServicioId){
 		java.util.Date fecha = new Date();
 		//Busco la InstanciaServicio 
@@ -276,8 +209,7 @@ public class ControladorProveedor {
 		InstanciaServicio is;
 		try{
 			is = (InstanciaServicio)em.find(InstanciaServicio.class, InstanciaServicioId);
-			if(is == null)
-			{
+			if(is == null){
 				return Error.I52;
 			}
 		}catch(Exception e){
@@ -291,28 +223,29 @@ public class ControladorProveedor {
 		return Error.Ok;
 	}
 	
-	public String FinServicio(int InstanciaServicioId, float Costo, float Distancia, float Tiempo){
-		java.util.Date fecha = new Date();
-		em.getTransaction().begin();		
-		InstanciaServicio InstanciaServicio;
-		try{
-			InstanciaServicio = (InstanciaServicio)em.find(InstanciaServicio.class, InstanciaServicioId);
-			if(InstanciaServicio == null)
-			{
-				return Error.I52;
-			}
-		}catch(Exception e){
-			return Error.I52;
+	public void Login(String ProveedorEmail, String Password){		
+	}
+	
+	public List<DataInstanciaServicio> ObtenerHistorial(String ProveedorCorreo){		
+		List<DataInstanciaServicio> ListaDataInstanciaServicio = new ArrayList<DataInstanciaServicio>();		
+		Query query = em.createNamedQuery("ObtenerHistorial", InstanciaServicio.class).setParameter("CorreoProv", ProveedorCorreo);
+		List<InstanciaServicio> ListaInstanciaServicio = query.getResultList();
+		for (InstanciaServicio InstanciaServicio : ListaInstanciaServicio){ 
+			DataInstanciaServicio DataInstanciaServicio = InstanciaServicio.getDataInstanciaServicio();
+			ListaDataInstanciaServicio.add(DataInstanciaServicio);
 		}
-		em.flush();
-		InstanciaServicio.setInstanciaServicioCosto(Costo);
-		InstanciaServicio.setInstanciaServicioDistancia(Distancia);
-		InstanciaServicio.setInstanciaServicioTiempo(Tiempo);
-		InstanciaServicio.setInstanciaServicioFechaFin(fecha);
-		//Guardo el BD
-		em.persist(InstanciaServicio);
-		em.getTransaction().commit();
-		return Error.Ok;
+		return ListaDataInstanciaServicio;
+	}
+	
+	public List<DataProveedor> ObtenerProveedores(){	
+		List<DataProveedor> ListaDataProveedor = new ArrayList<DataProveedor>();
+		List<Proveedor> ListaProveedor = em.createQuery(
+				"SELECT u FROM Proveedor u", Proveedor.class).getResultList();
+		for (Proveedor Proveedor : ListaProveedor){ 
+			DataProveedor dc = Proveedor.getDataProveedor();
+			ListaDataProveedor.add(dc);
+		}
+		return ListaDataProveedor;
 	}
 	
 	public boolean OlvidePass(String ClienteCorreo){
@@ -348,11 +281,136 @@ public class ControladorProveedor {
 		}
 	}
 	
+	public String PuntuarProveedor(int Puntaje, String Comentario, int InstanciaServicioId){	
+		em.getTransaction().begin();		
+		//Busco la InstanciaServicio 		
+		InstanciaServicio InstanciaServicio;
+		try{
+			InstanciaServicio = (InstanciaServicio)em.find(InstanciaServicio.class, InstanciaServicioId);
+			if(InstanciaServicio == null)
+			{
+				return Error.I52;
+			}
+		}catch(Exception e){
+			return Error.I52;
+		}
+		em.flush();
+		//Creo reseña para el cliente para dicha InstanciaServicio
+		Reseña Reseña = new Reseña();
+		Reseña.setInstanciaServicio(InstanciaServicio);
+		Reseña.setReseñaComentario(Comentario);
+		Reseña.setReseñaPuntaje(Puntaje);		
+		InstanciaServicio.setReseñaProveedor(Reseña);
+		//Guardo el BD
+		em.persist(InstanciaServicio);
+		em.getTransaction().commit();		
+		String Error = RecalcularPromedio(InstanciaServicio.getProveedor());		
+		return Error;
+	}
+	
+	private String RecalcularPromedio(Proveedor Proveedor)	{
+		try{
+			List<InstanciaServicio> ListaInstancias = Proveedor.getInstanciasServicio();
+			float suma = 0;
+			int cantidad = 0;
+			for(InstanciaServicio is : ListaInstancias){
+				suma += is.getReseñaProveedor().getReseñaPuntaje();
+				cantidad++;
+			}			
+			float promedio = suma/cantidad;
+			Proveedor.setUsuarioPromedioPuntaje(promedio);
+			em.getTransaction().begin();;
+			em.persist(Proveedor);
+			em.getTransaction().commit();		
+			return Error.Ok;
+		}catch(Exception e){
+			return Error.P53;
+		}
+	}
+	
+	public void RechazarServicio(int InstanciaServicioId){
+		//Creo que no tiene que hacer nada. Lo unico que hace esto es el cancel en el boton 
+		//del celular ignorando el servicio que se le habia propuesto
+	}
+	
+	public void RegistrarProveedor(DataProveedor Proveedor){
+		Proveedor user = new Proveedor();
+		user.setUsuarioNombre(Proveedor.getUsuarioNombre());
+		user.setUsuarioApellido(Proveedor.getUsuarioApellido());
+		user.setUsuarioCiudad(Proveedor.getUsuarioCiudad());
+		user.setUsuarioContraseña(Proveedor.getUsuarioContraseña());
+		user.setUsuarioCorreo(Proveedor.getUsuarioCorreo());
+		user.setUsuarioDireccion(Proveedor.getUsuarioDireccion());		
+		user.setUsuarioPromedioPuntaje(0);
+		user.setUsuarioTelefono(Proveedor.getUsuarioTelefono());	
+		em.getTransaction().begin();
+		em.persist(user);
+		em.getTransaction().commit();
+	}
+	
+	public List<DataReseña> MisReseñasObtenidas(String ProveedorCorreo){		
+		em.getTransaction().begin();
+		Proveedor prov;
+		try{
+			prov = (Proveedor)em.find(Proveedor.class, ProveedorCorreo);
+			if(prov == null){
+				return null;
+			}
+		}catch(Exception e){
+			return null;
+		}
+		em.flush();
+		List<DataReseña> ListaReseña = new ArrayList<DataReseña>();
+		List<InstanciaServicio> ListaInstanciaServicio = prov.getInstanciasServicio();
+		for(InstanciaServicio is : ListaInstanciaServicio){
+			if(is.getReseñaCliente() != null){
+				ListaReseña.add(is.getReseñaCliente().getDataReseña());
+			}
+		}
+		return ListaReseña;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	public void RetirarFondos(String ProveedorCorreo){			
+	}
+	
+	
+	public void NotificarArribo(int InstanciaServicioId){		
+	}
+	
 	public void AsociarMecanismoDePago(String ProveedorCorreo, String MedioDePago){		
-	//Este parece no estar bien definido, hay que ver bien como se maneja el asociar paypal
+		//Este parece no estar bien definido, hay que ver bien como se maneja el asociar paypal
 	}
 	
 	public void Cobrar(String ProveedorCorreo){
 		//No es lo mismo que RetirarFrondos??
 	}
+	
+	
+	
+	
+	
+		
+	
+	
+	
 }

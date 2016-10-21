@@ -26,8 +26,9 @@ public class ControlErrores {
 	
 	
 	//I0-I100 : Errores de Instancias de servicio
-	public String I50 = "La instancia de servicio ya fue asignada a otro proveedor";
-	public String I52 = "La instancia de servicio no existe en el sistema";
+	public String I50 = "La servicio ya fue asignada a otro proveedor";
+	public String I52 = "La servicio no existe en el sistema";
+	public String I53 = "El servicio ya fue finalizado";
 	
 	
 	//S0-S100 : Errores de Servicios
