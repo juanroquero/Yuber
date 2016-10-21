@@ -8,16 +8,16 @@ import com.entities.Administrador;
 import com.entities.Cliente;
 import com.entities.InstanciaServicio;
 import com.entities.Proveedor;
-import com.entities.Servicio;
 import com.entities.Vertical;
 import com.utils.ControlErrores;
+import com.webservices.ControladorAdministradorWS;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-public class ControladorAdministrador {
+public class ControladorAdministrador implements ControladorAdministradorWS {
 
 	EntityManagerFactory emf = Persistence.createEntityManagerFactory("Yuber_2");
 	EntityManager em = emf.createEntityManager();
@@ -26,9 +26,11 @@ public class ControladorAdministrador {
 	public ControladorAdministrador() {
 	}
 
+	@Override
 	public void Login(String AdministradorEmail, String Password){					
 	}
 	
+	@Override
 	public List<DataClienteBasico> ObtenerClientesActivos(){
 		//Se considera clientes activos aquellos que tienen
 		//instancia_servicio con menos de 30 dias 
@@ -48,6 +50,7 @@ public class ControladorAdministrador {
 		return ListaDataClientes;
 	}
 	
+	@Override
 	public List<DataProveedorBasico> ObtenerProveedoresActivos(){
 		//Se considera provedores activos aquellos que tienen
 		//instancia_servicio con menos de 30 dias
@@ -67,6 +70,7 @@ public class ControladorAdministrador {
 		return ListaDataProveedores;		
 	}
 	
+	@Override
 	public String CrearAdministrador(DataAdministradorBasico Administrador){
 		try{			
 			Administrador Admin = new Administrador(Administrador.getAdministradorCorreo(), Administrador.getAdministradorContraseña(), Administrador.getAdministradorNombre(), null);
@@ -76,6 +80,7 @@ public class ControladorAdministrador {
 		}
 	}
 	
+	@Override
 	public String EliminarAdministrador(String AdministradorEmail){
 		try{
 			Administrador Admin = this.em.find(Administrador.class, AdministradorEmail);
@@ -91,6 +96,7 @@ public class ControladorAdministrador {
 		}	
 	}
 	
+	@Override
 	public String ModificarAdministrador(DataAdministradorBasico Administrador){
 		Administrador Admin;
 		try{			
@@ -111,6 +117,7 @@ public class ControladorAdministrador {
 		
 	}
 	
+	@Override
 	public DataAdministrador ObtenerAdministrador(String AdministradorEmail){	
 			DataAdministrador DAdmin;
 			try{
@@ -125,6 +132,7 @@ public class ControladorAdministrador {
 			return DAdmin;
 	}	
 	
+	@Override
 	public float ObtenerGananciaMensual(Date fecha){		  
 		//obtengo el primer dia del mes
 		Date fechaInicio = fecha;
@@ -147,6 +155,7 @@ public class ControladorAdministrador {
 		return ganancia;
 	}
 	
+	@Override
 	public List<DataProveedorBasico> TopProveedoresPorPuntajes(int Limit){
 		List<DataProveedorBasico> ListaDataProveedores = new ArrayList<DataProveedorBasico>();
 		Query query = em.createNamedQuery("TopProveedoresPorPuntajes", Proveedor.class);
@@ -158,6 +167,7 @@ public class ControladorAdministrador {
 		return ListaDataProveedores;
 	}
 	
+	@Override
 	public List<DataProveedorBasico> TopProveedoresPorGanancia(int Limit){
 		List<DataProveedorBasico> ListaDataProveedores = new ArrayList<DataProveedorBasico>();
 		Query query = em.createNamedQuery("TopProveedoresPorGanancia", Proveedor.class);
@@ -185,6 +195,7 @@ public class ControladorAdministrador {
 		return ListaDataClientes;
 	}*/
 
+	@Override
 	public List<DataClienteBasico> TopClientesPorPuntaje(int Limit){
 		List<DataClienteBasico> ListaDataClientes = new ArrayList<DataClienteBasico>();
 		Query query = em.createNamedQuery("TopClientesPorPuntaje", Proveedor.class);
@@ -196,6 +207,7 @@ public class ControladorAdministrador {
 		return ListaDataClientes;		
 	}	
 	
+	@Override
 	public String CrearVertical(DataVerticalBasico Vertical){
 		try{
 			Vertical NuevaVertical = new Vertical(Vertical.getVerticalTipo(), Vertical.getVerticalNombre(), null, null);	
@@ -205,6 +217,7 @@ public class ControladorAdministrador {
 		}
 	}
 	
+	@Override
 	public String AsignarVertical(String AdminCreadorId, String AdminId, String TipoVertical){
 		boolean Habilitado = false;
 		if(AdminCreadorId == "FullAccess")
@@ -267,6 +280,7 @@ public class ControladorAdministrador {
 				
 	}
 	
+	@Override
 	public String DenegarVertical(String AdminCreadorId, String AdminId, String TipoVertical){
 		boolean Habilitado = false;
 		if(AdminCreadorId == "FullAccess")

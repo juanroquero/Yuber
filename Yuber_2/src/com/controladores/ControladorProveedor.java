@@ -26,8 +26,9 @@ import com.entities.Reseña;
 import com.entities.Servicio;
 import com.entities.Usuario;
 import com.utils.ControlErrores;
+import com.webservices.ControladorProveedorWS;
 
-public class ControladorProveedor {
+public class ControladorProveedor implements ControladorProveedorWS {
 
 	EntityManagerFactory emf = Persistence.createEntityManagerFactory("Yuber_2");
 	EntityManager em = emf.createEntityManager();
@@ -36,6 +37,7 @@ public class ControladorProveedor {
 	public ControladorProveedor() {
 	}
 	
+	@Override
 	public String AceptarServicio(int InstanciaServicioId, String Correo){
 		em.getTransaction().begin();
 		Proveedor prov;
@@ -72,6 +74,7 @@ public class ControladorProveedor {
 		}
 	}
 	
+	@Override
 	public String AsociarServicio(String ProveedorCorreo, int ServicioId){
 		//Busco el servicio
 		em.getTransaction().begin();
@@ -106,6 +109,7 @@ public class ControladorProveedor {
 		return Error.Ok;
 	}
 	
+	@Override
 	public String FinalizarJornada(String ProveedorCorreo, int ServicioId){		
 		em.getTransaction().begin();
 		//Busco al Proveedor
@@ -132,6 +136,7 @@ public class ControladorProveedor {
 		return Error.Ok;
 	}
 	
+	@Override
 	public String FinServicio(int InstanciaServicioId, float Distancia){
 		em.getTransaction().begin();		
 		InstanciaServicio InstanciaServicio;
@@ -202,6 +207,7 @@ public class ControladorProveedor {
 		return Error.Ok;
 	}
 	
+	@Override
 	public String IniciarServicio(int InstanciaServicioId){
 		java.util.Date fecha = new Date();
 		//Busco la InstanciaServicio 
@@ -223,6 +229,7 @@ public class ControladorProveedor {
 		return Error.Ok;
 	}
 	
+	@Override
 	public void Login(String ProveedorEmail, String Password){		
 	}
 	
@@ -248,6 +255,7 @@ public class ControladorProveedor {
 		return ListaDataProveedor;
 	}
 	
+	@Override
 	public boolean OlvidePass(String ClienteCorreo){
 		//************************ESTA INCOMPETO************************//
 		//Retorna true si lo manda false en otro caso		
@@ -401,6 +409,7 @@ public class ControladorProveedor {
 		//Este parece no estar bien definido, hay que ver bien como se maneja el asociar paypal
 	}
 	
+	@Override
 	public void Cobrar(String ProveedorCorreo){
 		//No es lo mismo que RetirarFrondos??
 	}
