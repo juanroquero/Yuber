@@ -37,6 +37,7 @@ public class ControladorProveedor implements ControladorProveedorWS {
 	public ControladorProveedor() {
 	}
 	
+	
 	@Override
 	public String AceptarServicio(int InstanciaServicioId, String Correo){
 		em.getTransaction().begin();
@@ -74,6 +75,7 @@ public class ControladorProveedor implements ControladorProveedorWS {
 		}
 	}
 	
+	
 	@Override
 	public String AsociarServicio(String ProveedorCorreo, int ServicioId){
 		//Busco el servicio
@@ -109,6 +111,7 @@ public class ControladorProveedor implements ControladorProveedorWS {
 		return Error.Ok;
 	}
 	
+	
 	@Override
 	public String FinalizarJornada(String ProveedorCorreo, int ServicioId){		
 		em.getTransaction().begin();
@@ -135,6 +138,7 @@ public class ControladorProveedor implements ControladorProveedorWS {
 		}
 		return Error.Ok;
 	}
+	
 	
 	@Override
 	public String FinServicio(int InstanciaServicioId, float Distancia){
@@ -181,7 +185,8 @@ public class ControladorProveedor implements ControladorProveedorWS {
 		em.getTransaction().commit();
 		return Error.Ok;
 	}
-			
+		
+	
 	public String IniciarJornada(String ProveedorCorreo, int ServicioId){		
 		em.getTransaction().begin();
 		//Busco al Proveedor
@@ -207,6 +212,7 @@ public class ControladorProveedor implements ControladorProveedorWS {
 		return Error.Ok;
 	}
 	
+	
 	@Override
 	public String IniciarServicio(int InstanciaServicioId){
 		java.util.Date fecha = new Date();
@@ -229,13 +235,38 @@ public class ControladorProveedor implements ControladorProveedorWS {
 		return Error.Ok;
 	}
 	
+
 	@Override
 	public void Login(String ProveedorEmail, String Password){		
 	}
+		
+	
+	public List<DataReseña> MisReseñasObtenidas(String ProveedorCorreo){		
+		em.getTransaction().begin();
+		Proveedor prov;
+		try{
+			prov = (Proveedor)em.find(Proveedor.class, ProveedorCorreo);
+			if(prov == null){
+				return null;
+			}
+		}catch(Exception e){
+			return null;
+		}
+		em.flush();
+		List<DataReseña> ListaReseña = new ArrayList<DataReseña>();
+		List<InstanciaServicio> ListaInstanciaServicio = prov.getInstanciasServicio();
+		for(InstanciaServicio is : ListaInstanciaServicio){
+			if(is.getReseñaCliente() != null){
+				ListaReseña.add(is.getReseñaCliente().getDataReseña());
+			}
+		}
+		return ListaReseña;
+	}
+	
 	
 	public List<DataInstanciaServicio> ObtenerHistorial(String ProveedorCorreo){		
 		List<DataInstanciaServicio> ListaDataInstanciaServicio = new ArrayList<DataInstanciaServicio>();		
-		Query query = em.createNamedQuery("ObtenerHistorial", InstanciaServicio.class).setParameter("CorreoProv", ProveedorCorreo);
+		Query query = em.createNamedQuery("ObtenerHistorialProveedor", InstanciaServicio.class).setParameter("ProveedorCorreo", ProveedorCorreo);
 		List<InstanciaServicio> ListaInstanciaServicio = query.getResultList();
 		for (InstanciaServicio InstanciaServicio : ListaInstanciaServicio){ 
 			DataInstanciaServicio DataInstanciaServicio = InstanciaServicio.getDataInstanciaServicio();
@@ -243,6 +274,7 @@ public class ControladorProveedor implements ControladorProveedorWS {
 		}
 		return ListaDataInstanciaServicio;
 	}
+	
 	
 	public List<DataProveedor> ObtenerProveedores(){	
 		List<DataProveedor> ListaDataProveedor = new ArrayList<DataProveedor>();
@@ -254,6 +286,7 @@ public class ControladorProveedor implements ControladorProveedorWS {
 		}
 		return ListaDataProveedor;
 	}
+	
 	
 	@Override
 	public boolean OlvidePass(String ClienteCorreo){
@@ -289,6 +322,7 @@ public class ControladorProveedor implements ControladorProveedorWS {
 		}
 	}
 	
+	
 	public String PuntuarProveedor(int Puntaje, String Comentario, int InstanciaServicioId){	
 		em.getTransaction().begin();		
 		//Busco la InstanciaServicio 		
@@ -316,6 +350,7 @@ public class ControladorProveedor implements ControladorProveedorWS {
 		return Error;
 	}
 	
+	
 	private String RecalcularPromedio(Proveedor Proveedor)	{
 		try{
 			List<InstanciaServicio> ListaInstancias = Proveedor.getInstanciasServicio();
@@ -335,6 +370,7 @@ public class ControladorProveedor implements ControladorProveedorWS {
 			return Error.P53;
 		}
 	}
+	
 	
 	public void RechazarServicio(int InstanciaServicioId){
 		//Creo que no tiene que hacer nada. Lo unico que hace esto es el cancel en el boton 
@@ -356,27 +392,7 @@ public class ControladorProveedor implements ControladorProveedorWS {
 		em.getTransaction().commit();
 	}
 	
-	public List<DataReseña> MisReseñasObtenidas(String ProveedorCorreo){		
-		em.getTransaction().begin();
-		Proveedor prov;
-		try{
-			prov = (Proveedor)em.find(Proveedor.class, ProveedorCorreo);
-			if(prov == null){
-				return null;
-			}
-		}catch(Exception e){
-			return null;
-		}
-		em.flush();
-		List<DataReseña> ListaReseña = new ArrayList<DataReseña>();
-		List<InstanciaServicio> ListaInstanciaServicio = prov.getInstanciasServicio();
-		for(InstanciaServicio is : ListaInstanciaServicio){
-			if(is.getReseñaCliente() != null){
-				ListaReseña.add(is.getReseñaCliente().getDataReseña());
-			}
-		}
-		return ListaReseña;
-	}
+	
 	
 	
 	
@@ -413,13 +429,5 @@ public class ControladorProveedor implements ControladorProveedorWS {
 	public void Cobrar(String ProveedorCorreo){
 		//No es lo mismo que RetirarFrondos??
 	}
-	
-	
-	
-	
-	
 		
-	
-	
-	
 }

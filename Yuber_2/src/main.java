@@ -173,14 +173,7 @@ public class main {
 
 		
 		
-		
-		List<DataReseña> ListaReseña = cp.MisReseñasObtenidas("prov3@hotmail.com");
-		for (DataReseña reseña : ListaReseña){ 
-			System.out.println(reseña.getReseñaComentario());
-		}
-		
-		
-		
+
 	}
 	
 	

@@ -24,7 +24,7 @@ public interface ControladorClienteWS {
 
 	String CancelarPedido(int InstanciaServicioId);
 
-	void OlvidePass(String CienteCorreo);
+	boolean OlvidePass(String CienteCorreo);
 
 	void RegistrarCliente(DataCliente Cliente);
 
