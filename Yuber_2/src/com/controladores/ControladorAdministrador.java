@@ -34,7 +34,7 @@ public class ControladorAdministrador implements ControladorAdministradorWS {
 	public List<DataClienteBasico> ObtenerClientesActivos(){
 		//Se considera clientes activos aquellos que tienen
 		//instancia_servicio con menos de 30 dias 
-		Date fechaHoy = new Date();
+	/*	Date fechaHoy = new Date();
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(fechaHoy); 
 		calendar.add(Calendar.MONTH, -1);  
@@ -46,15 +46,15 @@ public class ControladorAdministrador implements ControladorAdministradorWS {
 		List<Cliente> ListaCliente = query.getResultList();		
 		for(Cliente Cliente : ListaCliente){
 			ListaDataClientes.add(Cliente.getDataClienteBasico());
-		}		
-		return ListaDataClientes;
+		}		*/
+		return null;
 	}
 	
 	@Override
 	public List<DataProveedorBasico> ObtenerProveedoresActivos(){
 		//Se considera provedores activos aquellos que tienen
 		//instancia_servicio con menos de 30 dias
-		Date fechaHoy = new Date();
+		/*Date fechaHoy = new Date();
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(fechaHoy); 
 		calendar.add(Calendar.MONTH, -1);  
@@ -66,8 +66,8 @@ public class ControladorAdministrador implements ControladorAdministradorWS {
 		List<Proveedor> ListaProveedor = query.getResultList();		
 		for(Proveedor Proveedor : ListaProveedor){
 			ListaDataProveedores.add(Proveedor.getDataProveedorBasico());
-		}		
-		return ListaDataProveedores;		
+		}		*/
+		return null;		
 	}
 	
 	@Override
@@ -169,20 +169,20 @@ public class ControladorAdministrador implements ControladorAdministradorWS {
 	
 	@Override
 	public List<DataProveedorBasico> TopProveedoresPorGanancia(int Limit){
-		List<DataProveedorBasico> ListaDataProveedores = new ArrayList<DataProveedorBasico>();
+	/*	List<DataProveedorBasico> ListaDataProveedores = new ArrayList<DataProveedorBasico>();
 		Query query = em.createNamedQuery("TopProveedoresPorGanancia", Proveedor.class);
 		query.setMaxResults(Limit);	
 		List<Proveedor> ListaProveedor = query.getResultList();
 		for(Proveedor prov : ListaProveedor){
 			ListaDataProveedores.add(prov.getDataProveedorBasico());
-		}		
-		return ListaDataProveedores;
+		}		*/
+		return null;
 	}
 	
 	
-	/*
+	
 	public List<DataClienteBasico> TopClientesPorCantServicios(int Limit){
-		List<DataClienteBasico> ListaDataClientes = new ArrayList<DataClienteBasico>();
+	/*	List<DataClienteBasico> ListaDataClientes = new ArrayList<DataClienteBasico>();
 		Query query = em.createNamedQuery("TopClientesPorCantServicios", InstanciaServicio.class);
 		query.setMaxResults(Limit);	
 		List<InstanciaServicio> ListaCliente = query.getResultList();
@@ -191,9 +191,9 @@ public class ControladorAdministrador implements ControladorAdministradorWS {
 			
 			
 			
-		}		
-		return ListaDataClientes;
-	}*/
+		}		*/
+		return null;
+	}
 
 	@Override
 	public List<DataClienteBasico> TopClientesPorPuntaje(int Limit){

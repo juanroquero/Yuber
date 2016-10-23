@@ -40,7 +40,7 @@ public class main {
 		ControladorServicios cs = new ControladorServicios();
 		ControladorAdministrador ca = new ControladorAdministrador();
 		//*********************** CARGA INICIAL ***********************//
-	/*	//-->Agrego usuarios
+		//-->Agrego usuarios
 		DataCliente Cliente = new DataCliente("user1@hotmail.com", "NombreUser1", "ApellidoUser1", "San Jose", "pass123", "18 de julio 123", 0, "094568451", null);  
 		cc.RegistrarCliente(Cliente);
 		Cliente = new DataCliente("user2@hotmail.com", "NombreUser2", "ApellidoUser2", "San Jose", "pass123", "18 de julio 321", 0, "094568452", null);  
@@ -168,7 +168,7 @@ public class main {
 		System.out.println("Fin servicio: "+cp.FinServicio(idis, 126));
 		System.out.println("Puntua el proveedor: "+cc.PuntuarCliente(1, "Un rompe huevos el tipo", idis));
 		System.out.println("Puntua el cliente: "+cp.PuntuarProveedor(3, "No hablo en todo el camino", idis));
-	*/	
+		
 		
 
 		

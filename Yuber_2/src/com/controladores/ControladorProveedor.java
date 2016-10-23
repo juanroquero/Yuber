@@ -237,7 +237,8 @@ public class ControladorProveedor implements ControladorProveedorWS {
 	
 
 	@Override
-	public void Login(String ProveedorEmail, String Password){		
+	public boolean Login(String ProveedorEmail, String Password){		
+		return true;
 	}
 		
 	
